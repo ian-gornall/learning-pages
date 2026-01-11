@@ -5,19 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Classroom Capacity Monitor</title>
     
-    <!-- IMPORT 1: Google Fonts (Montserrat for that clean Montessori look) -->
+    <!-- FONTS & ICONS -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
-    
-    <!-- IMPORT 2: FontAwesome Icons (Standard library for UI icons) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
         :root {
             --bg-color: #1e293b;
             --tank-bg: #0f172a;
-            --liquid-safe: #34d399;   /* Green */
-            --liquid-warn: #fbbf24;   /* Yellow */
-            --liquid-danger: #f87171; /* Red */
+            --liquid-safe: #34d399;   
+            --liquid-warn: #fbbf24;   
+            --liquid-danger: #f87171; 
             --text-color: #f8fafc;
         }
 
@@ -34,10 +32,10 @@
             overflow: hidden;
         }
 
-        /* --- DASHBOARD LAYOUT --- */
+        /* DASHBOARD GRID */
         .dashboard {
             display: grid;
-            grid-template-columns: 1fr 1fr; /* Split screen: Controls vs Tank */
+            grid-template-columns: 1fr 1fr;
             gap: 40px;
             width: 90%;
             max-width: 1000px;
@@ -45,15 +43,18 @@
             padding: 40px;
             border-radius: 20px;
             box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            transition: all 0.3s;
         }
 
-        /* --- LEFT SIDE: INSTANT METER & CONTROLS --- */
-        .left-panel {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
+        /* When right panel is missing (popped out), center the left panel */
+        .dashboard.popped-out {
+            grid-template-columns: 1fr;
+            max-width: 500px;
         }
 
+        /* LEFT PANEL (Controls) */
+        .left-panel { display: flex; flex-direction: column; justify-content: space-between; }
+        
         .instant-meter-box {
             background: rgba(0,0,0,0.2);
             padding: 20px;
@@ -62,129 +63,94 @@
             margin-bottom: 20px;
         }
 
-        .icon-pulse {
-            font-size: 3rem;
-            color: #94a3b8;
-            transition: transform 0.05s, color 0.1s;
-        }
-        
+        .icon-pulse { font-size: 3rem; color: #94a3b8; transition: transform 0.05s, color 0.1s; }
         .meter-label { font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; color: #94a3b8; margin-top: 10px; display: block;}
 
-        .controls-box {
-            background: rgba(255,255,255,0.1);
-            padding: 20px;
-            border-radius: 15px;
-        }
-
+        .controls-box { background: rgba(255,255,255,0.1); padding: 20px; border-radius: 15px; }
         .control-row { margin-bottom: 20px; }
         .control-row label { display: flex; align-items: center; gap: 10px; font-weight: bold; margin-bottom: 5px;}
         input[type=range] { width: 100%; cursor: pointer; accent-color: var(--liquid-safe); }
         
-        button#btn-start {
-            width: 100%;
-            padding: 15px;
-            background-color: var(--liquid-safe);
-            border: none;
-            border-radius: 8px;
-            color: #064e3b;
-            font-weight: 900;
-            font-size: 1.2rem;
-            cursor: pointer;
-            transition: 0.2s;
+        button {
+            width: 100%; padding: 15px; border: none; border-radius: 8px;
+            font-weight: 900; font-size: 1.1rem; cursor: pointer; transition: 0.2s; margin-bottom: 10px;
         }
-        button#btn-start:hover { transform: translateY(-2px); filter: brightness(1.1); }
+        #btn-start { background-color: var(--liquid-safe); color: #064e3b; }
+        #btn-pop { background-color: #3b82f6; color: white; }
+        button:hover { transform: translateY(-2px); filter: brightness(1.1); }
 
-        /* --- RIGHT SIDE: THE TANK (THE LEAKY BUCKET) --- */
+        /* RIGHT PANEL (The Tank) */
         .right-panel {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            position: relative;
+            display: flex; flex-direction: column; align-items: center; 
+            justify-content: center; position: relative; height: 100%;
         }
 
         .tank-container {
-            width: 150px;
-            height: 400px;
+            width: 150px; height: 400px;
             background-color: var(--tank-bg);
             border: 4px solid #475569;
-            border-radius: 0 0 20px 20px; /* Rounded bottom like a test tube */
+            border-radius: 0 0 20px 20px;
             border-top: none;
-            position: relative;
-            overflow: hidden;
+            position: relative; overflow: hidden;
             box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
+            transition: all 0.3s;
         }
 
-        /* The Liquid */
         .tank-liquid {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 0%; /* JS changes this */
+            position: absolute; bottom: 0; left: 0; width: 100%; height: 0%;
             background-color: var(--liquid-safe);
             transition: height 0.2s ease-out, background-color 0.5s;
             opacity: 0.9;
         }
 
-        /* Visual markers on the tank */
         .tank-marker {
-            position: absolute;
-            left: 0; right: 0;
+            position: absolute; left: 0; right: 0;
             border-top: 1px dashed rgba(255,255,255,0.2);
-            font-size: 0.7rem;
-            color: rgba(255,255,255,0.4);
-            padding-left: 5px;
+            font-size: 0.7rem; color: rgba(255,255,255,0.4); padding-left: 5px;
         }
 
-        /* Top "Faucet" Icon */
-        .faucet-icon {
-            font-size: 2rem;
-            color: #64748b;
-            margin-bottom: 10px;
+        /* PIP MODE STYLES (When in the floating window) */
+        body.pip-mode {
+            background: #0f172a; /* Dark background for popout */
+            margin: 0; padding: 0;
         }
         
-        /* Bottom "Drain" Icon */
-        .drain-icon {
-            font-size: 1.5rem;
-            color: #64748b;
-            margin-top: 10px;
+        body.pip-mode .right-panel {
+            width: 100vw; height: 100vh;
+            padding: 0; margin: 0;
         }
 
-        /* --- OVERLAYS --- */
+        body.pip-mode .tank-container {
+            width: 100%; height: 100%;
+            border: none; border-radius: 0;
+        }
+        
+        body.pip-mode .faucet-icon, 
+        body.pip-mode .drain-icon { display: none; } /* Hide icons in mini mode */
+        
+        body.pip-mode #percent-display {
+            position: absolute; top: 10px; right: 20px; z-index: 50;
+            font-size: 2rem; text-shadow: 0 2px 5px black;
+        }
+
+        /* ALARM OVERLAY */
         .overlay {
-            display: none;
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: #ef4444;
-            z-index: 100;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            animation: alertPulse 1s infinite;
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #ef4444; z-index: 100;
+            flex-direction: column; align-items: center; justify-content: center;
+            text-align: center; animation: alertPulse 1s infinite;
         }
 
         .overlay-content {
-            background: white;
-            color: #ef4444;
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-            max-width: 500px;
+            background: white; color: #ef4444; padding: 20px; border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5); max-width: 90%;
         }
 
-        .timer-big { font-size: 6rem; font-weight: 900; font-variant-numeric: tabular-nums; margin: 10px 0; }
+        .timer-big { font-size: 4rem; font-weight: 900; font-variant-numeric: tabular-nums; margin: 10px 0; }
         
         .btn-action {
-            padding: 15px 30px;
-            border: 2px solid #ef4444;
-            background: transparent;
-            color: #ef4444;
-            font-weight: bold;
-            font-size: 1.2rem;
-            cursor: pointer;
-            border-radius: 10px;
-            margin-top: 10px;
+            padding: 10px 20px; border: 2px solid #ef4444; background: transparent;
+            color: #ef4444; font-weight: bold; font-size: 1rem; cursor: pointer; border-radius: 10px;
         }
         .btn-action:hover { background: #ef4444; color: white; }
 
@@ -194,21 +160,28 @@
             100% { background-color: #ef4444; }
         }
 
+        /* Utility */
+        .hidden { display: none !important; }
+
     </style>
 </head>
 <body>
 
-    <div class="dashboard">
+    <div class="dashboard" id="main-dash">
         
-        <!-- CONTROLS & INSTANT -->
+        <!-- LEFT PANEL: CONTROLS -->
         <div class="left-panel">
             <div>
                 <h1><i class="fa-solid fa-ear-listen"></i> Noise Monitor</h1>
-                <p style="color: #94a3b8;">When noise exceeds the threshold, the tank fills. When quiet, it drains.</p>
+                <p style="color: #94a3b8; font-size: 0.9rem;">
+                    <strong>Instructions:</strong><br>
+                    1. Click "Start Listening".<br>
+                    2. Adjust Sensitivity.<br>
+                    3. Click "Pop Out" to float the meter on top.
+                </p>
             </div>
 
             <div class="instant-meter-box">
-                <!-- This icon scales with volume -->
                 <i id="instant-icon" class="fa-solid fa-volume-off icon-pulse"></i>
                 <span class="meter-label">Instant Volume</span>
             </div>
@@ -217,74 +190,83 @@
                 <button id="btn-start" onclick="initAudio()">
                     <i class="fa-solid fa-play"></i> Start Listening
                 </button>
+
+                <button id="btn-pop" onclick="togglePiP()">
+                    <i class="fa-regular fa-window-restore"></i> Pop Out (Always on Top)
+                </button>
                 
                 <div class="control-row" style="margin-top: 20px;">
-                    <label><i class="fa-solid fa-ruler-horizontal"></i> Sensitivity (Threshold)</label>
+                    <label><i class="fa-solid fa-ruler-horizontal"></i> Sensitivity</label>
                     <input type="range" id="thresh-slider" min="0" max="100" value="40">
                 </div>
 
                 <div class="control-row">
-                    <label><i class="fa-solid fa-stopwatch"></i> Patience (Drain Speed)</label>
+                    <label><i class="fa-solid fa-stopwatch"></i> Patience</label>
                     <input type="range" id="drain-slider" min="1" max="10" value="5">
                 </div>
             </div>
         </div>
 
-        <!-- THE TANK -->
-        <div class="right-panel">
-            <div class="faucet-icon"><i class="fa-solid fa-faucet-drip"></i> Noise Input</div>
+        <!-- RIGHT PANEL: THE TANK (THIS MOVES TO POPUP) -->
+        <div class="right-panel" id="tank-panel">
+            <div class="faucet-icon" style="margin-bottom: 10px; color: #64748b;">
+                <i class="fa-solid fa-faucet-drip"></i>
+            </div>
             
             <div class="tank-container">
                 <div class="tank-marker" style="bottom: 75%">CRITICAL</div>
                 <div class="tank-marker" style="bottom: 50%">WARNING</div>
                 <div class="tank-marker" style="bottom: 25%">SAFE</div>
-                
                 <div id="liquid" class="tank-liquid"></div>
             </div>
 
-            <div class="drain-icon"><i class="fa-solid fa-arrow-down"></i> Draining (Quiet)</div>
+            <div class="drain-icon" style="margin-top: 10px; color: #64748b;">
+                <i class="fa-solid fa-arrow-down"></i> Quiet
+            </div>
             <h2 id="percent-display">0%</h2>
-        </div>
-    </div>
 
-    <!-- ALARM OVERLAY -->
-    <div id="alarm-overlay" class="overlay">
-        <div class="overlay-content">
-            <h1><i class="fa-solid fa-bell"></i> TOO LOUD</h1>
-            <p>Please ring the chime. Wait for silence.</p>
-            <div id="timer-display" class="timer-big">10:00</div>
-            <button class="btn-action" onclick="startTimer()" id="btn-timer">Start Silent Timer</button>
-            <br>
-            <button style="margin-top: 20px; border:none; background:none; color:#999; cursor:pointer; text-decoration:underline;" onclick="resetSystem()">False Alarm / Reset</button>
+            <!-- ALARM OVERLAY (Lives inside right panel so it follows to PiP) -->
+            <div id="alarm-overlay" class="overlay">
+                <div class="overlay-content">
+                    <h2><i class="fa-solid fa-bell"></i> TOO LOUD</h2>
+                    <div id="timer-display" class="timer-big">10:00</div>
+                    <button class="btn-action" onclick="startTimer()" id="btn-timer">Start Timer</button>
+                    <br>
+                    <button style="margin-top: 15px; border:none; background:none; color:#999; cursor:pointer; text-decoration:underline;" onclick="resetSystem()">Reset</button>
+                </div>
+            </div>
         </div>
+
     </div>
 
     <script>
-        // --- LOGIC ---
+        // LOGIC VARIABLES
         let audioCtx, analyser, source, scriptNode;
         let isRunning = false;
         let isAlarm = false;
         let timerInterval;
-
-        // Variables
         let currentVol = 0;
-        let stressLevel = 0; // 0 to 100 (The Liquid Level)
-        let threshold = 40;  // Input slider
-        let drainSpeed = 0.5; // Input slider
+        let stressLevel = 0;
+        let threshold = 40;
+        let drainSpeed = 0.5;
         const SILENT_MINUTES = 10;
+        let pipWindow = null;
 
-        // UI References
+        // UI REFS
         const liquid = document.getElementById('liquid');
         const instantIcon = document.getElementById('instant-icon');
         const percentDisplay = document.getElementById('percent-display');
         const alarmOverlay = document.getElementById('alarm-overlay');
         const timerDisplay = document.getElementById('timer-display');
         const btnTimer = document.getElementById('btn-timer');
+        const tankPanel = document.getElementById('tank-panel');
+        const mainDash = document.getElementById('main-dash');
 
-        // Slider Inputs
+        // SLIDERS
         document.getElementById('thresh-slider').oninput = function() { threshold = this.value; };
-        document.getElementById('drain-slider').oninput = function() { drainSpeed = this.value * 0.15; }; // Scale nicely
+        document.getElementById('drain-slider').oninput = function() { drainSpeed = this.value * 0.15; };
 
+        // --- AUDIO INIT ---
         async function initAudio() {
             if(isRunning) return;
             try {
@@ -297,17 +279,15 @@
                 source.connect(analyser);
                 analyser.connect(scriptNode);
                 scriptNode.connect(audioCtx.destination);
-                
                 analyser.smoothingTimeConstant = 0.3;
                 analyser.fftSize = 1024;
 
                 isRunning = true;
-                document.getElementById('btn-start').innerHTML = '<i class="fa-solid fa-microphone-lines"></i> Listening...';
-                
+                document.getElementById('btn-start').innerHTML = '<i class="fa-solid fa-microphone-lines"></i> Active';
                 scriptNode.onaudioprocess = processAudio;
                 requestAnimationFrame(updateLoop);
             } catch(e) {
-                alert("Please allow Microphone access to use this tool.");
+                alert("Microphone denied. Please allow access.");
             }
         }
 
@@ -317,74 +297,60 @@
             analyser.getByteFrequencyData(array);
             let values = 0;
             for (let i = 0; i < array.length; i++) values += array[i];
-            
-            // Normalize volume (roughly 0-100)
             let avg = values / array.length;
             currentVol = Math.min(avg * 1.5, 100);
         }
 
+        // --- MAIN LOOP ---
         function updateLoop() {
-            if (!isRunning || isAlarm) return requestAnimationFrame(updateLoop);
+            if (!isRunning) return requestAnimationFrame(updateLoop);
 
-            // 1. Update Instant Icon (The Speaker)
-            // Scale icon based on volume (1.0 to 1.5 scale)
+            // 1. Icon Animation
             let scale = 1 + (currentVol / 200);
             instantIcon.style.transform = `scale(${scale})`;
-            
-            // Change icon based on intensity
-            if(currentVol < 10) instantIcon.className = "fa-solid fa-volume-off icon-pulse";
-            else if(currentVol < threshold) instantIcon.className = "fa-solid fa-volume-low icon-pulse";
-            else instantIcon.className = "fa-solid fa-volume-high icon-pulse";
-            
             if(currentVol > threshold) instantIcon.style.color = "#fbbf24";
             else instantIcon.style.color = "#94a3b8";
 
-            // 2. The Leaky Bucket Logic
-            if (currentVol > threshold) {
-                // FILL: The louder it is over the limit, the faster it fills
-                let excess = currentVol - threshold;
-                stressLevel += (excess * 0.05); 
-            } else {
-                // DRAIN: Constant drain when quiet
-                stressLevel -= drainSpeed;
+            // 2. Logic (Only update if no alarm)
+            if(!isAlarm) {
+                if (currentVol > threshold) {
+                    let excess = currentVol - threshold;
+                    stressLevel += (excess * 0.05); 
+                } else {
+                    stressLevel -= drainSpeed;
+                }
+                if (stressLevel < 0) stressLevel = 0;
+                if (stressLevel > 100) stressLevel = 100;
             }
 
-            // Clamp
-            if (stressLevel < 0) stressLevel = 0;
-            if (stressLevel > 100) stressLevel = 100;
-
-            // 3. Update The Tank Visuals
+            // 3. Render
             liquid.style.height = stressLevel + "%";
             percentDisplay.innerText = Math.round(stressLevel) + "%";
 
-            // Color Coding
-            if(stressLevel < 50) {
-                liquid.style.backgroundColor = "var(--liquid-safe)"; // Green
-            } else if (stressLevel < 85) {
-                liquid.style.backgroundColor = "var(--liquid-warn)"; // Yellow
-            } else {
-                liquid.style.backgroundColor = "var(--liquid-danger)"; // Red
-            }
+            // Colors
+            if(stressLevel < 50) liquid.style.backgroundColor = "var(--liquid-safe)";
+            else if (stressLevel < 85) liquid.style.backgroundColor = "var(--liquid-warn)";
+            else liquid.style.backgroundColor = "var(--liquid-danger)";
 
             // 4. Trigger Alarm
-            if (stressLevel >= 100) {
+            if (stressLevel >= 100 && !isAlarm) {
                 triggerAlarm();
-            } else {
-                requestAnimationFrame(updateLoop);
             }
+
+            requestAnimationFrame(updateLoop);
         }
 
         function triggerAlarm() {
             isAlarm = true;
-            alarmOverlay.style.display = 'flex';
+            alarmOverlay.style.display = 'flex'; // This shows it in PiP too because it's inside tank-panel
             timerDisplay.innerText = SILENT_MINUTES + ":00";
             btnTimer.disabled = false;
-            btnTimer.innerText = "Start Silent Timer";
+            btnTimer.innerText = "Start Timer";
         }
 
         function startTimer() {
             btnTimer.disabled = true;
-            btnTimer.innerText = "Silence In Progress...";
+            btnTimer.innerText = "Quiet Mode...";
             let time = SILENT_MINUTES * 60;
             
             clearInterval(timerInterval);
@@ -397,7 +363,7 @@
                 if (time <= 0) {
                     clearInterval(timerInterval);
                     timerDisplay.innerText = "DONE";
-                    btnTimer.innerText = "Reset Class";
+                    btnTimer.innerText = "Reset";
                     btnTimer.disabled = false;
                     btnTimer.onclick = resetSystem;
                 }
@@ -411,13 +377,71 @@
             alarmOverlay.style.display = 'none';
             stressLevel = 0;
             liquid.style.height = "0%";
-            
-            // Reset Button Logic
-            btnTimer.onclick = startTimer;
-            
-            requestAnimationFrame(updateLoop);
+            btnTimer.onclick = startTimer; // Restore original handler
         }
 
+        // --- PICTURE IN PICTURE LOGIC ---
+        async function togglePiP() {
+            // Check support
+            if (!("documentPictureInPicture" in window)) {
+                alert("Your browser doesn't support 'Always on Top' (Document PiP). Please use Chrome or Edge.");
+                return;
+            }
+
+            if (pipWindow) {
+                // Close if already open
+                pipWindow.close();
+                return;
+            }
+
+            try {
+                // 1. Request Window
+                pipWindow = await documentPictureInPicture.requestWindow({
+                    width: 300,
+                    height: 600
+                });
+
+                // 2. Copy Styles
+                [...document.styleSheets].forEach((styleSheet) => {
+                    try {
+                        const cssRules = [...styleSheet.cssRules].map((rule) => rule.cssText).join('');
+                        const style = document.createElement('style');
+                        style.textContent = cssRules;
+                        pipWindow.document.head.appendChild(style);
+                    } catch (e) {
+                        const link = document.createElement('link');
+                        link.rel = 'stylesheet';
+                        link.type = styleSheet.type;
+                        link.media = styleSheet.media;
+                        link.href = styleSheet.href;
+                        pipWindow.document.head.appendChild(link);
+                    }
+                });
+
+                // 3. Move the Tank Panel to the new window
+                pipWindow.document.body.append(tankPanel);
+                
+                // 4. Add specific class for mini-mode styling
+                pipWindow.document.body.classList.add('pip-mode');
+                
+                // 5. Update Main UI
+                mainDash.classList.add('popped-out');
+                document.getElementById('btn-pop').innerHTML = '<i class="fa-solid fa-rectangle-xmark"></i> Close Pop Out';
+
+                // 6. Handle Closing
+                pipWindow.addEventListener("pagehide", (event) => {
+                    // Move tank back to main dashboard
+                    mainDash.append(tankPanel);
+                    mainDash.classList.remove('popped-out');
+                    document.getElementById('btn-pop').innerHTML = '<i class="fa-regular fa-window-restore"></i> Pop Out (Always on Top)';
+                    pipWindow = null;
+                });
+
+            } catch (err) {
+                console.error(err);
+                alert("Failed to open Pop Out.");
+            }
+        }
     </script>
 </body>
 </html>
