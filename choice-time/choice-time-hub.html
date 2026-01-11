@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Choice Time Hub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Bangers&family=Poppins:wght@400;700&display=swap');
+
+        :root {
+            --bg-color: #f0f8ff;
+            --card-color: #ffffff;
+            --header-font: 'Bangers', cursive;
+            --body-font: 'Poppins', sans-serif;
+            --text-dark: #333333;
+            --border-light: #e0e0e0;
+            --shadow-light: rgba(0,0,0,0.1);
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: var(--body-font);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 1em;
+            color: var(--text-dark);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* --- Screen Management --- */
+        .screen {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-width: 1100px;
+            margin: auto;
+            padding: 1em;
+        }
+        .screen.active {
+            display: flex;
+        }
+
+        h1.screen-title {
+            font-family: var(--header-font);
+            font-size: clamp(3em, 10vw, 5em);
+            letter-spacing: 4px;
+            margin: 0.2em 0 0.5em 0;
+            text-align: center;
+            color: var(--text-dark);
+        }
+        
+        h1.screen-title i {
+            margin-right: 0.2em;
+        }
+
+        /* --- Generic Grid for Choices --- */
+        .choice-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 2em;
+            width: 100%;
+        }
+        .choice-card {
+            background: var(--card-color);
+            border-radius: 20px;
+            padding: 1.5em;
+            text-align: center;
+            box-shadow: 0 5px 15px var(--shadow-light);
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            border: 4px solid transparent;
+        }
+        .choice-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+        }
+        .choice-card i {
+            font-size: 5em;
+            margin-bottom: 0.2em;
+        }
+        .choice-card h2 {
+            font-family: var(--header-font);
+            font-size: 2.2em;
+            margin: 0;
+            letter-spacing: 2px;
+        }
+        
+        /* Card Colors */
+        [data-activity="reading"] i, [data-sub-type="fiction"] i, [data-sub-type="nonFiction"] i { color: #ff6347; }
+        [data-activity="coding"] i { color: #1e90ff; }
+        [data-activity="building"] i { color: #ffc107; }
+        [data-activity="art"] i { color: #9b59b6; }
+        [data-activity="boardGames"] i { color: #2ecc71; }
+        [data-activity="puzzles"] i { color: #e67e22; }
+        [data-activity="skillsPractice"] i { color: #3498db; }
+        
+        /* --- FOCUSED TASK SCREEN --- */
+        #task-screen {
+            max-width: 800px;
+        }
+        .task-container {
+            background-color: var(--card-color);
+            width: 100%;
+            border-radius: 20px;
+            padding: 2.5em;
+            box-shadow: 0 5px 15px var(--shadow-light);
+        }
+        #task-instructions ul {
+            list-style: none;
+            padding: 0;
+            font-size: 1.5em;
+            line-height: 1.7;
+        }
+        #task-instructions li {
+            margin-bottom: 1em;
+        }
+        #task-example {
+            font-size: 1em;
+            margin-top: 2em;
+            padding-top: 1.5em;
+            border-top: 3px dashed var(--border-light);
+            color: #555;
+        }
+        #task-example p:first-of-type {
+            font-weight: bold;
+        }
+        
+        /* --- Navigation Buttons --- */
+        .nav-buttons {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            gap: 1em;
+            margin-top: 1.5em;
+        }
+        .back-button {
+            font-size: 1.2em;
+            font-weight: bold;
+            padding: 12px 30px;
+            background-color: #eee;
+            border: 2px solid #ddd;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .back-button:hover {
+            background-color: #ddd;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- SCREEN 1: Main Menu of Choices -->
+    <div id="hub-screen" class="screen active">
+        <h1 class="screen-title">Choice Time Hub</h1>
+        <div id="hub-grid" class="choice-grid">
+            <!-- Hub cards generated by JS -->
+        </div>
+    </div>
+
+    <!-- SCREEN 2a: Sub-Menu for Reading -->
+    <div id="reading-submenu-screen" class="screen">
+        <h1 class="screen-title"><i class="fa-solid fa-book-open"></i> Reading</h1>
+        <div id="reading-submenu-grid" class="choice-grid">
+             <div class="choice-card" data-sub-type="fiction">
+                <i class="fa-solid fa-dragon"></i>
+                <h2>Fiction</h2>
+            </div>
+            <div class="choice-card" data-sub-type="nonFiction">
+                <i class="fa-solid fa-landmark"></i>
+                <h2>Non-Fiction</h2>
+            </div>
+        </div>
+        <div class="nav-buttons">
+            <button class="back-button" data-target="hub-screen"><i class="fa-solid fa-arrow-left"></i> Back to All Choices</button>
+        </div>
+    </div>
+
+    <!-- SCREEN 2b: Menu of Tasks for a specific Activity -->
+    <div id="activity-menu-screen" class="screen">
+        <h1 id="activity-menu-title" class="screen-title"></h1>
+        <div id="task-grid" class="choice-grid">
+            <!-- Task choice cards generated by JS -->
+        </div>
+        <div class="nav-buttons">
+            <button class="back-button" id="back-to-hub-or-reading-button"><i class="fa-solid fa-arrow-left"></i> Back</button>
+        </div>
+    </div>
+    
+    <!-- SCREEN 3: The Focused Task View -->
+    <div id="task-screen" class="screen">
+        <h1 id="task-title" class="screen-title"></h1>
+        <div class="task-container">
+            <div id="task-instructions"></div>
+            <div id="task-example"></div>
+        </div>
+         <div class="nav-buttons">
+            <button class="back-button" id="back-to-tasks-button"><i class="fa-solid fa-arrow-left"></i> Back to Tasks</button>
+            <button class="back-button" data-target="hub-screen"><i class="fa-solid fa-house"></i> Back to Main Menu</button>
+        </div>
+    </div>
+
+
+<script>
+const activitiesData = {
+    reading: { 
+        title: "Reading", 
+        icon: "fa-solid fa-book-open",
+        fiction: {
+            title: "Fiction Reading",
+            cards: [
+                { title: "The Other Side", instructions: ["<strong>1. Find:</strong> A 'bad guy' character.", "<strong>2. Think:</strong> What is their side of the story?", "<strong>3. Create:</strong> Write one sentence they would say to defend themselves."], example: "<p><em>From The Three Little Pigs:</em> 'I just wanted a cup of sugar for my grandma, and I sneezed the houses down by accident!'</p>" },
+                { title: "Secret Meaning", instructions: ["<strong>1. Find:</strong> An important object in the story.", "<strong>2. Think:</strong> What big idea does it stand for?", "<strong>3. Create:</strong> Give the object a new name that is its secret meaning."], example: "<p><em>From The Giver:</em> The Sled could be renamed 'The Sled of Memories' because it shows all the joy and pain of the past.</p>" },
+                { title: "Author's Message", instructions: ["<strong>1. Find:</strong> A moment where a character learns a lesson.", "<strong>2. Think:</strong> What does the author want us all to learn?", "<strong>3. Create:</strong> Write the lesson as a 'Rule for Life.'"], example: "<p><em>From Wonder:</em> 'When given the choice between being right and being kind, choose kind.'</p>" }
+            ]
+        },
+        nonFiction: {
+            title: "Non-Fiction Reading",
+            cards: [
+                { title: "Headline News", instructions: ["<strong>1. Find:</strong> The most surprising or important fact on the page.", "<strong>2. Think:</strong> What is the big idea of this whole section?", "<strong>3. Create:</strong> Write a 'Newspaper Headline' for this section."], example: "<p><em>From a book about Ruby Bridges:</em> 'BRAVE SIX-YEAR-OLD FACES ANGRY MOBS TO INTEGRATE SCHOOL'</p>" },
+                { title: "Ask the Picture", instructions: ["<strong>1. Find:</strong> A picture, diagram, or map.", "<strong>2. Think:</strong> What does this teach you that the words don't?", "<strong>3. Create:</strong> Write one 'I wonder...' question you have after only looking at the picture."], example: "<p><em>From a book on the Solar System:</em> 'I wonder why all the asteroids stayed in a belt instead of becoming a planet?'</p>" },
+                { title: "Make a Connection", instructions: ["<strong>1. Find:</strong> One new fact.", "<strong>2. Think:</strong> How does this connect to something you already know?", "<strong>3. Create:</strong> Write an equation: [Fact I Learned] + [What I Knew] = [My New Idea]."], example: "<p><em>From a book on Jane Goodall:</em> [Jane Goodall was very patient with chimps] + [I get frustrated when my dog won't learn a trick] = [Understanding animals takes a lot of patience.]</p>" }
+            ]
+        }
+    },
+    coding: { title: "Coding", icon: "fa-solid fa-laptop-code", cards: [
+        { title: "The Boss Block", instructions: ["<strong>1. Do:</strong> Finish a game tutorial.", "<strong>2. Think:</strong> Which code block is the most important?", "<strong>3. Create:</strong> In your journal, name the 'boss block' and explain its job."], example: "<p><em>From a pizza game:</em> The 'on game update' block is the boss. Its job is to make a new pizza show up every few seconds.</p>" },
+        { title: "Game Remix", instructions: ["<strong>1. Do:</strong> Finish a game tutorial.", "<strong>2. Think:</strong> How can you change this game to make it YOURS?", "<strong>3. Create:</strong> Make one change to the game and write down what you did."], example: "<p><em>From a flower game:</em> 'I changed the water drops to fireballs. I also changed the grass background to a volcano to match!'</p>" },
+        { title: "The Big Idea", instructions: ["<strong>1. Do:</strong> Finish one lesson.", "<strong>2. Think:</strong> What is the #1 most important thing this lesson taught you?", "<strong>3. Create:</strong> Write one sentence explaining the big idea you learned."], example: "<p><em>From a website lesson:</em> 'The <strong>&lt;img&gt;</strong> code puts a picture on a website, and <strong>src=</strong> tells the code where to find the picture.'</p>" }
+    ]},
+    building: { title: "Building", icon: "fa-solid fa-cubes", cards: [
+        { title: "The Key Step", instructions: ["<strong>1. Build:</strong> Build one model from the instructions.", "<strong>2. Think:</strong> Which step was the most important for making it strong?", "<strong>3. Create:</strong> Draw that step. Write why it was the key."], example: "<p><em>From a LEGO car:</em> 'Putting the long piece on the bottom was the key. It connected the wheels and made the car sturdy.'</p>" },
+        { title: "My Upgrade", instructions: ["<strong>1. Build:</strong> Build a model exactly like the instructions say.", "<strong>2. Think:</strong> How can you make it better?", "<strong>3. Create:</strong> Upgrade your model. Draw your new version and write what your upgrade does."], example: "<p><em>From a Keva tower:</em> 'I added flying supports on the sides, so now my tower is much stronger.'</p>" },
+        { title: "Build a Blueprint", instructions: ["<strong>1. Build:</strong> Build one model.", "<strong>2. Think:</strong> How does it look from the top? From the side?", "<strong>3. Create:</strong> Draw your model from two different views. Label them 'Top View' and 'Side View.'"], example: "<p>A drawing of a car from above is a rectangle with circles. A drawing from the side shows the car's body and two wheels.</p>" }
+    ]},
+    art: { title: "Art", icon: "fa-solid fa-palette", cards: [
+        { title: "The Artist's Secret", instructions: ["<strong>1. Do:</strong> Follow any art lesson.", "<strong>2. Think:</strong> What is the #1 trick this lesson teaches?", "<strong>3. Create:</strong> Write down the 'Artist's Secret' you learned."], example: "<p><em>From a lesson on shading:</em> 'The secret is to leave a little white spot where the light hits to make it look shiny and round.'</p>" },
+        { title: "Art Remix", instructions: ["<strong>1. Do:</strong> Finish an art lesson.", "<strong>2. Think:</strong> How can you change this art to make it your own?", "<strong>3. Create:</strong> Draw the original art and your new version. Circle your change."], example: "<p>A drawing of a cat from a tutorial, then another drawing of the same cat but now it's wearing a wizard hat.</p>" },
+        { title: "Change the Mood", instructions: ["<strong>1. Do:</strong> Create a character or a scene.", "<strong>2. Think:</strong> How can you change it to make it look spooky, or silly, or sad?", "<strong>3. Create:</strong> Re-draw your art with a new mood. Explain what you changed."], example: "<p><em>From a drawing of a happy dog:</em> 'To make the dog look sad, I changed its smile to a frown and made its ears droop down.'</p>" }
+    ]},
+    boardGames: { title: "Board Games", icon: "fa-solid fa-chess-board", cards: [
+        { title: "The Smartest Move", instructions: ["<strong>1. Play:</strong> Play a game.", "<strong>2. Think:</strong> What was the smartest move in the whole game?", "<strong>3. Create:</strong> Draw the game board and circle the smartest move. Write why it was the best."], example: "<p><em>From Connect Four:</em> 'This move blocked my opponent AND set me up for a trap where I could win two different ways.'</p>" },
+        { title: "A Better Rule", instructions: ["<strong>1. Play:</strong> Play the game.", "<strong>2. Think:</strong> Which rule could be more fun? How would you change it?", "<strong>3. Create:</strong> Write the <strong>Old Rule</strong>. Then, write your <strong>New Rule</strong> and why it's better."], example: "<p><em>From Uno:</em> '<strong>New Rule:</strong> You CAN stack 'Draw 2' cards. <strong>Why it's better:</strong> It adds more surprise!'</p>" },
+        { title: "Master Strategy", instructions: ["<strong>1. Play:</strong> Play a game.", "<strong>2. Think:</strong> What is the best advice you could give a new player?", "<strong>3. Create:</strong> Write one 'Top Secret Tip' for winning this game."], example: "<p><em>From Tic-Tac-Toe:</em> 'Always try to go in the middle square on your first turn.'</p>" }
+    ]},
+    puzzles: { title: "Puzzles", icon: "fa-solid fa-puzzle-piece", cards: [
+        { title: "The Starting Plan", instructions: ["<strong>1. Look:</strong> Look at a new puzzle before you begin.", "<strong>2. Think:</strong> What is your plan? Where will you start?", "<strong>3. Create:</strong> Write one sentence that is your 'Starting Plan.'"], example: "<p><em>From a Sudoku puzzle:</em> 'My plan is to find the number that's already on the board the most times and solve for that one first.'</p>" },
+        { title: "The 'Aha!' Moment", instructions: ["<strong>1. Play:</strong> Solve a puzzle.", "<strong>2. Think:</strong> What was the key discovery that helped you solve it?", "<strong>3. Create:</strong> Describe your 'Aha!' Moment in one sentence."], example: "<p><em>From a pattern puzzle:</em> 'The 'Aha!' moment was when I realized the pattern was about the number of corners, not the colors.'</p>" },
+        { title: "The Difficulty Dial", instructions: ["<strong>1. Look:</strong> Look at an easy puzzle and a hard puzzle.", "<strong>2. Think:</strong> What makes the hard one harder?", "<strong>3. Create:</strong> Write one sentence explaining what makes these puzzles hard."], example: "<p>'This game gets harder when it gives you fewer clues at the start.'</p>" }
+    ]},
+    skillsPractice: { title: "Skills Practice", icon: "fa-solid fa-bullseye", cards: [
+        { title: "The Pattern Detective", instructions: ["<strong>1. Do:</strong> Work on one skill.", "<strong>2. Look:</strong> What is the one big idea all the questions are about?", "<strong>3. Create:</strong> Write one sentence of advice for a friend who is about to start this skill."], example: "<p><em>From a math skill on Area:</em> 'The secret is to just multiply the length by the width!'</p>" },
+        { title: "Write Your Own", instructions: ["<strong>1. Do:</strong> Answer at least five questions.", "<strong>2. Think:</strong> How are these questions made?", "<strong>3. Create:</strong> Write your own practice question that would fit in this skill."], example: "<p><em>From a vocabulary skill on Synonyms:</em> 'Which word is a synonym for 'gigantic': tiny, angry, or enormous?'</p>" },
+        { title: "The Tricky Part", instructions: ["<strong>1. Do:</strong> Work until you find a tricky question.", "<strong>2. Think:</strong> What makes this question harder than the others?", "<strong>3. Create:</strong> Write down what the tricky part is and how you figured it out."], example: "<p><em>From a math word problem:</em> 'The tricky part was that the problem gave me extra numbers that I didn't even need to use.'</p>" }
+    ]}
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+    const hubGrid = document.getElementById('hub-grid');
+    const readingSubmenuGrid = document.getElementById('reading-submenu-grid');
+    const activityMenuTitle = document.getElementById('activity-menu-title');
+    const taskGrid = document.getElementById('task-grid');
+    const taskTitle = document.getElementById('task-title');
+    const taskInstructions = document.getElementById('task-instructions');
+    const taskExample = document.getElementById('task-example');
+    const backToHubOrReadingButton = document.getElementById('back-to-hub-or-reading-button');
+    const backToTasksButton = document.getElementById('back-to-tasks-button');
+
+    let currentActivityKey = null;
+    let currentSubType = null;
+    
+    function showScreen(screenId) {
+        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+        document.getElementById(screenId).classList.add('active');
+    }
+
+    // Generic listener for buttons with a static data-target
+    document.querySelectorAll('.back-button[data-target]').forEach(button => {
+        button.addEventListener('click', () => showScreen(button.dataset.target));
+    });
+    
+    // **FIXED** Dedicated listener for the back button on the task menu screen
+    backToHubOrReadingButton.addEventListener('click', () => {
+        const targetScreen = backToHubOrReadingButton.getAttribute('data-target');
+        if (targetScreen) {
+            showScreen(targetScreen);
+        }
+    });
+    
+    // Dedicated listener for the back button on the task display screen
+    backToTasksButton.addEventListener('click', () => {
+        showActivityMenu(currentActivityKey, currentSubType);
+    });
+
+    // Build the main hub menu
+    Object.keys(activitiesData).forEach(key => {
+        const activity = activitiesData[key];
+        const card = document.createElement('div');
+        card.className = 'choice-card';
+        card.dataset.activity = key;
+        card.innerHTML = `<i class="${activity.icon}"></i><h2>${activity.title}</h2>`;
+        hubGrid.appendChild(card);
+    });
+
+    function showActivityMenu(activityKey, subType = null) {
+        currentActivityKey = activityKey;
+        currentSubType = subType;
+        
+        const activity = subType ? activitiesData[activityKey][subType] : activitiesData[activityKey];
+        const icon = activitiesData[activityKey].icon;
+
+        activityMenuTitle.innerHTML = `<i class="${icon}"></i> ${activity.title}`;
+        taskGrid.innerHTML = '';
+        
+        activity.cards.forEach((card, index) => {
+            const taskCard = document.createElement('div');
+            taskCard.className = 'choice-card';
+            taskCard.dataset.activity = activityKey;
+            taskCard.dataset.subType = subType || '';
+            taskCard.dataset.taskIndex = index;
+            taskCard.innerHTML = `<h2>${card.title}</h2>`;
+            taskGrid.appendChild(taskCard);
+        });
+
+        const backTarget = activityKey === 'reading' ? 'reading-submenu-screen' : 'hub-screen';
+        backToHubOrReadingButton.setAttribute('data-target', backTarget);
+        
+        showScreen('activity-menu-screen');
+    }
+
+    function showTask(activityKey, subType, taskIndex) {
+        const activity = subType ? activitiesData[activityKey][subType] : activitiesData[activityKey];
+        const task = activity.cards[taskIndex];
+        const icon = activitiesData[activityKey].icon;
+        
+        taskTitle.innerHTML = `<i class="${icon}"></i> ${task.title}`;
+        taskInstructions.innerHTML = `<ul>${task.instructions.map(inst => `<li>${inst}</li>`).join('')}</ul>`;
+        taskExample.innerHTML = task.example;
+        
+        showScreen('task-screen');
+    }
+
+    // --- Event Listeners ---
+    
+    hubGrid.addEventListener('click', e => {
+        const card = e.target.closest('.choice-card');
+        if (card) {
+            const activityKey = card.dataset.activity;
+            if (activityKey === 'reading') {
+                showScreen('reading-submenu-screen');
+            } else {
+                showActivityMenu(activityKey);
+            }
+        }
+    });
+
+    readingSubmenuGrid.addEventListener('click', e => {
+        const card = e.target.closest('.choice-card');
+        if (card) {
+            showActivityMenu('reading', card.dataset.subType);
+        }
+    });
+
+    taskGrid.addEventListener('click', e => {
+        const card = e.target.closest('.choice-card');
+        if (card) {
+            const { activity, subType, taskIndex } = card.dataset;
+            showTask(activity, subType || null, taskIndex);
+        }
+    });
+});
+</script>
+
+</body>
+</html>
