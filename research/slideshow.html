@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<!-- Highlight key vocabulary words from lesson plan -->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Discovery Project: Sessions 1-6</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Bangers&family=Poppins:wght@400;700;800&display=swap");
+      :root {
+        --primary-color: #ff6347;
+        --secondary-color: #4a90e2;
+        --accent-color: #f0c419;
+        --dark-text: #2c3e50;
+        --danger-color: #e74c3c;
+        --success-color: #2ecc71;
+      }
+      body {
+        margin: 0;
+        font-family: "Poppins", sans-serif;
+        background-color: var(--dark-text);
+        overflow: hidden;
+      }
+      .slideshow-container {
+        position: relative;
+        width: 100vw;
+        height: 100vh;
+      }
+
+      .slide {
+        display: none;
+        width: 100%;
+        height: 100%;
+        padding: 20px 75px;
+        box-sizing: border-box;
+        text-align: center;
+        justify-content: flex-start;
+        align-items: center;
+        flex-direction: column;
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+      .slide.active {
+        display: flex;
+        animation: slideAppear 0.05s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      }
+      @keyframes slideAppear {
+        from {
+          opacity: 0;
+          transform: scale(0.97);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+
+      @keyframes gradient-pan {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+      .bg-quest {
+        background: linear-gradient(-45deg, #ffecd2, #fcb69f, #ff9a9e);
+        background-size: 400% 400%;
+        animation: gradient-pan 15s ease infinite;
+      }
+      .bg-ignite {
+        background: linear-gradient(-45deg, #fffde4, #fef189, #ffda77, #ffc371);
+        background-size: 400% 400%;
+        animation: gradient-pan 15s ease infinite;
+      }
+      .bg-mission {
+        background: linear-gradient(-45deg, #e0c3fc, #8ec5fc, #a1c4fd, #c2e9fb);
+        background-size: 400% 400%;
+        animation: gradient-pan 15s ease infinite;
+      }
+      .bg-debrief {
+        background: linear-gradient(-45deg, #d4fc79, #96e6a1, #a8e063, #56ab2f);
+        background-size: 400% 400%;
+        animation: gradient-pan 15s ease infinite;
+      }
+
+      .slide.active > * {
+        animation: contentFadeUp 0.6s 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94)
+          both;
+      }
+      .slide.active > *:nth-child(2) {
+        animation-delay: 0.3s;
+      }
+
+      @keyframes contentFadeUp {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      h1 {
+        font-family: "Bangers", cursive;
+        font-size: clamp(3em, 8vw, 5em); /* Adjusted font size */
+        margin: 0 0 5px 0;
+        -webkit-text-stroke: 2px #2c3e50;
+        text-stroke: 2px #2c3e50;
+        text-shadow: 0px 4px 10px rgba(0, 0, 0, 0.4);
+      }
+
+      .bg-quest h1 {
+        color: #a06eff;
+        -webkit-text-stroke-color: #4b278c;
+      }
+      .bg-ignite h1 {
+        color: #00a8ff;
+        -webkit-text-stroke-color: #005a8a;
+      }
+      .bg-mission h1 {
+        color: #ffc900;
+        -webkit-text-stroke-color: #8c6d00;
+      }
+      .bg-debrief h1 {
+        color: #ff5daa;
+        -webkit-text-stroke-color: #99235d;
+      }
+
+      h2 {
+        font-family: "Poppins", sans-serif;
+        font-weight: 800;
+        font-size: clamp(1.5em, 5vw, 2.5em); /* Adjusted font size */
+        color: var(--dark-text);
+        margin-bottom: 15px;
+        text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+      }
+      .content-box {
+        background: rgba(255, 255, 255, 0.92);
+        margin: 10px 0px 50px;
+        padding: 25px 40px;
+        border-radius: 15px;
+        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        height: 75vh; /* UPDATED: Taller, fixed height */
+        width: 100%;
+        max-height: 800px; /* UPDATED: Capped max-height */
+        overflow-y: auto;
+        box-sizing: border-box; /* UPDATED: Consistent box sizing */
+      }
+      
+      /* Specific styling for instructions */
+      .instruction-step {
+        font-size: 1.8em;
+        margin: 20px 0;
+        text-align: left;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+      }
+      .instruction-icon {
+        color: var(--secondary-color);
+        font-size: 1.2em;
+        width: 50px;
+        text-align: center;
+      }
+      .target-box {
+        background-color: #ecf0f1;
+        border-left: 8px solid var(--secondary-color);
+        padding: 15px;
+        margin-bottom: 30px;
+        border-radius: 0 10px 10px 0;
+        text-align: left;
+      }
+      .success-box {
+        background-color: #e8f8f5;
+        border-left: 8px solid var(--success-color);
+        padding: 15px;
+        margin-bottom: 30px;
+        border-radius: 0 10px 10px 0;
+        text-align: left;
+      }
+      .section-label {
+        font-size: 0.8em;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-weight: bold;
+        color: #7f8c8d;
+        display: block;
+        margin-bottom: 5px;
+      }
+
+      .nav-button {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background-color: rgba(44, 62, 80, 0.6);
+        color: white;
+        border: none;
+        font-size: 2em;
+        width: 45px;
+        height: 45px;
+        cursor: pointer;
+        z-index: 100;
+        border-radius: 50%;
+        transition: transform 0.2s, background-color 0.2s;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      #prev {
+        left: 15px;
+      }
+      #next {
+        right: 15px;
+      }
+      .day-nav {
+        position: absolute;
+        bottom: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 100;
+        background: rgba(44, 62, 80, 0.7);
+        padding: 5px;
+        border-radius: 50px;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        display: flex;
+        align-items: center;
+      }
+      .day-nav button {
+        background: transparent;
+        border: none;
+        color: white;
+        font-family: "Poppins";
+        font-weight: 700;
+        font-size: 0.9em;
+        padding: 8px 15px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border-radius: 30px;
+        white-space: nowrap;
+      }
+      .day-nav button.active {
+        background-color: var(--accent-color);
+        color: var(--dark-text);
+        transform: scale(1.1);
+      }
+      /* --- TIMER STYLES START --- */
+      .timer-container {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        z-index: 101;
+        background: var(--dark-text);
+        padding: 10px;
+        border-radius: 12px;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+        color: white;
+        text-align: center;
+        width: 160px;
+        transition: opacity 0.3s, transform 0.3s;
+      }
+
+      .timer-visual {
+        position: relative;
+        width: 100px;
+        height: 100px;
+        margin: 0 auto 10px;
+      }
+
+      .timer-visual svg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        transform: rotate(-90deg);
+      }
+      .timer-progress-bg {
+        fill: none;
+        stroke: rgba(255, 255, 255, 0.1);
+        stroke-width: 7;
+      }
+      .timer-progress-bar {
+        fill: none;
+        stroke: var(--accent-color);
+        stroke-width: 7;
+        stroke-linecap: round;
+        transition: stroke-dashoffset 0.2s linear, stroke 0.3s;
+      }
+
+      .timer-display {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-family: "Poppins", sans-serif;
+        font-weight: 800;
+        font-size: 1.5em;
+        color: white;
+        text-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
+        letter-spacing: 1px;
+      }
+
+      .timer-adjust,
+      .timer-controls {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .timer-adjust {
+        gap: 5px;
+        margin-bottom: 10px;
+      }
+
+      .timer-controls {
+        gap: 8px;
+      }
+
+      .timer-adjust-btn {
+        background-color: var(--secondary-color);
+        border: none;
+        color: white;
+        width: 32px;
+        height: 24px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 0.6em;
+        font-family: "Poppins", sans-serif;
+        font-weight: 600;
+        transition: background-color 0.2s, transform 0.1s;
+      }
+      .timer-adjust-btn:active,
+      .timer-control-btn:active {
+        transform: scale(0.95);
+      }
+
+      .timer-control-btn {
+        border: none;
+        color: white;
+        width: 38px;
+        height: 38px;
+        font-size: 1em;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: background-color 0.2s, transform 0.1s;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+      #start-pause-timer {
+        background-color: var(--success-color);
+      }
+      #reset-timer {
+        background-color: var(--danger-color);
+      }
+
+      /* --- TIMER STYLES END --- */
+    </style>
+  </head>
+  <body>
+    <div class="slideshow-container">
+      
+      <!-- SESSION 1: THE RESEARCH TEAM -->
+      <div class="slide active bg-quest" data-day="1">
+        <h1>Session 1: The Research Team</h1>
+        <div class="content-box">
+          <div class="target-box">
+            <span class="section-label">Learning Target</span>
+            I can agree on how to work with my team and establish our group norms.
+          </div>
+          <div class="success-box">
+            <span class="section-label">Success Criteria</span>
+            <i class="fa-solid fa-check"></i> Our Contract is signed.<br>
+            <i class="fa-solid fa-check"></i> We have a Team Name.
+          </div>
+          
+          <h2><i class="fa-solid fa-clipboard-list"></i> Instructions</h2>
+          <div class="instruction-step">
+            <div class="instruction-icon"><i class="fa-solid fa-users"></i></div>
+            <div>Meet your team and assign your roles!</div>
+          </div>
+          <div class="instruction-step">
+            <div class="instruction-icon"><i class="fa-solid fa-file-signature"></i></div>
+            <div><strong>Leader:</strong> Read the contract aloud.</div>
+          </div>
+          <div class="instruction-step">
+            <div class="instruction-icon"><i class="fa-solid fa-pen-fancy"></i></div>
+            <div><strong>Scribe:</strong> Write your cool Team Name on the cover.</div>
+          </div>
+          <div class="instruction-step">
+            <div class="instruction-icon"><i class="fa-solid fa-hand-shake"></i></div>
+            <div><strong>All:</strong> Sign your names to promise you will work together.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SESSION 2: THE WONDER WALL -->
+      <div class="slide bg-ignite" data-day="2">
+        <h1>Session 2: The Wonder Wall</h1>
+        <div class="content-box">
+          <div class="target-box">
+            <span class="section-label">Learning Target</span>
+            I can generate open-ended questions about the world and rank my interests.
+          </div>
+          <div class="success-box">
+            <span class="section-label">Success Criteria</span>
+            <i class="fa-solid fa-check"></i> Paths are checked.<br>
+            <i class="fa-solid fa-check"></i> Top 3 ideas are written on sticky notes and ranked.
+          </div>
+          
+          <h2><i class="fa-solid fa-lightbulb"></i> Instructions</h2>
+          <div class="instruction-step">
+            <div class="instruction-icon"><i class="fa-solid fa-check-double"></i></div>
+            <div>Checkmark <strong>every</strong> path that looks fun.</div>
+          </div>
+          <div class="instruction-step">
+            <div class="instruction-icon"><i class="fa-solid fa-sticky-note"></i></div>
+            <div>Pick your <strong>Top 3</strong>. Write one specific idea for each on a sticky note.</div>
+          </div>
+          <div class="instruction-step">
+            <div class="instruction-icon"><i class="fa-solid fa-sort-numeric-down"></i></div>
+            <div><strong>Vote!</strong> Rank them: 1 (Favorite), 2 (Next Best), 3 (Okay).</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SESSION 3: THE SELECTION -->
+      <div class="slide bg-mission" data-day="3">
+        <h1>Session 3: The Selection</h1>
+        <div class="content-box">
+          <div class="target-box">
+            <span class="section-label">Learning Target</span>
+            I can narrow down my topic and assign research responsibilities.
+          </div>
+          <div class="success-box">
+            <span class="section-label">Success Criteria</span>
+            <i class="fa-solid fa-check"></i> Project method is selected.<br>
+            <i class="fa-solid fa-check"></i> Questions are written and assigned to a person.
+          </div>
+          
+          <h2><i class="fa-solid fa-filter"></i> Instructions</h2>
+          <div class="instruction-step">
+            <div class="instruction-icon"><i class="fa-solid fa-bullseye"></i></div>
+            <div>Pick your <strong>Method</strong> based on your favorite topic from yesterday.</div>
+          </div>
+          <div class="instruction-step">
+            <div class="instruction-icon"><i class="fa-solid fa-magnifying-glass"></i></div>
+            <div>Go to <strong>Detective Work</strong>. Brainstorm your big questions.</div>
+          </div>
+          <div class="instruction-step">
+            <div class="instruction-icon"><i class="fa-solid fa-user-tag"></i></div>
+            <div><strong>Assign It!</strong> Write a student's name next to every question.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SESSION 3b: VOCAB BOOT CAMP -->
+      <div class="slide bg-debrief" data-day="3b">
+        <h1>Session 3b: Vocab Boot Camp</h1>
+        <div class="content-box">
+          <div class="target-box">
+            <span class="section-label">Learning Target</span>
+            I can define key research terms for my specific discipline.
+          </div>
+          <div class="success-box">
+            <span class="section-label">Success Criteria</span>
+            <i class="fa-solid fa-check"></i> I have correctly matched the words to their definitions.
+          </div>
+          
+          <h2><i class="fa-solid fa-shapes"></i> Instructions</h2>
+          <div class="instruction-step">
+            <div class="instruction-icon"><i class="fa-solid fa-layer-group"></i></div>
+            <div><strong>Manager:</strong> Spread out the vocab cards.</div>
+          </div>
+          <div class="instruction-step">
+            <div class="instruction-icon"><i class="fa-solid fa-puzzle-piece"></i></div>
+            <div>Work together to match the <strong>Word</strong> to the <strong>Meaning</strong>.</div>
+          </div>
+          <div class="instruction-step">
+            <div class="instruction-icon"><i class="fa-solid fa-comments"></i></div>
+            <div>Can you explain the word in your own language?</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SESSION 4: IDEA HUNT -->
+      <div class="slide bg-ignite" data-day="4">
+        <h1>Session 4: The Idea Hunt</h1>
+        <div class="content-box">
+          <div class="target-box">
+            <span class="section-label">Learning Target</span>
+            I can analyze existing projects to identify necessary components.
+          </div>
+          <div class="success-box">
+            <span class="section-label">Success Criteria</span>
+            <i class="fa-solid fa-check"></i> 3 Examples bookmarked.<br>
+            <i class="fa-solid fa-check"></i> We know what parts we need to build.
+          </div>
+          
+          <h2><i class="fa-solid fa-globe"></i> Instructions</h2>
+          <div class="instruction-step">
+            <div class="instruction-icon"><i class="fa-solid fa-qrcode"></i></div>
+            <div>Scan the codes. Look for projects that match <strong>your</strong> topic!</div>
+          </div>
+          <div class="instruction-step">
+            <div class="instruction-icon"><i class="fa-solid fa-eye"></i></div>
+            <div>Look closely: Where is their data? What did they build?</div>
+          </div>
+          <div class="instruction-step">
+            <div class="instruction-icon"><i class="fa-solid fa-bookmark"></i></div>
+            <div><strong>Bookmark</strong> 3 projects that give you good ideas.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SESSION 5: KEYWORDS -->
+      <div class="slide bg-quest" data-day="5">
+        <h1>Session 5: Keywords</h1>
+        <div class="content-box">
+          <div class="target-box">
+            <span class="section-label">Learning Target</span>
+            I can generate specific keywords for a search engine.
+          </div>
+          <div class="success-box">
+            <span class="section-label">Success Criteria</span>
+            <i class="fa-solid fa-check"></i> 5 Specific Search Terms are written.
+          </div>
+          
+          <h2><i class="fa-solid fa-keyboard"></i> Instructions</h2>
+          <div class="instruction-step">
+            <div class="instruction-icon"><i class="fa-solid fa-cat"></i></div>
+            <div>Don't just write "Cats." Be specific! (e.g., "Cat Diet")</div>
+          </div>
+          <div class="instruction-step">
+            <div class="instruction-icon"><i class="fa-solid fa-user-graduate"></i></div>
+            <div>Think: What words would a <strong>Professor</strong> use?</div>
+          </div>
+          <div class="instruction-step">
+            <div class="instruction-icon"><i class="fa-solid fa-pencil"></i></div>
+            <div><strong>Scribe:</strong> Write the 5 best words in your list.</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- TIMER ELEMENTS (Unchanged from template) -->
+    <div class="timer-container">
+      <div class="timer-visual">
+        <div class="timer-display">05:00</div>
+        <svg>
+          <circle class="timer-progress-bg" cx="50" cy="50" r="46"></circle>
+          <circle class="timer-progress-bar" cx="50" cy="50" r="46"></circle>
+        </svg>
+      </div>
+      <div class="timer-adjust">
+        <button class="timer-adjust-btn" data-time="-60">-1m</button>
+        <button class="timer-adjust-btn" data-time="-15">-15s</button>
+        <button class="timer-adjust-btn" data-time="15">+15s</button>
+        <button class="timer-adjust-btn" data-time="60">+1m</button>
+      </div>
+      <div class="timer-controls">
+        <button class="timer-control-btn" id="start-pause-timer">
+          <i class="fas fa-play"></i>
+        </button>
+        <button class="timer-control-btn" id="reset-timer">
+          <i class="fas fa-redo"></i>
+        </button>
+      </div>
+    </div>
+
+    <button id="prev" class="nav-button" aria-label="Previous Slide">
+      &#10094;
+    </button>
+    <button id="next" class="nav-button" aria-label="Next Slide">
+      &#10095;
+    </button>
+    
+    <div class="day-nav">
+      <button data-day="1">S 1</button>
+      <button data-day="2">S 2</button>
+      <button data-day="3">S 3</button>
+      <button data-day="3b">S 3b</button>
+      <button data-day="4">S 4</button>
+      <button data-day="5">S 5</button>
+      <button id="toggle-timer" style="margin-left: 10px; padding: 8px 10px">
+        <i class="fas fa-eye"></i>
+      </button>
+      <button id="play-sound-btn" style="padding: 8px 12px">
+        <i class="fas fa-bell"></i>
+      </button>
+    </div>
+
+    <audio
+      id="alarm-sound"
+      src="https://actions.google.com/sounds/v1/alarms/medium_bell_ringing_near.ogg"
+      preload="auto"
+    ></audio>
+
+    <script>
+      let currentSlideIndex = 0;
+      const slides = document.querySelectorAll(".slide");
+      const dayButtons = document.querySelectorAll(".day-nav button[data-day]");
+      function showSlide(index) {
+        if (index >= slides.length) {
+          index = 0;
+        } else if (index < 0) {
+          index = slides.length - 1;
+        }
+        slides.forEach((slide) => slide.classList.remove("active"));
+        slides[index].classList.add("active");
+        currentSlideIndex = index;
+        const currentDay = slides[index].getAttribute("data-day");
+        dayButtons.forEach((button) => {
+          button.classList.toggle(
+            "active",
+            button.getAttribute("data-day") == currentDay
+          );
+        });
+      }
+      document
+        .getElementById("next")
+        .addEventListener("click", () => showSlide(currentSlideIndex + 1));
+      document
+        .getElementById("prev")
+        .addEventListener("click", () => showSlide(currentSlideIndex - 1));
+      dayButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          const targetDay = button.getAttribute("data-day");
+          const i = Array.from(slides).findIndex(
+            (slide) => slide.getAttribute("data-day") === targetDay
+          );
+          if (i !== -1) {
+            showSlide(i);
+          }
+        });
+      });
+      showSlide(0);
+
+      // --- TIMER SCRIPT START ---
+      const timerDisplay = document.querySelector(".timer-display");
+      const startPauseButton = document.getElementById("start-pause-timer");
+      const resetButton = document.getElementById("reset-timer");
+      const toggleTimerButton = document.getElementById("toggle-timer");
+      const playSoundButton = document.getElementById("play-sound-btn");
+      const timerContainer = document.querySelector(".timer-container");
+      const timeAdjustButtons = document.querySelectorAll(".timer-adjust-btn");
+      const progressBar = document.querySelector(".timer-progress-bar");
+      const alarmSound = document.getElementById("alarm-sound");
+      alarmSound.volume = 1.0;
+
+      const radius = progressBar.r.baseVal.value;
+      const circumference = 2 * Math.PI * radius;
+      progressBar.style.strokeDasharray = circumference;
+
+      let countdown;
+      let alarmTimeout;
+      let totalTime = 300;
+      let remainingTime = totalTime;
+      let isRunning = false;
+
+      function updateDisplay() {
+        const mins = Math.floor(remainingTime / 60);
+        const secs = remainingTime % 60;
+        timerDisplay.textContent = `${mins < 10 ? "0" : ""}${mins}:${
+          secs < 10 ? "0" : ""
+        }${secs}`;
+        updateProgressBar();
+      }
+
+      function updateProgressBar() {
+        if (totalTime === 0) {
+          progressBar.style.strokeDashoffset = circumference;
+          return;
+        }
+        const offset =
+          circumference - (remainingTime / totalTime) * circumference;
+        progressBar.style.strokeDashoffset = offset;
+        progressBar.style.stroke =
+          remainingTime <= 10 ? "var(--danger-color)" : "var(--accent-color)";
+      }
+
+      function startAlarm() {
+        alarmSound.loop = true;
+        alarmSound.play();
+        alarmTimeout = setTimeout(stopAlarm, 5000);
+      }
+
+      function stopAlarm() {
+        clearTimeout(alarmTimeout);
+        alarmSound.pause();
+        alarmSound.currentTime = 0;
+        alarmSound.loop = false;
+      }
+
+      function toggleTimer() {
+        stopAlarm();
+        if (isRunning) {
+          clearInterval(countdown);
+          startPauseButton.innerHTML = '<i class="fas fa-play"></i>';
+        } else {
+          if (remainingTime <= 0) return;
+          startPauseButton.innerHTML = '<i class="fas fa-pause"></i>';
+          countdown = setInterval(() => {
+            remainingTime--;
+            updateDisplay();
+            if (remainingTime <= 0) {
+              clearInterval(countdown);
+              isRunning = false;
+              startPauseButton.innerHTML = '<i class="fas fa-play"></i>';
+              startAlarm();
+            }
+          }, 1000);
+        }
+        isRunning = !isRunning;
+      }
+
+      function resetTimer() {
+        clearInterval(countdown);
+        stopAlarm();
+        remainingTime = totalTime;
+        isRunning = false;
+        startPauseButton.innerHTML = '<i class="fas fa-play"></i>';
+        updateDisplay();
+      }
+
+      timeAdjustButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          if (isRunning) return;
+          stopAlarm();
+          const adjustment = parseInt(button.dataset.time);
+          totalTime += adjustment;
+          if (totalTime < 0) totalTime = 0;
+          remainingTime = totalTime;
+          updateDisplay();
+        });
+      });
+
+      startPauseButton.addEventListener("click", toggleTimer);
+      resetButton.addEventListener("click", resetTimer);
+
+      toggleTimerButton.addEventListener("click", () => {
+        const isVisible = timerContainer.style.opacity !== "0";
+        timerContainer.style.opacity = isVisible ? "0" : "1";
+        timerContainer.style.transform = isVisible
+          ? "translateY(-10px)"
+          : "translateY(0)";
+        toggleTimerButton.innerHTML = isVisible
+          ? '<i class="fas fa-eye-slash"></i>'
+          : '<i class="fas fa-eye"></i>';
+      });
+
+      playSoundButton.addEventListener("click", () => {
+        if (!alarmSound.paused) {
+          stopAlarm();
+        } else {
+          alarmSound.currentTime = 0;
+          alarmSound.loop = false;
+          alarmSound.play();
+        }
+      });
+
+      updateDisplay();
+      // --- TIMER SCRIPT END ---
+    </script>
+  </body>
+</html>

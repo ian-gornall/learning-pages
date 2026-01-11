@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hugo Cabret: Novel Study Unit</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Bangers&family=Poppins:wght@400;600;700;800&display=swap");
+      :root {
+        --primary-color: #ff6347;
+        --secondary-color: #4a90e2;
+        --accent-color: #f0c419;
+        --dark-text: #2c3e50;
+        --danger-color: #e74c3c;
+        --success-color: #2ecc71;
+        --warmup-color: #e67e22;
+        --lesson-color: #3498db;
+        --work-color: #9b59b6;
+        --close-color: #27ae60;
+      }
+      body {
+        margin: 0;
+        font-family: "Poppins", sans-serif;
+        background-color: var(--dark-text);
+        overflow: hidden;
+      }
+      .slideshow-container {
+        position: relative;
+        width: 100vw;
+        height: 100vh;
+      }
+
+      /* SLIDE ANIMATIONS & LAYOUT */
+      .slide {
+        display: none;
+        width: 100%;
+        height: 100%;
+        padding: 10px 40px;
+        box-sizing: border-box;
+        text-align: center;
+        justify-content: flex-start;
+        align-items: center;
+        flex-direction: column;
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+      .slide.active {
+        display: flex;
+        animation: slideAppear 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      }
+      @keyframes slideAppear {
+        from { opacity: 0; transform: scale(0.98); }
+        to { opacity: 1; transform: scale(1); }
+      }
+
+      /* DYNAMIC BACKGROUNDS */
+      @keyframes gradient-pan {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+      }
+      .bg-day1 { background: linear-gradient(-45deg, #a18cd1, #fbc2eb, #a6c0fe); background-size: 400% 400%; animation: gradient-pan 15s ease infinite; }
+      .bg-day2 { background: linear-gradient(-45deg, #f6d365, #fda085, #f093fb); background-size: 400% 400%; animation: gradient-pan 15s ease infinite; }
+      .bg-day3 { background: linear-gradient(-45deg, #84fab0, #8fd3f4, #a1c4fd); background-size: 400% 400%; animation: gradient-pan 15s ease infinite; }
+      .bg-day4 { background: linear-gradient(-45deg, #ff9a9e, #fecfef, #feada6); background-size: 400% 400%; animation: gradient-pan 15s ease infinite; }
+
+      /* TYPOGRAPHY */
+      h1 {
+        font-family: "Bangers", cursive;
+        font-size: clamp(2.5em, 5vw, 4em);
+        margin: 5px 0 5px 0;
+        color: #fff;
+        -webkit-text-stroke: 2px #2c3e50;
+        text-shadow: 3px 3px 0px rgba(0,0,0,0.3);
+        letter-spacing: 1px;
+        z-index: 10;
+      }
+
+      /* TARGET BOX STYLES */
+      .target-container {
+        display: flex;
+        gap: 15px;
+        width: 90%;
+        max-width: 1200px;
+        margin-bottom: 10px;
+        z-index: 10;
+      }
+      .target-box {
+        background: rgba(255, 255, 255, 0.95);
+        padding: 8px 20px;
+        border-radius: 15px;
+        font-weight: 700;
+        font-size: 1.1em;
+        color: var(--dark-text);
+        box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        border: 2px solid #2c3e50;
+        flex: 1;
+        text-align: left;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .target-icon { font-size: 1.5em; color: var(--secondary-color); }
+      .success-icon { font-size: 1.5em; color: var(--success-color); }
+
+      /* MAIN CONTENT BOX */
+      .content-box {
+        background: rgba(255, 255, 255, 0.93);
+        margin: 5px 0;
+        padding: 20px 30px;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        border: 4px solid #fff;
+        height: 70vh;
+        width: 95%;
+        max-width: 1400px;
+        display: grid;
+        grid-template-columns: 1fr 1fr; /* 2 Columns */
+        grid-template-rows: 1fr 1fr;    /* 2 Rows */
+        gap: 20px;
+        box-sizing: border-box;
+      }
+
+      /* LESSON STEP CARDS */
+      .step-card {
+        background: white;
+        border-radius: 15px;
+        padding: 15px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        text-align: left;
+        border-left: 10px solid #ccc;
+        transition: transform 0.2s;
+        position: relative;
+        overflow: hidden;
+      }
+      .step-card:hover { transform: translateY(-3px); box-shadow: 0 8px 15px rgba(0,0,0,0.1); }
+
+      /* Card Variations */
+      .card-warmup { border-left-color: var(--warmup-color); background: #fff8e1; }
+      .card-lesson { border-left-color: var(--lesson-color); background: #e3f2fd; }
+      .card-work   { border-left-color: var(--work-color); background: #f3e5f5; }
+      .card-close  { border-left-color: var(--close-color); background: #e8f5e9; }
+
+      .step-header {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 8px;
+        border-bottom: 2px solid rgba(0,0,0,0.05);
+        padding-bottom: 5px;
+      }
+      .step-badge {
+        color: white;
+        padding: 4px 10px;
+        border-radius: 10px;
+        font-weight: 800;
+        font-size: 0.9em;
+        text-transform: uppercase;
+      }
+      .bg-warmup { background-color: var(--warmup-color); }
+      .bg-lesson { background-color: var(--lesson-color); }
+      .bg-work { background-color: var(--work-color); }
+      .bg-close { background-color: var(--close-color); }
+
+      .step-title { font-weight: 800; font-size: 1.3em; color: var(--dark-text); }
+      .step-desc { font-size: 1em; color: #555; line-height: 1.4; flex-grow: 1; }
+      .step-icon-bg {
+        position: absolute; bottom: -10px; right: -10px; font-size: 6em; opacity: 0.1;
+      }
+      .card-warmup .step-icon-bg { color: var(--warmup-color); }
+      .card-lesson .step-icon-bg { color: var(--lesson-color); }
+      .card-work .step-icon-bg { color: var(--work-color); }
+      .card-close .step-icon-bg { color: var(--close-color); }
+
+
+      /* NAVIGATION */
+      .nav-button {
+        position: absolute; top: 50%; transform: translateY(-50%);
+        background-color: rgba(44, 62, 80, 0.6); color: white;
+        border: none; font-size: 2em; width: 45px; height: 45px;
+        cursor: pointer; z-index: 100; border-radius: 50%;
+        display: flex; align-items: center; justify-content: center;
+        transition: all 0.2s;
+      }
+      .nav-button:hover { background-color: var(--accent-color); color: var(--dark-text); }
+      #prev { left: 15px; }
+      #next { right: 15px; }
+
+      .day-nav {
+        position: absolute; bottom: 15px; left: 50%; transform: translateX(-50%);
+        z-index: 100; background: rgba(44, 62, 80, 0.8);
+        padding: 8px 15px; border-radius: 50px;
+        display: flex; align-items: center; gap: 5px;
+      }
+      .day-nav button {
+        background: transparent; border: none; color: white;
+        font-family: "Poppins"; font-weight: 700; font-size: 0.9em;
+        padding: 8px 16px; cursor: pointer; border-radius: 30px;
+        transition: all 0.3s ease;
+      }
+      .day-nav button.active {
+        background-color: var(--accent-color); color: var(--dark-text);
+        box-shadow: 0 0 10px var(--accent-color);
+      }
+
+      /* TIMER */
+      .timer-container {
+        position: absolute; top: 15px; right: 15px; z-index: 101;
+        background: var(--dark-text); padding: 10px; border-radius: 15px;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5); color: white;
+        text-align: center; width: 150px; transition: opacity 0.3s;
+      }
+      .timer-visual { position: relative; width: 80px; height: 80px; margin: 0 auto 5px; }
+      .timer-visual svg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; transform: rotate(-90deg); }
+      .timer-progress-bg { fill: none; stroke: rgba(255, 255, 255, 0.1); stroke-width: 7; }
+      .timer-progress-bar { fill: none; stroke: var(--success-color); stroke-width: 7; stroke-linecap: round; transition: stroke-dashoffset 0.2s linear; }
+      .timer-display { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-weight: 800; font-size: 1.4em; }
+      .timer-adjust button { background: #555; border: none; color: white; border-radius: 4px; padding: 2px 6px; cursor: pointer; margin: 0 2px; font-size: 0.7em;}
+      .timer-controls button { border: none; color: white; width: 30px; height: 30px; border-radius: 50%; margin: 5px 3px 0; cursor: pointer; }
+      #start-pause-timer { background: var(--success-color); }
+      #reset-timer { background: var(--danger-color); }
+
+    </style>
+  </head>
+  <body>
+
+    <div class="slideshow-container">
+
+      <!-- DAY 1: THE STAKEOUT -->
+      <div class="slide bg-day1 active" data-day="1">
+        <h1><i class="fas fa-eye"></i> Day 1: The Stakeout</h1>
+        
+        <div class="target-container">
+            <div class="target-box">
+                <i class="fas fa-bullseye target-icon"></i>
+                <div><strong>Target:</strong> I can interpret non-verbal cues (body language) to understand a character.</div>
+            </div>
+            <div class="target-box">
+                <i class="fas fa-check-circle success-icon"></i>
+                <div><strong>Success:</strong> I can act out and guess emotions without speaking.</div>
+            </div>
+        </div>
+
+        <div class="content-box">
+            <!-- 1. Warmup -->
+            <div class="step-card card-warmup">
+                <i class="fas fa-brain step-icon-bg"></i>
+                <div class="step-header">
+                    <span class="step-badge bg-warmup">Warmup</span>
+                    <div class="step-title">Vocab: Agitated</div>
+                </div>
+                <div class="step-desc">
+                    <strong>Definition:</strong> Feeling troubled or nervous.<br>
+                    <strong>Think:</strong> Does watching someone from a distance mean you actually know them?
+                </div>
+            </div>
+
+            <!-- 2. Mini-Lesson -->
+            <div class="step-card card-lesson">
+                <i class="fas fa-book-open step-icon-bg"></i>
+                <div class="step-header">
+                    <span class="step-badge bg-lesson">Read Aloud</span>
+                    <div class="step-title">Chapter 1: The Thief</div>
+                </div>
+                <div class="step-desc">
+                    Listen closely: Does Hugo use his <strong>ears</strong> or his <strong>eyes</strong> more to understand the Old Man?<br>
+                    <em>Leader: Discuss Questions 3 & 5.</em>
+                </div>
+            </div>
+
+            <!-- 3. Work Period -->
+            <div class="step-card card-work">
+                <i class="fas fa-user-secret step-icon-bg"></i>
+                <div class="step-header">
+                    <span class="step-badge bg-work">Activity</span>
+                    <div class="step-title">The Silent Observer</div>
+                </div>
+                <div class="step-desc">
+                    <strong>Partner Charades:</strong>
+                    <ol style="margin:5px 0 0 20px; padding:0;">
+                        <li>Person A: Act out an emotion (No sound!)</li>
+                        <li>Person B: Guess the emotion based on cues.</li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- 4. Closing -->
+            <div class="step-card card-close">
+                <i class="fas fa-comments step-icon-bg"></i>
+                <div class="step-header">
+                    <span class="step-badge bg-close">Closing</span>
+                    <div class="step-title">Debrief</div>
+                </div>
+                <div class="step-desc">
+                    What was the hardest part of understanding someone without words? How does Hugo do it every day?
+                </div>
+            </div>
+        </div>
+      </div>
+
+      <!-- DAY 2: LIFE IN THE WALLS -->
+      <div class="slide bg-day2" data-day="2">
+        <h1><i class="fas fa-clock"></i> Day 2: Life in the Walls</h1>
+        
+        <div class="target-container">
+            <div class="target-box">
+                <i class="fas fa-bullseye target-icon"></i>
+                <div><strong>Target:</strong> I can analyze how setting details reveal character traits.</div>
+            </div>
+            <div class="target-box">
+                <i class="fas fa-check-circle success-icon"></i>
+                <div><strong>Success:</strong> I can map a secret space and explain Hugo's responsibility.</div>
+            </div>
+        </div>
+
+        <div class="content-box">
+            <!-- 1. Warmup -->
+            <div class="step-card card-warmup">
+                <i class="fas fa-tools step-icon-bg"></i>
+                <div class="step-header">
+                    <span class="step-badge bg-warmup">Warmup</span>
+                    <div class="step-title">Vocab: Diligent</div>
+                </div>
+                <div class="step-desc">
+                    <strong>Definition:</strong> Showing care in one's work.<br>
+                    <strong>Discuss:</strong> Why does Hugo work so hard if he doesn't get paid?
+                </div>
+            </div>
+
+            <!-- 2. Mini-Lesson -->
+            <div class="step-card card-lesson">
+                <i class="fas fa-book-reader step-icon-bg"></i>
+                <div class="step-header">
+                    <span class="step-badge bg-lesson">Read Aloud</span>
+                    <div class="step-title">Chapter 2: The Clocks</div>
+                </div>
+                <div class="step-desc">
+                    Listen for descriptions of the secret apartments.<br>
+                    What is <em>Decrepit</em> (worn out) and what is kept shiny?
+                </div>
+            </div>
+
+            <!-- 3. Work Period -->
+            <div class="step-card card-work">
+                <i class="fas fa-map-marked-alt step-icon-bg"></i>
+                <div class="step-header">
+                    <span class="step-badge bg-work">Activity</span>
+                    <div class="step-title">Mapping the Secret</div>
+                </div>
+                <div class="step-desc">
+                    Create a <strong>Blueprint Sketch</strong> of a secret room you would build inside this school.<br>
+                    List 3 objects you would hide there.
+                </div>
+            </div>
+
+            <!-- 4. Closing -->
+            <div class="step-card card-close">
+                <i class="fas fa-users step-icon-bg"></i>
+                <div class="step-header">
+                    <span class="step-badge bg-close">Closing</span>
+                    <div class="step-title">Invisible Work</div>
+                </div>
+                <div class="step-desc">
+                    Who are the "invisible workers" in our school (like Hugo)? How can we show them we see them?
+                </div>
+            </div>
+        </div>
+      </div>
+
+      <!-- DAY 3: GHOSTS & FOOTSTEPS -->
+      <div class="slide bg-day3" data-day="3">
+        <h1><i class="fas fa-shoe-prints"></i> Day 3: Ghosts & Footsteps</h1>
+        
+        <div class="target-container">
+            <div class="target-box">
+                <i class="fas fa-bullseye target-icon"></i>
+                <div><strong>Target:</strong> I can explain how authors use sound to create mood/fear.</div>
+            </div>
+            <div class="target-box">
+                <i class="fas fa-check-circle success-icon"></i>
+                <div><strong>Success:</strong> I can identify what memories specific sounds trigger.</div>
+            </div>
+        </div>
+
+        <div class="content-box">
+            <!-- 1. Warmup -->
+            <div class="step-card card-warmup">
+                <i class="fas fa-lightbulb step-icon-bg"></i>
+                <div class="step-header">
+                    <span class="step-badge bg-warmup">Warmup</span>
+                    <div class="step-title">Vocab: Illumination</div>
+                </div>
+                <div class="step-desc">
+                    <strong>Definition:</strong> Lighting or light.<br>
+                    <strong>Predict:</strong> The Old Man fears "Ghosts." Are they real ghosts or memories?
+                </div>
+            </div>
+
+            <!-- 2. Mini-Lesson -->
+            <div class="step-card card-lesson">
+                <i class="fas fa-ghost step-icon-bg"></i>
+                <div class="step-header">
+                    <span class="step-badge bg-lesson">Read Aloud</span>
+                    <div class="step-title">Chapter 3: Snowfall</div>
+                </div>
+                <div class="step-desc">
+                    Pay attention to the <strong>contrast</strong> between the dark station and the bright snow.<br>
+                    Why does he hate the clicking of heels?
+                </div>
+            </div>
+
+            <!-- 3. Work Period -->
+            <div class="step-card card-work">
+                <i class="fas fa-volume-up step-icon-bg"></i>
+                <div class="step-header">
+                    <span class="step-badge bg-work">Activity</span>
+                    <div class="step-title">Soundscapes</div>
+                </div>
+                <div class="step-desc">
+                    Close your eyes. Identify the sound (tapping, crunching, stomping).<br>
+                    <strong>Share:</strong> What memory does that sound unlock for you?
+                </div>
+            </div>
+
+            <!-- 4. Closing -->
+            <div class="step-card card-close">
+                <i class="fas fa-question step-icon-bg"></i>
+                <div class="step-header">
+                    <span class="step-badge bg-close">Closing</span>
+                    <div class="step-title">Reflection</div>
+                </div>
+                <div class="step-desc">
+                    If you could erase one sound from the world, what would it be and why?
+                </div>
+            </div>
+        </div>
+      </div>
+
+      <!-- DAY 4: THE GIRL IN THE WINDOW -->
+      <div class="slide bg-day4" data-day="4">
+        <h1><i class="fas fa-window-maximize"></i> Day 4: Girl in the Window</h1>
+        
+        <div class="target-container">
+            <div class="target-box">
+                <i class="fas fa-bullseye target-icon"></i>
+                <div><strong>Target:</strong> I can distinguish between being alone (solitude) and being lonely (isolation).</div>
+            </div>
+            <div class="target-box">
+                <i class="fas fa-check-circle success-icon"></i>
+                <div><strong>Success:</strong> I can write a detailed character description.</div>
+            </div>
+        </div>
+
+        <div class="content-box">
+            <!-- 1. Warmup -->
+            <div class="step-card card-warmup">
+                <i class="fas fa-pencil-alt step-icon-bg"></i>
+                <div class="step-header">
+                    <span class="step-badge bg-warmup">Warmup</span>
+                    <div class="step-title">Descriptive Writing</div>
+                </div>
+                <div class="step-desc">
+                    Look at the picture of the Girl.<br>
+                    <strong>Write:</strong> A 3-sentence description of her appearance (Page 17).
+                </div>
+            </div>
+
+            <!-- 2. Mini-Lesson -->
+            <div class="step-card card-lesson">
+                <i class="fas fa-book step-icon-bg"></i>
+                <div class="step-header">
+                    <span class="step-badge bg-lesson">Read Aloud</span>
+                    <div class="step-title">Chapter 4: The Window</div>
+                </div>
+                <div class="step-desc">
+                    Hugo is alone. The Girl has family. <br>
+                    Why did she make him promise to leave? Is she an enemy or a friend?
+                </div>
+            </div>
+
+            <!-- 3. Work Period -->
+            <div class="step-card card-work">
+                <i class="fas fa-search step-icon-bg"></i>
+                <div class="step-header">
+                    <span class="step-badge bg-work">Activity</span>
+                    <div class="step-title">Cliffhanger & Grammar</div>
+                </div>
+                <div class="step-desc">
+                    1. Find a sentence with a <strong>Proper Noun</strong>.<br>
+                    2. <strong>Predict:</strong> Will the girl keep her promise about the notebook?
+                </div>
+            </div>
+
+            <!-- 4. Closing -->
+            <div class="step-card card-close">
+                <i class="fas fa-balance-scale step-icon-bg"></i>
+                <div class="step-header">
+                    <span class="step-badge bg-close">Closing</span>
+                    <div class="step-title">The Big Idea</div>
+                </div>
+                <div class="step-desc">
+                    <strong>Solitude vs. Isolation:</strong> Which one is Hugo experiencing right now? Why?
+                </div>
+            </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- TIMER COMPONENT -->
+    <div class="timer-container">
+      <div class="timer-visual">
+        <div class="timer-display">05:00</div>
+        <svg>
+          <circle class="timer-progress-bg" cx="40" cy="40" r="36"></circle>
+          <circle class="timer-progress-bar" cx="40" cy="40" r="36"></circle>
+        </svg>
+      </div>
+      <div class="timer-adjust">
+        <button class="timer-adjust-btn" data-time="-60">-1m</button>
+        <button class="timer-adjust-btn" data-time="-15">-15s</button>
+        <button class="timer-adjust-btn" data-time="15">+15s</button>
+        <button class="timer-adjust-btn" data-time="60">+1m</button>
+      </div>
+      <div class="timer-controls">
+        <button id="start-pause-timer"><i class="fas fa-play"></i></button>
+        <button id="reset-timer"><i class="fas fa-redo"></i></button>
+      </div>
+    </div>
+
+    <!-- NAVIGATION CONTROLS -->
+    <button id="prev" class="nav-button"><i class="fas fa-chevron-left"></i></button>
+    <button id="next" class="nav-button"><i class="fas fa-chevron-right"></i></button>
+    
+    <div class="day-nav">
+      <button data-day="1" class="active">Day 1</button>
+      <button data-day="2">Day 2</button>
+      <button data-day="3">Day 3</button>
+      <button data-day="4">Day 4</button>
+      <button id="toggle-timer-btn" style="margin-left:10px; width:40px; text-align:center;"><i class="fas fa-clock"></i></button>
+    </div>
+
+    <audio id="alarm-sound" src="https://actions.google.com/sounds/v1/alarms/medium_bell_ringing_near.ogg" preload="auto"></audio>
+
+    <script>
+      /* --- NAVIGATION LOGIC --- */
+      let currentSlideIndex = 0;
+      const slides = document.querySelectorAll(".slide");
+      const dayButtons = document.querySelectorAll(".day-nav button[data-day]");
+
+      function showSlide(index) {
+        if (index >= slides.length) index = 0;
+        if (index < 0) index = slides.length - 1;
+        
+        slides.forEach(slide => slide.classList.remove("active"));
+        slides[index].classList.add("active");
+        
+        currentSlideIndex = index;
+        
+        const currentDay = slides[index].getAttribute("data-day");
+        dayButtons.forEach(btn => {
+          btn.classList.toggle("active", btn.getAttribute("data-day") === currentDay);
+        });
+      }
+
+      document.getElementById("next").addEventListener("click", () => showSlide(currentSlideIndex + 1));
+      document.getElementById("prev").addEventListener("click", () => showSlide(currentSlideIndex - 1));
+
+      dayButtons.forEach((btn, index) => {
+        btn.addEventListener("click", () => showSlide(index));
+      });
+
+      /* --- TIMER LOGIC --- */
+      const timerDisplay = document.querySelector(".timer-display");
+      const startPauseBtn = document.getElementById("start-pause-timer");
+      const resetBtn = document.getElementById("reset-timer");
+      const toggleTimerBtn = document.getElementById("toggle-timer-btn");
+      const timerContainer = document.querySelector(".timer-container");
+      const timeAdjustBtns = document.querySelectorAll(".timer-adjust-btn");
+      const progressBar = document.querySelector(".timer-progress-bar");
+      const alarmSound = document.getElementById("alarm-sound");
+
+      const radius = progressBar.r.baseVal.value;
+      const circumference = 2 * Math.PI * radius;
+      progressBar.style.strokeDasharray = circumference;
+
+      let countdown;
+      let totalTime = 300; // 5 Minutes
+      let remainingTime = totalTime;
+      let isRunning = false;
+
+      function updateDisplay() {
+        const mins = Math.floor(remainingTime / 60);
+        const secs = remainingTime % 60;
+        timerDisplay.textContent = `${mins}:${secs < 10 ? "0" : ""}${secs}`;
+        
+        const offset = circumference - (remainingTime / totalTime) * circumference;
+        progressBar.style.strokeDashoffset = offset;
+      }
+
+      function toggleTimer() {
+        if (isRunning) {
+          clearInterval(countdown);
+          startPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+        } else {
+          startPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+          countdown = setInterval(() => {
+            if (remainingTime > 0) {
+              remainingTime--;
+              updateDisplay();
+            } else {
+              clearInterval(countdown);
+              isRunning = false;
+              startPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+              alarmSound.play();
+            }
+          }, 1000);
+        }
+        isRunning = !isRunning;
+      }
+
+      function resetTimer() {
+        clearInterval(countdown);
+        isRunning = false;
+        remainingTime = totalTime;
+        updateDisplay();
+        startPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+        alarmSound.pause();
+        alarmSound.currentTime = 0;
+      }
+
+      timeAdjustBtns.forEach(btn => {
+        btn.addEventListener("click", () => {
+          if (isRunning) return;
+          totalTime += parseInt(btn.dataset.time);
+          if (totalTime < 0) totalTime = 0;
+          remainingTime = totalTime;
+          updateDisplay();
+        });
+      });
+
+      toggleTimerBtn.addEventListener("click", () => {
+        const currentOp = getComputedStyle(timerContainer).opacity;
+        timerContainer.style.opacity = currentOp === "1" ? "0" : "1";
+        timerContainer.style.pointerEvents = currentOp === "1" ? "none" : "auto";
+      });
+
+      startPauseBtn.addEventListener("click", toggleTimer);
+      resetBtn.addEventListener("click", resetTimer);
+      
+      // Init
+      updateDisplay();
+
+    </script>
+  </body>
+</html>

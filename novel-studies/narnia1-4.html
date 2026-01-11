@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Narnia Unit: Chapters 1-4</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Bangers&family=Poppins:wght@400;600;700;800&display=swap");
+      :root {
+        --dark-text: #2c3e50;
+        --danger-color: #e74c3c;
+        --success-color: #27ae60;
+        --accent-gold: #f1c40f;
+        --wardrobe-brown: #8d6e63;
+        --ice-blue: #b3e5fc;
+        --magic-purple: #9b59b6;
+        --turkish-red: #ff6b6b;
+      }
+      body {
+        margin: 0;
+        font-family: "Poppins", sans-serif;
+        background-color: var(--dark-text);
+        overflow: hidden;
+      }
+      .slideshow-container {
+        position: relative;
+        width: 100vw;
+        height: 100vh;
+      }
+
+      /* BACKGROUND ANIMATIONS */
+      @keyframes gradient-pan {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+      }
+      
+      .bg-day1 { /* Wardrobe/Wood - Warm into Cool */
+        background: linear-gradient(-45deg, #D7CCC8, #A1887F, #90CAF9);
+        background-size: 400% 400%;
+        animation: gradient-pan 15s ease infinite;
+      }
+      .bg-day2 { /* Melancholy/Cave - Purple/Blue */
+        background: linear-gradient(-45deg, #E1BEE7, #D1C4E9, #BBDEFB);
+        background-size: 400% 400%;
+        animation: gradient-pan 15s ease infinite;
+      }
+      .bg-day3 { /* Spite/Cold - Stark White/Grey/Blue */
+        background: linear-gradient(-45deg, #ECEFF1, #CFD8DC, #B3E5FC);
+        background-size: 400% 400%;
+        animation: gradient-pan 15s ease infinite;
+      }
+      .bg-day4 { /* Turkish Delight/Danger - Red/Gold */
+        background: linear-gradient(-45deg, #FFCDD2, #FFECB3, #FFAB91);
+        background-size: 400% 400%;
+        animation: gradient-pan 15s ease infinite;
+      }
+
+      /* SLIDE LAYOUT */
+      .slide {
+        display: none;
+        width: 100%;
+        height: 100%;
+        padding: 10px 40px;
+        box-sizing: border-box;
+        text-align: center;
+        flex-direction: column;
+        align-items: center;
+        position: absolute;
+        top: 0; left: 0;
+      }
+      .slide.active {
+        display: flex;
+        animation: fadeIn 0.5s ease;
+      }
+      @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+      h1 {
+        font-family: "Bangers", cursive;
+        font-size: clamp(2.5em, 5vw, 4em);
+        margin: 10px 0 5px 0;
+        color: #fff;
+        -webkit-text-stroke: 2px #2c3e50;
+        text-shadow: 3px 3px 0px rgba(0,0,0,0.3);
+        letter-spacing: 2px;
+        z-index: 10;
+      }
+
+      /* LEARNING TARGET BANNER */
+      .target-banner {
+        background: rgba(255, 255, 255, 0.95);
+        padding: 8px 30px;
+        border-radius: 50px;
+        border: 3px solid var(--dark-text);
+        color: var(--dark-text);
+        font-weight: 700;
+        font-size: 1.2rem;
+        margin-bottom: 10px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        z-index: 10;
+        display: inline-block;
+      }
+      .target-label { color: var(--danger-color); text-transform: uppercase; margin-right: 5px; }
+
+      /* MAIN CONTENT BOX */
+      .content-box {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        height: 72vh;
+        width: 95%;
+        max-width: 1400px;
+        display: flex;
+        flex-direction: column;
+        padding: 20px;
+        box-sizing: border-box;
+        border: 1px solid rgba(255,255,255,0.5);
+        position: relative;
+      }
+
+      /* SPLIT COLUMNS FOR CONTENT */
+      .content-split {
+        display: flex;
+        flex: 1;
+        gap: 20px;
+        overflow: hidden;
+      }
+
+      .col-left, .col-right {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        overflow-y: auto;
+        padding-right: 10px; /* Space for scrollbar */
+      }
+
+      .col-right {
+        border-left: 2px dashed #ccc;
+        padding-left: 20px;
+      }
+
+      /* SECTION HEADERS */
+      .section-header {
+        font-family: "Bangers", cursive;
+        font-size: 1.8em;
+        color: var(--dark-text);
+        text-align: left;
+        margin-bottom: 5px;
+        border-bottom: 2px solid var(--accent-gold);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      /* CARDS FOR STEPS */
+      .card {
+        background: #f8f9fa;
+        border-radius: 12px;
+        padding: 15px;
+        text-align: left;
+        border-left: 6px solid;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        margin-bottom: 5px;
+      }
+      .card-hook { border-color: var(--magic-purple); }
+      .card-read { border-color: var(--wardrobe-brown); }
+      .card-discuss { border-color: var(--success-color); }
+
+      .card h3 { margin: 0 0 5px 0; font-size: 1.1em; font-weight: 800; color: var(--dark-text); }
+      .card p { margin: 0; font-size: 0.95em; line-height: 1.4; color: #555; }
+      .vocab-word {
+        background: var(--accent-gold);
+        padding: 2px 8px;
+        border-radius: 4px;
+        font-weight: 700;
+        color: var(--dark-text);
+      }
+
+      /* QUESTIONS LIST */
+      .question-box {
+        background: #e8f5e9;
+        border: 2px solid var(--success-color);
+        border-radius: 12px;
+        padding: 15px;
+        text-align: left;
+        flex-grow: 1;
+      }
+      .question-list { padding-left: 20px; margin: 0; }
+      .question-list li { margin-bottom: 10px; font-size: 1em; line-height: 1.3; }
+
+      /* SUCCESS CRITERIA FOOTER (High Visibility) */
+      .success-footer {
+        margin-top: auto;
+        background: var(--dark-text);
+        color: var(--accent-gold);
+        padding: 15px;
+        border-radius: 12px;
+        font-size: 1.3em;
+        font-weight: 700;
+        text-align: center;
+        border: 3px solid var(--accent-gold);
+        box-shadow: 0 -4px 15px rgba(0,0,0,0.1);
+      }
+      .success-label { color: #fff; text-transform: uppercase; font-size: 0.8em; display: block; margin-bottom: 5px; letter-spacing: 1px;}
+
+      /* NAV & TIMER (From Template) */
+      .nav-button {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background-color: rgba(44, 62, 80, 0.6);
+        color: white;
+        border: none;
+        font-size: 2em;
+        width: 45px;
+        height: 45px;
+        cursor: pointer;
+        z-index: 100;
+        border-radius: 50%;
+        transition: transform 0.2s;
+        display: flex; align-items: center; justify-content: center;
+      }
+      .nav-button:hover { background-color: rgba(44, 62, 80, 0.9); }
+      #prev { left: 15px; }
+      #next { right: 15px; }
+
+      .day-nav {
+        position: absolute;
+        bottom: 15px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 100;
+        background: rgba(44, 62, 80, 0.8);
+        padding: 8px;
+        border-radius: 50px;
+        display: flex; gap: 5px;
+      }
+      .day-nav button {
+        background: transparent; border: none; color: white;
+        font-family: "Poppins"; font-weight: 700; font-size: 0.9em;
+        padding: 8px 15px; cursor: pointer; border-radius: 30px;
+        transition: all 0.3s;
+      }
+      .day-nav button.active {
+        background-color: var(--accent-gold); color: var(--dark-text);
+        transform: scale(1.05);
+      }
+
+      /* TIMER STYLES */
+      .timer-container {
+        position: absolute; top: 15px; right: 15px; z-index: 101;
+        background: var(--dark-text); padding: 10px; border-radius: 12px;
+        box-shadow: 0 6px 20px rgba(0,0,0,0.3); color: white;
+        text-align: center; width: 150px;
+        transition: opacity 0.3s, transform 0.3s;
+      }
+      .timer-visual { position: relative; width: 90px; height: 90px; margin: 0 auto 5px; }
+      .timer-visual svg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; transform: rotate(-90deg); }
+      .timer-progress-bg { fill: none; stroke: rgba(255,255,255,0.1); stroke-width: 6; }
+      .timer-progress-bar { fill: none; stroke: var(--accent-gold); stroke-width: 6; stroke-linecap: round; transition: stroke-dashoffset 0.2s linear; }
+      .timer-display { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-weight: 800; font-size: 1.4em; }
+      .timer-controls, .timer-adjust { display: flex; justify-content: center; gap: 5px; margin-top: 5px; }
+      .timer-control-btn { border: none; color: white; width: 30px; height: 30px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+      #start-pause-timer { background: var(--success-color); }
+      #reset-timer { background: var(--danger-color); }
+      .timer-adjust-btn { background: #555; border: none; color: white; font-size: 0.7em; padding: 2px 6px; border-radius: 4px; cursor: pointer; }
+    </style>
+  </head>
+  <body>
+    <div class="slideshow-container">
+
+      <!-- DAY 1: CURIOSITY -->
+      <div class="slide bg-day1 active" data-day="1">
+        <h1>Day 1: Into the Wardrobe</h1>
+        
+        <div class="target-banner">
+            <span class="target-label">Target:</span> I can analyze why characters make risky choices.
+        </div>
+
+        <div class="content-box">
+            <div class="content-split">
+                <!-- Left Col: Hook/Vocab -->
+                <div class="col-left">
+                    <div class="section-header"><i class="fas fa-lightbulb"></i> Introduction</div>
+                    
+                    <div class="card card-hook">
+                        <h3><i class="fas fa-spell-check"></i> Word of the Day</h3>
+                        <p><span class="vocab-word">Inquisitive</span> = Curious or asking many questions.</p>
+                        <p><em>Check page 6, #1 & #8 in your packet.</em></p>
+                    </div>
+
+                    <div class="card card-hook">
+                        <h3><i class="fas fa-comments"></i> The Hook</h3>
+                        <p>Make an "inquisitive" face! Turn to a partner: What is one thing you are curious about today?</p>
+                    </div>
+
+                    <div class="section-header"><i class="fas fa-book-open"></i> Read Aloud</div>
+                    <div class="card card-read">
+                        <h3>Chapter 1</h3>
+                        <p><strong>Start:</strong> Beginning of Chapter 1.</p>
+                        <p><strong>Stop:</strong> After Lucy meets the Faun. <br><em>Cue: "'Goodness gracious me!' exclaimed the Faun."</em></p>
+                    </div>
+                </div>
+
+                <!-- Right Col: Discussion -->
+                <div class="col-right">
+                    <div class="section-header"><i class="fas fa-users"></i> Discussion</div>
+                    <div class="question-box">
+                        <ol class="question-list">
+                            <li><strong>Novel-Ties #1:</strong> Find where reality ended and fantasy began. Was it smooth or sudden?</li>
+                            <li><strong>Novel-Ties #1 (Pg 7):</strong> Why did the children think they would find an adventure in the Professor's house?</li>
+                            <li>Lucy felt frightened but <strong>inquisitive</strong>. Why didn't she turn back when it got cold?</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VISIBLE SUCCESS CRITERIA -->
+            <div class="success-footer">
+                <span class="success-label">Success Criteria</span>
+                <i class="fas fa-check-circle"></i> I can explain why Lucy chose to stay in the wood.
+            </div>
+        </div>
+      </div>
+
+      <!-- DAY 2: EMPATHY -->
+      <div class="slide bg-day2" data-day="2">
+        <h1>Day 2: Tea with Tumnus</h1>
+
+        <div class="target-banner">
+            <span class="target-label">Target:</span> I can evaluate a character's complex actions.
+        </div>
+
+        <div class="content-box">
+            <div class="content-split">
+                <div class="col-left">
+                    <div class="section-header"><i class="fas fa-lightbulb"></i> Introduction</div>
+                    
+                    <div class="card card-hook">
+                        <h3><i class="fas fa-spell-check"></i> Word of the Day</h3>
+                        <p><span class="vocab-word">Melancholy</span> = A deep, beautiful sadness.</p>
+                        <p><em>Check page 7, #4 (Meaning of "Tea").</em></p>
+                    </div>
+
+                    <div class="card card-hook">
+                        <h3><i class="fas fa-comments"></i> The Hook</h3>
+                        <p>Sigh a big, heavy sigh. Today we find out why the Faun is melancholy.</p>
+                    </div>
+
+                    <div class="section-header"><i class="fas fa-book-open"></i> Read Aloud</div>
+                    <div class="card card-read">
+                        <h3>Chapter 2</h3>
+                        <p><strong>Start:</strong> Tumnus invites Lucy to tea.</p>
+                        <p><strong>Stop:</strong> After Tumnus confesses. <br><em>Cue: "'But I have,' said the Faun."</em></p>
+                    </div>
+                </div>
+
+                <div class="col-right">
+                    <div class="section-header"><i class="fas fa-users"></i> Discussion</div>
+                    <div class="question-box">
+                        <ol class="question-list">
+                            <li><strong>Novel-Ties #4:</strong> Why did the Faun think he was "bad"? Why did he change his mind about Humans?</li>
+                            <li><strong>Novel-Ties #2 (Pg 8):</strong> How did Tumnus make Lucy comfortable? Would you have trusted him?</li>
+                            <li>Is Tumnus a "Bad Guy" who did good, or a "Good Guy" who almost did bad?</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+            <div class="success-footer">
+                <span class="success-label">Success Criteria</span>
+                <i class="fas fa-check-circle"></i> I can use evidence to decide if Tumnus is trustworthy.
+            </div>
+        </div>
+      </div>
+
+      <!-- DAY 3: TRUTH & LIES -->
+      <div class="slide bg-day3" data-day="3">
+        <h1>Day 3: Edmund's Lie</h1>
+
+        <div class="target-banner">
+            <span class="target-label">Target:</span> I can distinguish between truth and spite.
+        </div>
+
+        <div class="content-box">
+            <div class="content-split">
+                <div class="col-left">
+                    <div class="section-header"><i class="fas fa-lightbulb"></i> Introduction</div>
+                    
+                    <div class="card card-hook">
+                        <h3><i class="fas fa-spell-check"></i> Word of the Day</h3>
+                        <p><span class="vocab-word">Spiteful</span> = Being mean to hurt feelings.</p>
+                        <p><span class="vocab-word">Hoax</span> = A trick to fool others.</p>
+                        <p><em>Check page 6, #3.</em></p>
+                    </div>
+
+                    <div class="card card-hook">
+                        <h3><i class="fas fa-comments"></i> The Hook</h3>
+                        <p>Raise your hand if you think Edmund believes Lucy is playing a hoax, or if he is just being mean.</p>
+                    </div>
+
+                    <div class="section-header"><i class="fas fa-book-open"></i> Read Aloud</div>
+                    <div class="card card-read">
+                        <h3>Chapter 3</h3>
+                        <p><strong>Start:</strong> Lucy returns from the wardrobe.</p>
+                        <p><strong>Stop:</strong> Edmund enters and is alone. <br><em>Cue: "'...door must have swung open of its own accord.'"</em></p>
+                    </div>
+                </div>
+
+                <div class="col-right">
+                    <div class="section-header"><i class="fas fa-users"></i> Discussion</div>
+                    <div class="question-box">
+                        <ol class="question-list">
+                            <li><strong>Novel-Ties #5:</strong> Why hadn't the other children noticed Lucy's absence? (Think about Logic!)</li>
+                            <li>The book says Edmund was tired and pretending not to be. Why does being tired make us <strong>spiteful</strong>?</li>
+                            <li><strong>Novel-Ties #10:</strong> Why did Edmund feel uncomfortable when Lucy mentioned the Witch?</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+            <div class="success-footer">
+                <span class="success-label">Success Criteria</span>
+                <i class="fas fa-check-circle"></i> I can explain why Edmund acted spitefully toward Lucy.
+            </div>
+        </div>
+      </div>
+
+      <!-- DAY 4: MANIPULATION -->
+      <div class="slide bg-day4" data-day="4">
+        <h1>Day 4: Turkish Delight</h1>
+
+        <div class="target-banner">
+            <span class="target-label">Target:</span> I can identify manipulation and flattery.
+        </div>
+
+        <div class="content-box">
+            <div class="content-split">
+                <div class="col-left">
+                    <div class="section-header"><i class="fas fa-lightbulb"></i> Introduction</div>
+                    
+                    <div class="card card-hook">
+                        <h3><i class="fas fa-spell-check"></i> Word of the Day</h3>
+                        <p><span class="vocab-word">Dominions</span> = Lands a ruler controls.</p>
+                        <p><span class="vocab-word">Courtiers</span> = Royal helpers.</p>
+                        <p><em>Check page 6, #4 & #5.</em></p>
+                    </div>
+
+                    <div class="card card-hook">
+                        <h3><i class="fas fa-comments"></i> The Hook</h3>
+                        <p>Today Edmund meets a Queen. Watch closely how she treats him.</p>
+                    </div>
+
+                    <div class="section-header"><i class="fas fa-book-open"></i> Read Aloud</div>
+                    <div class="card card-read">
+                        <h3>Chapter 4</h3>
+                        <p><strong>Start:</strong> The Sledge arrives.</p>
+                        <p><strong>Stop:</strong> After the Queen drives away. <br><em>Cue: "'Next time! Next time! Don't forget.'"</em></p>
+                    </div>
+                </div>
+
+                <div class="col-right">
+                    <div class="section-header"><i class="fas fa-users"></i> Discussion</div>
+                    <div class="question-box">
+                        <ol class="question-list">
+                            <li><strong>Novel-Ties #4 (Pg 8):</strong> Why do you think the Queen's flattery worked so well on Edmund?</li>
+                            <li><strong>Novel-Ties #3 (Pg 8):</strong> What might have made Edmund suspicious? Would you have eaten the food?</li>
+                            <li><strong>Novel-Ties #8 (Pg 7):</strong> What was the magical power of the Turkish Delight?</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+            <div class="success-footer">
+                <span class="success-label">Success Criteria</span>
+                <i class="fas fa-check-circle"></i> I can explain how the Queen tricked Edmund using flattery.
+            </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- TIMER UI -->
+    <div class="timer-container">
+      <div class="timer-visual">
+        <div class="timer-display">25:00</div>
+        <svg>
+          <circle class="timer-progress-bg" cx="45" cy="45" r="40"></circle>
+          <circle class="timer-progress-bar" cx="45" cy="45" r="40"></circle>
+        </svg>
+      </div>
+      <div class="timer-adjust">
+        <button class="timer-adjust-btn" data-time="-60">-1m</button>
+        <button class="timer-adjust-btn" data-time="60">+1m</button>
+      </div>
+      <div class="timer-controls">
+        <button class="timer-control-btn" id="start-pause-timer"><i class="fas fa-play"></i></button>
+        <button class="timer-control-btn" id="reset-timer"><i class="fas fa-redo"></i></button>
+      </div>
+    </div>
+
+    <!-- NAVIGATION -->
+    <button id="prev" class="nav-button">&#10094;</button>
+    <button id="next" class="nav-button">&#10095;</button>
+    <div class="day-nav">
+      <button data-day="1">Day 1</button>
+      <button data-day="2">Day 2</button>
+      <button data-day="3">Day 3</button>
+      <button data-day="4">Day 4</button>
+      <button id="toggle-timer" style="margin-left:10px;"><i class="fas fa-clock"></i></button>
+    </div>
+
+    <audio id="alarm-sound" src="https://actions.google.com/sounds/v1/alarms/medium_bell_ringing_near.ogg" preload="auto"></audio>
+
+    <script>
+      /* SLIDESHOW LOGIC */
+      let currentSlideIndex = 0;
+      const slides = document.querySelectorAll(".slide");
+      const dayButtons = document.querySelectorAll(".day-nav button[data-day]");
+
+      function showSlide(index) {
+        if (index >= slides.length) index = 0;
+        if (index < 0) index = slides.length - 1;
+        slides.forEach(slide => slide.classList.remove("active"));
+        slides[index].classList.add("active");
+        currentSlideIndex = index;
+        
+        // Update Nav Buttons
+        dayButtons.forEach(btn => btn.classList.remove("active"));
+        if(dayButtons[index]) dayButtons[index].classList.add("active");
+      }
+
+      document.getElementById("next").addEventListener("click", () => showSlide(currentSlideIndex + 1));
+      document.getElementById("prev").addEventListener("click", () => showSlide(currentSlideIndex - 1));
+      
+      dayButtons.forEach((btn, index) => {
+        btn.addEventListener("click", () => showSlide(index));
+      });
+
+      showSlide(0);
+
+      /* TIMER LOGIC */
+      const timerDisplay = document.querySelector(".timer-display");
+      const progressBar = document.querySelector(".timer-progress-bar");
+      const alarmSound = document.getElementById("alarm-sound");
+      
+      let totalTime = 1500; // 25 minutes
+      let remainingTime = totalTime;
+      let timerInterval;
+      let isRunning = false;
+
+      const radius = progressBar.r.baseVal.value;
+      const circumference = 2 * Math.PI * radius;
+      progressBar.style.strokeDasharray = circumference;
+
+      function updateDisplay() {
+        let m = Math.floor(remainingTime / 60);
+        let s = remainingTime % 60;
+        timerDisplay.textContent = `${m}:${s < 10 ? '0' : ''}${s}`;
+        
+        const offset = circumference - (remainingTime / totalTime) * circumference;
+        progressBar.style.strokeDashoffset = offset;
+      }
+
+      document.getElementById("start-pause-timer").addEventListener("click", function() {
+        if(isRunning) {
+          clearInterval(timerInterval);
+          this.innerHTML = '<i class="fas fa-play"></i>';
+        } else {
+          timerInterval = setInterval(() => {
+            if(remainingTime > 0) {
+              remainingTime--;
+              updateDisplay();
+            } else {
+              clearInterval(timerInterval);
+              alarmSound.play();
+              isRunning = false;
+              document.getElementById("start-pause-timer").innerHTML = '<i class="fas fa-play"></i>';
+            }
+          }, 1000);
+          this.innerHTML = '<i class="fas fa-pause"></i>';
+        }
+        isRunning = !isRunning;
+      });
+
+      document.getElementById("reset-timer").addEventListener("click", () => {
+        clearInterval(timerInterval);
+        remainingTime = totalTime;
+        isRunning = false;
+        document.getElementById("start-pause-timer").innerHTML = '<i class="fas fa-play"></i>';
+        updateDisplay();
+      });
+
+      document.querySelectorAll(".timer-adjust-btn").forEach(btn => {
+        btn.addEventListener("click", function() {
+          totalTime += parseInt(this.dataset.time);
+          if(totalTime < 60) totalTime = 60;
+          remainingTime = totalTime;
+          updateDisplay();
+        });
+      });
+      
+      // Toggle Timer Visibility
+      const timerContainer = document.querySelector(".timer-container");
+      document.getElementById("toggle-timer").addEventListener("click", () => {
+        if(timerContainer.style.display === "none") {
+            timerContainer.style.display = "block";
+        } else {
+            timerContainer.style.display = "none";
+        }
+      });
+
+      updateDisplay();
+    </script>
+  </body>
+</html>
