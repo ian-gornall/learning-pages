@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Student Fluency Dashboard</title>
+<!-- Google Fonts: Bangers (Fun) and Poppins (Readable) -->
+<link href="https://fonts.googleapis.com/css2?family=Bangers&family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+<!-- Font Awesome for Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+  /* --- General Styling --- */
+  :root {
+    --math-color: #4facfe;
+    --type-color: #f093fb;
+  }
+
+  body {
+    background-color: #ffffff;
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 20px;
+    text-align: center;
+    color: #333;
+  }
+
+  h1, h2, h3 {
+    font-family: 'Bangers', cursive;
+    letter-spacing: 2px;
+    margin: 10px 0;
+  }
+
+  h1 {
+    font-size: 3rem;
+    color: #333;
+    text-shadow: 2px 2px 0px #eee;
+  }
+
+  .intro-box {
+    background: #fff3cd;
+    border: 3px dashed #ffecb5;
+    border-radius: 15px;
+    padding: 15px;
+    margin-bottom: 30px;
+    display: inline-block;
+    max-width: 800px;
+  }
+
+  .intro-text {
+    font-size: 1.2rem;
+    color: #856404;
+    font-weight: bold;
+  }
+
+  /* --- Layout Columns --- */
+  .container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .team-card {
+    flex: 1;
+    min-width: 350px;
+    max-width: 550px;
+    border-radius: 20px;
+    padding: 25px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    transition: transform 0.2s;
+  }
+
+  .team-card:hover {
+    transform: translateY(-5px);
+  }
+
+  /* --- Math Team Styles --- */
+  .math-card {
+    background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%);
+    border: 4px solid #fff;
+  }
+
+  .math-title {
+    color: #2c3e50;
+    font-size: 2.5rem;
+  }
+
+  /* --- Typing Team Styles --- */
+  .typing-card {
+    background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
+    border: 4px solid #fff;
+  }
+
+  .typing-title {
+    color: #c0392b;
+    font-size: 2.5rem;
+  }
+
+  /* --- Button Styles --- */
+  .btn {
+    display: block;
+    width: 90%;
+    margin: 10px auto;
+    padding: 15px 10px;
+    border-radius: 15px;
+    text-decoration: none;
+    color: white;
+    font-weight: 800;
+    font-size: 1.2rem;
+    box-shadow: 0 5px 0 rgba(0,0,0,0.2);
+    transition: all 0.1s;
+    position: relative;
+    border: none;
+    cursor: pointer;
+  }
+
+  .btn:active {
+    box-shadow: 0 2px 0 rgba(0,0,0,0.2);
+    transform: translateY(3px);
+  }
+
+  .btn i {
+    margin-right: 10px;
+    font-size: 1.4rem;
+  }
+
+  /* Button Colors */
+  .btn-xtra { background-color: #27ae60; font-size: 1.5rem; }
+  .btn-clever { background-color: #0059ff; font-size: 1.5rem; border: 2px solid white; }
+  
+  .btn-game { background-color: #2980b9; } 
+  .btn-game:hover { background-color: #3498db; }
+  .btn-shep { background-color: #8e44ad; }
+  .btn-shep:hover { background-color: #9b59b6; }
+
+  /* --- Sections --- */
+  .section-header {
+    background: rgba(255,255,255,0.6);
+    border-radius: 10px;
+    padding: 5px;
+    margin: 15px 0 10px 0;
+    font-family: 'Bangers';
+    font-size: 1.5rem;
+    color: #444;
+  }
+
+  /* Math Grid */
+  .game-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .game-grid .btn { width: auto; font-size: 1rem; padding: 10px; }
+  .game-label {
+    grid-column: span 2;
+    font-family: 'Bangers';
+    font-size: 1.2rem;
+    margin-top: 10px;
+    color: #333;
+    text-align: left;
+    padding-left: 10px;
+  }
+
+  /* Typing Routine Visuals (Non-clickable steps) */
+  .typing-step-box {
+    background: white;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px 0;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  }
+  
+  .step-num {
+    background: #c0392b;
+    color: white;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    margin-right: 15px;
+    flex-shrink: 0;
+  }
+
+  .step-text {
+    font-weight: bold;
+    color: #555;
+    font-size: 1.1rem;
+  }
+  
+  .step-icon {
+    margin-left: auto;
+    color: #c0392b;
+    font-size: 1.2rem;
+  }
+
+</style>
+</head>
+<body>
+
+  <h1><i class="fa-solid fa-brain"></i> Brain Gym Daily</h1>
+
+  <!-- Top Logic Instruction -->
+  <div class="intro-box">
+    <div class="intro-text">
+      <i class="fa-solid fa-circle-exclamation"></i> RULE: Do <strong>XtraMath</strong> one time every week.<br>
+      If you did it already, you can play games!
+    </div>
+  </div>
+
+  <div class="container">
+
+    <!-- LEFT COLUMN: MATH TEAM -->
+    <div class="team-card math-card">
+      <h2 class="math-title"><i class="fa-solid fa-calculator"></i> Math Team</h2>
+      
+      <!-- Step 1: XtraMath -->
+      <div class="section-header">Step 1: The Weekly Check</div>
+      <a href="https://xtramath.org" target="_blank" class="btn btn-xtra">
+        <i class="fa-solid fa-user-lock"></i> Go to XtraMath
+      </a>
+      <p style="font-size: 0.9rem; margin-top:0;">(Login with PIN)</p>
+
+      <hr style="border: 2px dashed rgba(255,255,255,0.5); margin: 20px 0;">
+
+      <!-- Step 2: Games -->
+      <div class="section-header">Step 2: Practice Games</div>
+      
+      <div class="game-grid">
+        <!-- Addition -->
+        <div class="game-label">Addition (+)</div>
+        <a href="https://www.arcademics.com/games?subject=addition" target="_blank" class="btn btn-game">Arcademics</a>
+        <a href="https://www.sheppardsoftware.com/mathgames/menus/addition.htm" target="_blank" class="btn btn-shep">Sheppard</a>
+
+        <!-- Subtraction -->
+        <div class="game-label">Subtraction (-)</div>
+        <a href="https://www.arcademics.com/games?subject=subtraction" target="_blank" class="btn btn-game">Arcademics</a>
+        <a href="https://www.sheppardsoftware.com/mathgames/menus/subtraction.htm" target="_blank" class="btn btn-shep">Sheppard</a>
+
+        <!-- Multiplication -->
+        <div class="game-label">Multiplication (x)</div>
+        <a href="https://www.arcademics.com/games?subject=multiplication" target="_blank" class="btn btn-game">Arcademics</a>
+        <a href="https://www.sheppardsoftware.com/mathgames/menus/multiplication.htm" target="_blank" class="btn btn-shep">Sheppard</a>
+
+        <!-- Division -->
+        <div class="game-label">Division (÷)</div>
+        <a href="https://www.arcademics.com/games?subject=division" target="_blank" class="btn btn-game">Arcademics</a>
+        <a href="https://www.sheppardsoftware.com/mathgames/menus/division.htm" target="_blank" class="btn btn-shep">Sheppard</a>
+      </div>
+    </div>
+
+    <!-- RIGHT COLUMN: TYPING TEAM -->
+    <div class="team-card typing-card">
+      <h2 class="typing-title"><i class="fa-solid fa-keyboard"></i> Typing Team</h2>
+      
+      <!-- Step 1: Login -->
+      <div class="section-header">Step 1: Login</div>
+      <a href="https://clever.com/login?student" target="_blank" class="btn btn-clever">
+        <i class="fa-solid fa-id-badge"></i> Go to Clever
+      </a>
+      <p style="font-weight:bold; margin-top:5px;">
+        <i class="fa-solid fa-arrow-up"></i> Click this, then find <span style="background:white; padding:2px 5px; border-radius:5px; color:#333;">Typing.com</span>
+      </p>
+
+      <hr style="border: 2px dashed rgba(255,255,255,0.5); margin: 20px 0;">
+
+      <!-- Step 2: Visual Guide -->
+      <div class="section-header">Step 2: Find these Tabs</div>
+      <p style="font-size:0.9rem;">(Do these inside Typing.com)</p>
+
+      <!-- Visual Step 1 -->
+      <div class="typing-step-box">
+        <div class="step-num">1</div>
+        <div class="step-text">Click "Tests"</div>
+        <div class="step-icon"><i class="fa-solid fa-stopwatch"></i></div>
+      </div>
+
+      <!-- Visual Step 2 -->
+      <div class="typing-step-box">
+        <div class="step-num">2</div>
+        <div class="step-text">Click "Lessons"</div>
+        <div class="step-icon"><i class="fa-solid fa-pencil"></i></div>
+      </div>
+
+      <!-- Visual Step 3 -->
+      <div class="typing-step-box">
+        <div class="step-num">3</div>
+        <div class="step-text">Click "Games"</div>
+        <div class="step-icon"><i class="fa-solid fa-gamepad"></i></div>
+      </div>
+
+    </div>
+
+  </div>
+
+</body>
+</html>
