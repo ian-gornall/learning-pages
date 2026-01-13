@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Student Checklists</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Bangers&family=Poppins:wght@400;600;700&display=swap");
+
+      @media print {
+        body {
+          -webkit-print-color-adjust: exact;
+          print-color-adjust: exact;
+        }
+        .page-break {
+          page-break-after: always;
+        }
+      }
+
+      body {
+        font-family: "Poppins", sans-serif;
+        background-color: #fff;
+        color: #000;
+        margin: 0;
+        padding: 0;
+      }
+
+      .page-container {
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .header {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 15px;
+        border-bottom: 3px solid #000;
+        padding-bottom: 5px;
+      }
+      .header i {
+        font-size: 2em;
+        color: #000;
+        margin-right: 15px;
+      }
+      h1 {
+        font-family: "Bangers", cursive;
+        font-size: 2.5em;
+        color: #000;
+        margin: 0;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+      }
+
+      .info-box {
+        border: 2px solid #000;
+        padding: 8px;
+        margin-bottom: 15px;
+        border-radius: 10px;
+        font-size: 0.85em;
+        display: flex;
+        justify-content: space-between;
+        background-color: #f9f9f9;
+      }
+      
+      .info-item i {
+        margin-right: 5px;
+      }
+
+      .task-list {
+        display: flex;
+        flex-direction: column;
+        gap: 12px; /* Slightly tighter gap to fit new text */
+        flex-grow: 1;
+      }
+
+      .task-row {
+        display: flex;
+        align-items: flex-start;
+        border: 1px solid #ccc;
+        padding: 8px 10px;
+        border-radius: 8px;
+      }
+
+      .task-icon {
+        font-size: 1.4em;
+        width: 35px;
+        text-align: center;
+        margin-right: 12px;
+        padding-top: 5px;
+      }
+
+      .task-details {
+        flex-grow: 1;
+      }
+
+      .task-title {
+        font-weight: 700;
+        font-size: 1.05em;
+        text-transform: uppercase;
+        margin-bottom: 2px;
+      }
+
+      .task-desc {
+        font-size: 0.9em;
+        line-height: 1.3;
+      }
+
+      .seesaw-action {
+        margin-top: 4px;
+        font-weight: 600;
+        font-size: 0.8em;
+        display: flex;
+        align-items: center;
+        color: #333;
+        background-color: #eee;
+        padding: 2px 5px;
+        border-radius: 4px;
+        width: fit-content;
+      }
+      .seesaw-action i {
+        margin-right: 5px;
+      }
+
+      .mode-badge {
+        display: inline-block;
+        font-size: 0.7em;
+        padding: 1px 5px;
+        border-radius: 4px;
+        text-transform: uppercase;
+        font-weight: bold;
+        margin-left: 8px;
+        border: 1px solid #000;
+        vertical-align: middle;
+      }
+
+      .checkbox-area {
+        width: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding-top: 5px;
+      }
+
+      .square-check {
+        width: 25px;
+        height: 25px;
+        border: 2px solid #000;
+        border-radius: 4px;
+      }
+
+      .novel-options {
+        margin: 3px 0;
+        padding-left: 20px;
+        font-size: 0.85em;
+      }
+      .novel-options li {
+        margin-bottom: 0px;
+      }
+
+      .partner-steps {
+        font-size: 0.75em;
+        font-style: italic;
+        margin-top: 2px;
+        color: #555;
+      }
+
+      .page-break {
+page-break-after: always;
+      }
+      
+      @media print {
+
+        .page-container {
+            height: auto;
+
+        }
+      }
+    </style>
+  </head>
+  <body>
+
+    <!-- ========================================== -->
+    <!-- GRADE 1: MATILDA -->
+    <!-- ========================================== -->
+    <div class="page-container">
+      <div class="header">
+        <i class="fa-solid fa-book-open-reader"></i>
+        <h1>First Grade Checklist</h1>
+      </div>
+
+      <div class="info-box">
+        <div class="info-item"><i class="fa-solid fa-link"></i> Links on Clever "Discovery"</div>
+        <div class="info-item"><i class="fa-solid fa-people-arrows"></i> Ask 3 friends before teacher</div>
+      </div>
+
+      <div class="task-list">
+        <!-- Task 1 -->
+        <div class="task-row">
+          <div class="task-icon"><i class="fa-solid fa-calculator"></i></div>
+          <div class="task-details">
+            <div class="task-title">1. Xtramath <span class="mode-badge">By Yourself</span></div>
+            <div class="task-desc">Complete one full session.</div>
+            <div class="seesaw-action"><i class="fa-solid fa-camera"></i> Screenshot progress &rarr; Upload.</div>
+          </div>
+          <div class="checkbox-area"><div class="square-check"></div></div>
+        </div>
+
+        <!-- Task 2 -->
+        <div class="task-row">
+          <div class="task-icon"><i class="fa-solid fa-robot"></i></div>
+          <div class="task-details">
+            <div class="task-title">2. Freckle Math <span class="mode-badge">By Yourself</span></div>
+            <div class="task-desc">Do the <strong>"Computational Fluency"</strong> Pretest.</div>
+            <div class="seesaw-action"><i class="fa-solid fa-camera"></i> Screenshot level &rarr; Upload.</div>
+          </div>
+          <div class="checkbox-area"><div class="square-check"></div></div>
+        </div>
+
+        <!-- Task 3 -->
+        <div class="task-row">
+          <div class="task-icon"><i class="fa-solid fa-lightbulb"></i></div>
+          <div class="task-details">
+            <div class="task-title">3. Project Ideas <span class="mode-badge">With Partner</span></div>
+            <div class="task-desc">Decide what actions you will <strong>DO</strong> for your project.</div>
+            <div class="partner-steps">Talk &rarr; Write &rarr; Feedback &rarr; Fix</div>
+            <div class="seesaw-action"><i class="fa-solid fa-microphone"></i> <strong>Voice Type</strong>, Type, or Photo.</div>
+          </div>
+          <div class="checkbox-area"><div class="square-check"></div></div>
+        </div>
+
+        <!-- Task 4 -->
+        <div class="task-row">
+          <div class="task-icon"><i class="fa-solid fa-book"></i></div>
+          <div class="task-details">
+            <div class="task-title">4. Matilda Packet <span class="mode-badge">With Partner</span></div>
+            <div class="task-desc"><strong>Choose one activity from</strong> (pg 3-5):</div>
+            <ul class="novel-options">
+              <li>Vocabulary</li>
+              <li>Prediction</li>
+              <li>Language Difference</li>
+              <li>Writing Activities</li>
+            </ul>
+            <div class="partner-steps">Discuss &rarr; Do Work &rarr; Check Work</div>
+            <div class="seesaw-action"><i class="fa-solid fa-camera"></i> Photo of COMPLETED work.</div>
+          </div>
+          <div class="checkbox-area"><div class="square-check"></div></div>
+        </div>
+
+        <!-- Task 5 -->
+        <div class="task-row">
+          <div class="task-icon"><i class="fa-solid fa-star"></i></div>
+          <div class="task-details">
+            <div class="task-title">5. Choice Time <span class="mode-badge">CHOICE</span></div>
+            <div class="task-desc">
+                1. Pick a <strong>Task Card</strong> from the Hub.<br>
+                2. <strong>DO</strong> the activity.
+            </div>
+            <div class="seesaw-action"><i class="fa-solid fa-video"></i> Record response to task card.</div>
+          </div>
+          <div class="checkbox-area"><div class="square-check"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-break"></div>
+
+    <!-- ========================================== -->
+    <!-- GRADE 2: LION, WITCH, WARDROBE -->
+    <!-- ========================================== -->
+    <div class="page-container">
+      <div class="header">
+        <i class="fa-solid fa-shield-cat"></i>
+        <h1>Second Grade Checklist</h1>
+      </div>
+
+      <div class="info-box">
+        <div class="info-item"><i class="fa-solid fa-link"></i> Links on Clever "Discovery"</div>
+        <div class="info-item"><i class="fa-solid fa-people-arrows"></i> Ask 3 friends before teacher</div>
+      </div>
+
+      <div class="task-list">
+        <!-- Task 1 -->
+        <div class="task-row">
+          <div class="task-icon"><i class="fa-solid fa-calculator"></i></div>
+          <div class="task-details">
+            <div class="task-title">1. Xtramath <span class="mode-badge">By Yourself</span></div>
+            <div class="task-desc">Complete one full session.</div>
+            <div class="seesaw-action"><i class="fa-solid fa-camera"></i> Screenshot progress &rarr; Upload.</div>
+          </div>
+          <div class="checkbox-area"><div class="square-check"></div></div>
+        </div>
+
+        <!-- Task 2 -->
+        <div class="task-row">
+          <div class="task-icon"><i class="fa-solid fa-robot"></i></div>
+          <div class="task-details">
+            <div class="task-title">2. Freckle Math <span class="mode-badge">By Yourself</span></div>
+            <div class="task-desc">Do the <strong>"Computational Fluency"</strong> Pretest.</div>
+            <div class="seesaw-action"><i class="fa-solid fa-camera"></i> Screenshot level &rarr; Upload.</div>
+          </div>
+          <div class="checkbox-area"><div class="square-check"></div></div>
+        </div>
+
+        <!-- Task 3 -->
+        <div class="task-row">
+          <div class="task-icon"><i class="fa-solid fa-pen-to-square"></i></div>
+          <div class="task-details">
+            <div class="task-title">3. Project Ideas <span class="mode-badge">With Partner</span></div>
+            <div class="task-desc">Write the actions you want to <strong>DO</strong> for your project.</div>
+            <div class="partner-steps">Talk &rarr; Write &rarr; Feedback &rarr; Revise</div>
+            <div class="seesaw-action"><i class="fa-solid fa-microphone"></i> <strong>Voice Type</strong>, Type, or Photo.</div>
+          </div>
+          <div class="checkbox-area"><div class="square-check"></div></div>
+        </div>
+
+        <!-- Task 4 -->
+        <div class="task-row">
+          <div class="task-icon"><i class="fa-solid fa-book"></i></div>
+          <div class="task-details">
+            <div class="task-title">4. Narnia Packet <span class="mode-badge">With Partner</span></div>
+            <div class="task-desc"><strong>Choose one activity from</strong> (pg 3-5):</div>
+            <ul class="novel-options">
+              <li>Vocabulary</li>
+              <li>Humor</li>
+              <li>Writing Activity</li>
+            </ul>
+            <div class="partner-steps">Discuss &rarr; Do Task &rarr; Check Each Other</div>
+            <div class="seesaw-action"><i class="fa-solid fa-camera"></i> Photo of COMPLETED work.</div>
+          </div>
+          <div class="checkbox-area"><div class="square-check"></div></div>
+        </div>
+
+        <!-- Task 5 -->
+        <div class="task-row">
+          <div class="task-icon"><i class="fa-solid fa-gamepad"></i></div>
+          <div class="task-details">
+            <div class="task-title">5. Choice Time <span class="mode-badge">CHOICE</span></div>
+            <div class="task-desc">
+                1. Pick a <strong>Task Card</strong> from Hub.<br>
+                2. <strong>DO</strong> the activity.
+            </div>
+            <div class="seesaw-action"><i class="fa-solid fa-video"></i> Record response to task card.</div>
+          </div>
+          <div class="checkbox-area"><div class="square-check"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-break"></div>
+
+    <!-- ========================================== -->
+    <!-- GRADE 3: HUGO CABRET -->
+    <!-- ========================================== -->
+    <div class="page-container">
+      <div class="header">
+        <i class="fa-solid fa-clock"></i>
+        <h1>Third Grade Checklist</h1>
+      </div>
+
+      <div class="info-box">
+        <div class="info-item"><i class="fa-solid fa-link"></i> Links on Clever "Discovery"</div>
+        <div class="info-item"><i class="fa-solid fa-circle-question"></i> Ask 3 friends before teacher</div>
+      </div>
+
+      <div class="task-list">
+        <!-- Task 1 -->
+        <div class="task-row">
+          <div class="task-icon"><i class="fa-solid fa-calculator"></i></div>
+          <div class="task-details">
+            <div class="task-title">1. Xtramath <span class="mode-badge">Independent</span></div>
+            <div class="task-desc">Complete a full session.</div>
+            <div class="seesaw-action"><i class="fa-solid fa-camera"></i> Screenshot progress &rarr; Upload.</div>
+          </div>
+          <div class="checkbox-area"><div class="square-check"></div></div>
+        </div>
+
+        <!-- Task 2 -->
+        <div class="task-row">
+          <div class="task-icon"><i class="fa-solid fa-robot"></i></div>
+          <div class="task-details">
+            <div class="task-title">2. Freckle Math <span class="mode-badge">Independent</span></div>
+            <div class="task-desc">Complete <strong>"Computational Fluency"</strong> Pretest.</div>
+            <div class="seesaw-action"><i class="fa-solid fa-camera"></i> Screenshot level &rarr; Upload.</div>
+          </div>
+          <div class="checkbox-area"><div class="square-check"></div></div>
+        </div>
+
+        <!-- Task 3 -->
+        <div class="task-row">
+          <div class="task-icon"><i class="fa-solid fa-pen-nib"></i></div>
+          <div class="task-details">
+            <div class="task-title">3. Project Planning <span class="mode-badge">Partner Work</span></div>
+            <div class="task-desc">Plan exactly what you will <strong>DO</strong> (actions) for your project.</div>
+            <div class="partner-steps">Discuss &rarr; Write &rarr; Partner Feedback &rarr; Fix</div>
+            <div class="seesaw-action"><i class="fa-solid fa-microphone"></i> <strong>Voice Type</strong>, Type, or Photo.</div>
+          </div>
+          <div class="checkbox-area"><div class="square-check"></div></div>
+        </div>
+
+        <!-- Task 4 -->
+        <div class="task-row">
+          <div class="task-icon"><i class="fa-solid fa-book-journal-whills"></i></div>
+          <div class="task-details">
+            <div class="task-title">4. Hugo Packet <span class="mode-badge">Partner Work</span></div>
+            <div class="task-desc"><strong>Choose one activity from</strong> (pg 8-14):</div>
+            <ul class="novel-options" style="display:flex; flex-wrap:wrap; gap:5px;">
+              <li>Vocabulary</li>
+              <li>Language</li>
+              <li>Eiffel Tower</li>
+              <li>Alliteration</li>
+              <li>Quatrain</li>
+              <li>Storyboard</li>
+            </ul>
+            <div class="partner-steps">Partner discussion &rarr; Do task &rarr; Feedback</div>
+            <div class="seesaw-action"><i class="fa-solid fa-camera"></i> Photo of COMPLETED work.</div>
+          </div>
+          <div class="checkbox-area"><div class="square-check"></div></div>
+        </div>
+
+        <!-- Task 5 -->
+        <div class="task-row">
+          <div class="task-icon"><i class="fa-solid fa-puzzle-piece"></i></div>
+          <div class="task-details">
+            <div class="task-title">5. Choice Time <span class="mode-badge">CHOICE</span></div>
+            <div class="task-desc">
+                1. Choose a <strong>Task Card</strong> from Hub.<br>
+                2. <strong>DO</strong> the activity.
+            </div>
+            <div class="seesaw-action"><i class="fa-solid fa-video"></i> Record response to task card.</div>
+          </div>
+          <div class="checkbox-area"><div class="square-check"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-break"></div>
+
+    <!-- ========================================== -->
+    <!-- GRADE 4/5: NOVEL STUDY -->
+    <!-- ========================================== -->
+    <div class="page-container">
+      <div class="header">
+        <i class="fa-solid fa-graduation-cap"></i>
+        <h1>Grade 4 & 5 Checklist</h1>
+      </div>
+
+      <div class="info-box">
+        <div class="info-item"><i class="fa-solid fa-link"></i> Links on Clever "Discovery"</div>
+        <div class="info-item"><i class="fa-solid fa-circle-question"></i> "Ask 3 before me"</div>
+      </div>
+
+      <div class="task-list">
+        <!-- Task 1 -->
+        <div class="task-row">
+          <div class="task-icon"><i class="fa-solid fa-calculator"></i></div>
+          <div class="task-details">
+            <div class="task-title">1. Xtramath <span class="mode-badge">Independent</span></div>
+            <div class="task-desc">Complete a full session. Focus on accuracy.</div>
+            <div class="seesaw-action"><i class="fa-solid fa-camera"></i> Screenshot summary &rarr; Upload.</div>
+          </div>
+          <div class="checkbox-area"><div class="square-check"></div></div>
+        </div>
+
+        <!-- Task 2 -->
+        <div class="task-row">
+          <div class="task-icon"><i class="fa-solid fa-robot"></i></div>
+          <div class="task-details">
+            <div class="task-title">2. Freckle Math <span class="mode-badge">Independent</span></div>
+            <div class="task-desc">Complete <strong>"Computational Fluency"</strong> Pretest.</div>
+            <div class="seesaw-action"><i class="fa-solid fa-camera"></i> Screenshot done screen &rarr; Upload.</div>
+          </div>
+          <div class="checkbox-area"><div class="square-check"></div></div>
+        </div>
+
+        <!-- Task 3 -->
+        <div class="task-row">
+          <div class="task-icon"><i class="fa-solid fa-list-check"></i></div>
+          <div class="task-details">
+            <div class="task-title">3. Project Action Plan <span class="mode-badge">Partner Work</span></div>
+            <div class="task-desc">Outline specific <strong>actions</strong> you will take for your project.</div>
+            <div class="partner-steps">Discuss &rarr; Write plan &rarr; Critique & Revise</div>
+            <div class="seesaw-action"><i class="fa-solid fa-microphone"></i> <strong>Voice Type</strong>, Type, or Photo.</div>
+          </div>
+          <div class="checkbox-area"><div class="square-check"></div></div>
+        </div>
+
+        <!-- Task 4 -->
+        <div class="task-row">
+          <div class="task-icon"><i class="fa-solid fa-book-open"></i></div>
+          <div class="task-details">
+            <div class="task-title">4. Novel Packet <span class="mode-badge">Partner Work</span></div>
+            <div class="task-desc"><strong>Choose one activity from</strong> (pg 5-7):</div>
+            <ul class="novel-options">
+              <li>Vocabulary Work</li>
+              <li>Literary Devices</li>
+              <li>Writing Activities</li>
+            </ul>
+            <div class="partner-steps">Discussion &rarr; Draft &rarr; Partner Feedback &rarr; Revise</div>
+            <div class="seesaw-action"><i class="fa-solid fa-camera"></i> Photo of COMPLETED, revised work.</div>
+          </div>
+          <div class="checkbox-area"><div class="square-check"></div></div>
+        </div>
+
+        <!-- Task 5 -->
+        <div class="task-row">
+          <div class="task-icon"><i class="fa-solid fa-shapes"></i></div>
+          <div class="task-details">
+            <div class="task-title">5. Choice Time <span class="mode-badge">CHOICE</span></div>
+            <div class="task-desc">
+                1. Pick a <strong>Task Card</strong> from Hub.<br>
+                2. <strong>DO</strong> the activity.
+            </div>
+            <div class="seesaw-action"><i class="fa-solid fa-video"></i> Record response to task card.</div>
+          </div>
+          <div class="checkbox-area"><div class="square-check"></div></div>
+        </div>
+      </div>
+    </div>
+
+  </body>
+</html>
