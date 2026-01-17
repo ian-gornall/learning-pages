@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Silent Squads Protocol</title>
+    <title>Stealth Squads Protocol</title>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
@@ -11,7 +11,7 @@
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Bangers&family=Poppins:wght@400;600;700;800&display=swap");
       :root {
-        --primary-color: #4a90e2; 
+        --primary-color: #4a90e2;
         --secondary-color: #2c3e50;
         --accent-color: #f0c419;
         --dark-text: #2c3e50;
@@ -54,19 +54,38 @@
         animation: slideAppear 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
       }
       @keyframes slideAppear {
-        from { opacity: 0; transform: scale(0.98); }
-        to { opacity: 1; transform: scale(1); }
+        from {
+          opacity: 0;
+          transform: scale(0.98);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
       }
 
       /* DYNAMIC BACKGROUNDS */
       @keyframes gradient-pan {
-        0% { background-position: 0% 50%; }
-        50% { background-position: 100% 50%; }
-        100% { background-position: 0% 50%; }
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
       }
-      .bg-main { background: linear-gradient(-45deg, #2c3e50, #4ca1af, #3a6073); background-size: 400% 400%; animation: gradient-pan 15s ease infinite; }
-      .bg-special { background: linear-gradient(-45deg, #8E2DE2, #4A00E0, #ff5e62); background-size: 400% 400%; animation: gradient-pan 15s ease infinite; }
-      
+      .bg-main {
+        background: linear-gradient(-45deg, #2c3e50, #4ca1af, #3a6073);
+        background-size: 400% 400%;
+        animation: gradient-pan 15s ease infinite;
+      }
+      .bg-special {
+        background: linear-gradient(-45deg, #8e2de2, #4a00e0, #ff5e62);
+        background-size: 400% 400%;
+        animation: gradient-pan 15s ease infinite;
+      }
 
       /* TYPOGRAPHY */
       h1 {
@@ -75,7 +94,7 @@
         margin: 5px 0 5px 0;
         color: #fff;
         -webkit-text-stroke: 2px #2c3e50;
-        text-shadow: 3px 3px 0px rgba(0,0,0,0.3);
+        text-shadow: 3px 3px 0px rgba(0, 0, 0, 0.3);
         letter-spacing: 1px;
         z-index: 10;
       }
@@ -96,7 +115,7 @@
         font-weight: 700;
         font-size: 1.1em;
         color: var(--dark-text);
-        box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
         border: 2px solid #2c3e50;
         flex: 1;
         text-align: left;
@@ -104,8 +123,14 @@
         align-items: center;
         gap: 10px;
       }
-      .target-icon { font-size: 1.5em; color: var(--primary-color); }
-      .success-icon { font-size: 1.5em; color: var(--success-color); }
+      .target-icon {
+        font-size: 1.5em;
+        color: var(--primary-color);
+      }
+      .success-icon {
+        font-size: 1.5em;
+        color: var(--success-color);
+      }
 
       /* MAIN CONTENT BOX */
       .content-box {
@@ -120,7 +145,7 @@
         max-width: 1400px;
         display: grid;
         grid-template-columns: 1fr 1fr; /* 2 Columns */
-        grid-template-rows: 1fr 1fr;    /* 2 Rows */
+        grid-template-rows: 1fr 1fr; /* 2 Rows */
         gap: 20px;
         box-sizing: border-box;
       }
@@ -130,7 +155,7 @@
         background: white;
         border-radius: 15px;
         padding: 15px;
-        box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
@@ -140,21 +165,39 @@
         position: relative;
         overflow: hidden;
       }
-      .step-card:hover { transform: translateY(-3px); box-shadow: 0 8px 15px rgba(0,0,0,0.1); }
+      .step-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+      }
 
       /* Card Variations */
-      .card-setup { border-left-color: var(--setup-color); background: #e3f2fd; }
-      .card-mission { border-left-color: var(--mission-color); background: #fff8e1; }
-      .card-debrief   { border-left-color: var(--debrief-color); background: #fbe9e7; }
-      .card-end  { border-left-color: var(--end-color); background: #e8f5e9; }
-      .card-special { border-left-color: var(--accent-color); background: #fffde7;}
+      .card-setup {
+        border-left-color: var(--setup-color);
+        background: #e3f2fd;
+      }
+      .card-mission {
+        border-left-color: var(--mission-color);
+        background: #fff8e1;
+      }
+      .card-debrief {
+        border-left-color: var(--debrief-color);
+        background: #fbe9e7;
+      }
+      .card-end {
+        border-left-color: var(--end-color);
+        background: #e8f5e9;
+      }
+      .card-special {
+        border-left-color: var(--accent-color);
+        background: #fffde7;
+      }
 
       .step-header {
         display: flex;
         align-items: center;
         gap: 10px;
         margin-bottom: 8px;
-        border-bottom: 2px solid rgba(0,0,0,0.05);
+        border-bottom: 2px solid rgba(0, 0, 0, 0.05);
         padding-bottom: 5px;
       }
       .step-badge {
@@ -165,421 +208,588 @@
         font-size: 0.9em;
         text-transform: uppercase;
       }
-      .bg-setup { background-color: var(--setup-color); }
-      .bg-mission { background-color: var(--mission-color); }
-      .bg-debrief { background-color: var(--debrief-color); }
-      .bg-end { background-color: var(--end-color); }
-      .bg-special { background-color: var(--accent-color); color: var(--dark-text); }
-
-      .step-title { font-weight: 800; font-size: 1.3em; color: var(--dark-text); }
-      .step-desc { font-size: 1em; color: #555; line-height: 1.4; flex-grow: 1; }
-      .step-desc ol, .step-desc ul { margin:5px 0 0 20px; padding:0; }
-      .step-icon-bg {
-        position: absolute; bottom: -10px; right: -10px; font-size: 6em; opacity: 0.1;
+      .bg-setup {
+        background-color: var(--setup-color);
       }
-      .card-setup .step-icon-bg { color: var(--setup-color); }
-      .card-mission .step-icon-bg { color: var(--mission-color); }
-      .card-debrief .step-icon-bg { color: var(--debrief-color); }
-      .card-end .step-icon-bg { color: var(--end-color); }
+      .bg-mission {
+        background-color: var(--mission-color);
+      }
+      .bg-debrief {
+        background-color: var(--debrief-color);
+      }
+      .bg-end {
+        background-color: var(--end-color);
+      }
+      .bg-special {
+        background-color: var(--accent-color);
+        color: white;
+      }
 
+      .step-title {
+        font-weight: 800;
+        font-size: 1.3em;
+        color: var(--dark-text);
+      }
+      .step-desc {
+        font-size: 1em;
+        color: #555;
+        line-height: 1.4;
+        flex-grow: 1;
+      }
+      .step-desc ol,
+      .step-desc ul {
+        margin: 5px 0 0 20px;
+        padding: 0;
+      }
+      .step-icon-bg {
+        position: absolute;
+        bottom: -10px;
+        right: -10px;
+        font-size: 6em;
+        opacity: 0.1;
+      }
+      .card-setup .step-icon-bg {
+        color: var(--setup-color);
+      }
+      .card-mission .step-icon-bg {
+        color: var(--mission-color);
+      }
+      .card-debrief .step-icon-bg {
+        color: var(--debrief-color);
+      }
+      .card-end .step-icon-bg {
+        color: var(--end-color);
+      }
 
       /* NAVIGATION */
       .nav-button {
-        position: absolute; top: 50%; transform: translateY(-50%);
-        background-color: rgba(44, 62, 80, 0.6); color: white;
-        border: none; font-size: 2em; width: 45px; height: 45px;
-        cursor: pointer; z-index: 100; border-radius: 50%;
-        display: flex; align-items: center; justify-content: center;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background-color: rgba(44, 62, 80, 0.6);
+        color: white;
+        border: none;
+        font-size: 2em;
+        width: 45px;
+        height: 45px;
+        cursor: pointer;
+        z-index: 100;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         transition: all 0.2s;
       }
-      .nav-button:hover { background-color: var(--accent-color); color: var(--dark-text); }
-      #prev { left: 15px; }
-      #next { right: 15px; }
+      .nav-button:hover {
+        background-color: var(--accent-color);
+        color: var(--dark-text);
+      }
+      #prev {
+        left: 15px;
+      }
+      #next {
+        right: 15px;
+      }
 
       .slide-nav {
-        position: absolute; bottom: 15px; left: 50%; transform: translateX(-50%);
-        z-index: 100; background: rgba(44, 62, 80, 0.8);
-        padding: 8px 15px; border-radius: 50px;
-        display: flex; align-items: center; gap: 5px;
+        position: absolute;
+        bottom: 15px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 100;
+        background: rgba(44, 62, 80, 0.8);
+        padding: 8px 15px;
+        border-radius: 50px;
+        display: flex;
+        align-items: center;
+        gap: 5px;
       }
       .slide-nav button {
-        background: transparent; border: none; color: white;
-        font-family: "Poppins"; font-weight: 700; font-size: 0.9em;
-        padding: 8px 16px; cursor: pointer; border-radius: 30px;
+        background: transparent;
+        border: none;
+        color: white;
+        font-family: "Poppins";
+        font-weight: 700;
+        font-size: 0.9em;
+        padding: 8px 16px;
+        cursor: pointer;
+        border-radius: 30px;
         transition: all 0.3s ease;
       }
       .slide-nav button.active {
-        background-color: var(--accent-color); color: var(--dark-text);
+        background-color: var(--accent-color);
+        color: var(--dark-text);
         box-shadow: 0 0 10px var(--accent-color);
       }
 
       /* TIMER */
       .timer-container {
-        position: absolute; top: 15px; right: 15px; z-index: 101;
-        background: var(--dark-text); padding: 10px; border-radius: 15px;
-        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5); color: white;
-        text-align: center; width: 150px; transition: opacity 0.3s;
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        z-index: 101;
+        background: var(--dark-text);
+        padding: 10px;
+        border-radius: 15px;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+        color: white;
+        text-align: center;
+        width: 150px;
+        transition: opacity 0.3s;
       }
-      .timer-visual { position: relative; width: 80px; height: 80px; margin: 0 auto 5px; }
-      .timer-visual svg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; transform: rotate(-90deg); }
-      .timer-progress-bg { fill: none; stroke: rgba(255, 255, 255, 0.1); stroke-width: 7; }
-      .timer-progress-bar { fill: none; stroke: var(--success-color); stroke-width: 7; stroke-linecap: round; transition: stroke-dashoffset 0.2s linear; }
-      .timer-display { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-weight: 800; font-size: 1.4em; }
-      .timer-adjust button { background: #555; border: none; color: white; border-radius: 4px; padding: 2px 6px; cursor: pointer; margin: 0 2px; font-size: 0.7em;}
-      .timer-controls button { border: none; color: white; width: 30px; height: 30px; border-radius: 50%; margin: 5px 3px 0; cursor: pointer; }
-      #start-pause-timer { background: var(--success-color); }
-      #reset-timer { background: var(--danger-color); }
-
+      .timer-visual {
+        position: relative;
+        width: 80px;
+        height: 80px;
+        margin: 0 auto 5px;
+      }
+      .timer-visual svg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        transform: rotate(-90deg);
+      }
+      .timer-progress-bg {
+        fill: none;
+        stroke: rgba(255, 255, 255, 0.1);
+        stroke-width: 7;
+      }
+      .timer-progress-bar {
+        fill: none;
+        stroke: var(--success-color);
+        stroke-width: 7;
+        stroke-linecap: round;
+        transition: stroke-dashoffset 0.2s linear;
+      }
+      .timer-display {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-weight: 800;
+        font-size: 1.4em;
+      }
+      .timer-adjust button {
+        background: #555;
+        border: none;
+        color: white;
+        border-radius: 4px;
+        padding: 2px 6px;
+        cursor: pointer;
+        margin: 0 2px;
+        font-size: 0.7em;
+      }
+      .timer-controls button {
+        border: none;
+        color: white;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        margin: 5px 3px 0;
+        cursor: pointer;
+      }
+      #start-pause-timer {
+        background: var(--success-color);
+      }
+      #reset-timer {
+        background: var(--danger-color);
+      }
     </style>
   </head>
   <body>
-
     <div class="slideshow-container">
-
       <!-- SLIDE 1: LAUNCH DAY -->
       <div class="slide bg-main active" data-slide-id="launch">
-        <h1><i class="fas fa-rocket"></i> Silent Squads: Launch Day</h1>
-        
+        <h1><i class="fas fa-rocket"></i> Stealth Squads: Launch Day</h1>
+
         <div class="target-container">
-            <div class="target-box">
-                <i class="fas fa-bullseye target-icon"></i>
-                <div><strong>Your Goal:</strong> Learn the rules and the purpose of Silent Squads.</div>
+          <div class="target-box">
+            <i class="fas fa-bullseye target-icon"></i>
+            <div>
+              <strong>Your Goal:</strong> Learn the rules and the purpose of
+              Stealth Squads.
             </div>
-            <div class="target-box">
-                <i class="fas fa-check-circle success-icon"></i>
-                <div><strong>Success:</strong> Our squad created a secret handshake that makes us feel like a team.</div>
+          </div>
+          <div class="target-box">
+            <i class="fas fa-check-circle success-icon"></i>
+            <div>
+              <strong>Success:</strong> Our squad created a secret handshake
+              that makes us feel like a team.
             </div>
+          </div>
         </div>
 
         <div class="content-box">
-            <!-- 1. The System -->
-            <div class="step-card card-setup">
-                <i class="fas fa-sitemap step-icon-bg"></i>
-                <div class="step-header">
-                    <span class="step-badge bg-setup">Step 1</span>
-                    <div class="step-title">The Protocol</div>
-                </div>
-                <div class="step-desc">
-                    This is leadership training.
-                    <ul>
-                        <li><strong>Mission Deck:</strong> The silent challenge.</li>
-                        <li><strong>Ritual Keys:</strong> The talking cards (before & after).</li>
-                    </ul>
-                </div>
+          <!-- 1. The System -->
+          <div class="step-card card-setup">
+            <i class="fas fa-sitemap step-icon-bg"></i>
+            <div class="step-header">
+              <span class="step-badge bg-setup">Step 1</span>
+              <div class="step-title">The Protocol</div>
             </div>
+            <div class="step-desc">
+              This is leadership training.
+              <ul>
+                <li><strong>Mission Deck:</strong> The silent challenge.</li>
+                <li>
+                  <strong>Ritual Keys:</strong> The talking cards (before &
+                  after).
+                </li>
+              </ul>
+            </div>
+          </div>
 
-            <!-- 2. The Rules -->
-            <div class="step-card card-mission">
-                <i class="fas fa-gavel step-icon-bg"></i>
-                <div class="step-header">
-                    <span class="step-badge bg-mission">Step 2</span>
-                    <div class="step-title">The 3 Core Rules</div>
-                </div>
-                <div class="step-desc">
-                    <ol>
-                        <li><strong>Stealth Mode is Law.</strong> (Absolute Silence)</li>
-                        <li><strong>The Squad is the Judge.</strong> (You decide success)</li>
-                        <li><strong>Safety Word is "BREAK".</strong> (Stops everything)</li>
-                    </ol>
-                </div>
+          <!-- 2. The Rules -->
+          <div class="step-card card-mission">
+            <i class="fas fa-gavel step-icon-bg"></i>
+            <div class="step-header">
+              <span class="step-badge bg-mission">Step 2</span>
+              <div class="step-title">The 3 Core Rules</div>
             </div>
+            <div class="step-desc">
+              <ol>
+                <li>
+                  <strong>Stealth Mode is Law.</strong> (Absolute Silence).
+                  Penalty when broken.
+                </li>
+                <li>
+                  <strong>The Squad is the Judge.</strong> (You decide success)
+                </li>
+                <li>
+                  <strong>Safety sign is arms in an "X" and walk away.</strong>
+                  (Self-protection)
+                </li>
+              </ol>
+            </div>
+          </div>
 
-            <!-- 3. First Mission -->
-            <div class="step-card card-debrief">
-                <i class="fas fa-handshake step-icon-bg"></i>
-                <div class="step-header">
-                    <span class="step-badge bg-debrief">Step 3</span>
-                    <div class="step-title">First Mission</div>
-                </div>
-                <div class="step-desc">
-                    Assemble into your squads.
-                    <br>
-                    Find the <strong>"Secret Handshake"</strong> Mission Card in your kit.
-                    <br>
-                    You have the full session to complete it.
-                </div>
+          <!-- 3. First Mission -->
+          <div class="step-card card-debrief">
+            <i class="fas fa-handshake step-icon-bg"></i>
+            <div class="step-header">
+              <span class="step-badge bg-debrief">Step 3</span>
+              <div class="step-title">First Mission</div>
             </div>
+            <div class="step-desc">
+              Assemble into your squads.
+              <br />
+              Find the <strong>"Secret Handshake"</strong> Mission Card in your
+              kit.
+              <br />
+              You have the full session to complete it.
+            </div>
+          </div>
 
-            <!-- 4. Assemble -->
-            <div class="step-card card-end">
-                <i class="fas fa-users step-icon-bg"></i>
-                <div class="step-header">
-                    <span class="step-badge bg-end">Go!</span>
-                    <div class="step-title">Squads, Assemble!</div>
-                </div>
-                <div class="step-desc">
-                    Your training begins now.
-                </div>
+          <!-- 4. Assemble -->
+          <div class="step-card card-end">
+            <i class="fas fa-users step-icon-bg"></i>
+            <div class="step-header">
+              <span class="step-badge bg-end">Go!</span>
+              <div class="step-title">Squads, Assemble!</div>
             </div>
+            <div class="step-desc">Your training begins now.</div>
+          </div>
         </div>
       </div>
 
       <!-- SLIDE 2: GRADES 1-2 DAILY FLOW -->
       <div class="slide bg-main" data-slide-id="grades1-2">
         <h1><i class="fas fa-cogs"></i> Daily Protocol (The Pack)</h1>
-        
+
         <div class="target-container">
-            <div class="target-box">
-                <i class="fas fa-bullseye target-icon"></i>
-                <div><strong>Your Goal:</strong> Be a safe and helpful teammate.</div>
+          <div class="target-box">
+            <i class="fas fa-bullseye target-icon"></i>
+            <div>
+              <strong>Your Goal:</strong> Be a safe and helpful teammate.
             </div>
-            <div class="target-box">
-                <i class="fas fa-check-circle success-icon"></i>
-                <div><strong>Success:</strong> I shared my idea during the debrief.
-</div>
+          </div>
+          <div class="target-box">
+            <i class="fas fa-check-circle success-icon"></i>
+            <div>
+              <strong>Success:</strong> We feel more connected as a team.
             </div>
+          </div>
         </div>
 
         <div class="content-box">
-            <!-- 1. Setup -->
-            <div class="step-card card-setup">
-                <i class="fas fa-comments step-icon-bg"></i>
-                <div class="step-header">
-                    <span class="step-badge bg-setup">1. Setup</span>
-                    <div class="step-title">Draw a BLUE Key</div>
-                </div>
-                <div class="step-desc">
-                    Leader reads the <strong>Setup Key</strong>.
-                    <br>
-                    Everyone in the squad answers the question.
-                </div>
+          <!-- 1. Setup -->
+          <div class="step-card card-setup">
+            <i class="fas fa-comments step-icon-bg"></i>
+            <div class="step-header">
+              <span class="step-badge bg-setup">1. Setup</span>
+              <div class="step-title">Draw a BLUE Key</div>
             </div>
+            <div class="step-desc">
+              Review rules with teacher as needed.<br />
+              Captain reads the <strong>Setup Key</strong>.
+              <br />
+              Everyone in the squad answers the question.
+            </div>
+          </div>
 
-            <!-- 2. Mission -->
-            <div class="step-card card-mission">
-                <i class="fas fa-running step-icon-bg"></i>
-                <div class="step-header">
-                    <span class="step-badge bg-mission">2. Mission</span>
-                    <div class="step-title">Stealth Mode ON</div>
-                </div>
-                <div class="step-desc">
-                    Listen for today's mission.
-                    <br>
-                    Attempt it in <strong>absolute silence</strong>.
-                </div>
+          <!-- 2. Mission -->
+          <div class="step-card card-mission">
+            <i class="fas fa-running step-icon-bg"></i>
+            <div class="step-header">
+              <span class="step-badge bg-mission">2. Mission</span>
+              <div class="step-title">Stealth Mode ON</div>
             </div>
+            <div class="step-desc">
+              Listen for today's mission.
+              <br />
+              Attempt it in <strong>absolute silence</strong>.
+            </div>
+          </div>
 
-            <!-- 3. Debrief -->
-            <div class="step-card card-debrief">
-                <i class="fas fa-brain step-icon-bg"></i>
-                <div class="step-header">
-                    <span class="step-badge bg-debrief">3. Debrief</span>
-                    <div class="step-title">Draw a RED Key</div>
-                </div>
-                <div class="step-desc">
-                    Stealth Mode is OFF.
-                    <br>
-                    Leader reads the <strong>Debrief Key</strong>. Talk about what happened.
-                </div>
+          <!-- 3. Debrief -->
+          <div class="step-card card-debrief">
+            <i class="fas fa-brain step-icon-bg"></i>
+            <div class="step-header">
+              <span class="step-badge bg-debrief">3. Debrief</span>
+              <div class="step-title">Draw a RED Key</div>
             </div>
+            <div class="step-desc">
+              Stealth Mode is OFF.
+              <br />
+              Leader reads the <strong>Debrief Key</strong>. Talk about what
+              happened.
+            </div>
+          </div>
 
-            <!-- 4. Dismiss -->
-            <div class="step-card card-end">
-                <i class="fas fa-door-open step-icon-bg"></i>
-                <div class="step-header">
-                    <span class="step-badge bg-end">4. Dismiss</span>
-                    <div class="step-title">Protocol Complete</div>
-                </div>
-                <div class="step-desc">
-                    Put your Squad Kit away neatly.
-                </div>
+          <!-- 4. Dismiss -->
+          <div class="step-card card-end">
+            <i class="fas fa-door-open step-icon-bg"></i>
+            <div class="step-header">
+              <span class="step-badge bg-end">4. Dismiss</span>
+              <div class="step-title">Protocol Complete</div>
             </div>
+            <div class="step-desc">Put your Squad Kit away neatly.</div>
+          </div>
         </div>
       </div>
 
       <!-- SLIDE 3: GRADES 3-5 DAILY FLOW -->
       <div class="slide bg-main" data-slide-id="grades3-5">
         <h1><i class="fas fa-cogs"></i> Daily Protocol (The Crew)</h1>
-        
+
         <div class="target-container">
-            <div class="target-box">
-                <i class="fas fa-bullseye target-icon"></i>
-                <div><strong>Your Goal:</strong> Help my squad work together as a single unit.</div>
+          <div class="target-box">
+            <i class="fas fa-bullseye target-icon"></i>
+            <div>
+              <strong>Your Goal:</strong> Help my squad work together as a
+              single unit.
             </div>
-            <div class="target-box">
-                <i class="fas fa-check-circle success-icon"></i>
-                <div><strong>Success:</strong> Our squad's conversation helped us feel more connected as a team.</div>
+          </div>
+          <div class="target-box">
+            <i class="fas fa-check-circle success-icon"></i>
+            <div>
+              <strong>Success:</strong> Our squad feels more connected as a
+              team.
             </div>
+          </div>
         </div>
 
         <div class="content-box">
-            <!-- 1. Setup -->
-            <div class="step-card card-setup">
-                <i class="fas fa-comments step-icon-bg"></i>
-                <div class="step-header">
-                    <span class="step-badge bg-setup">1. Setup</span>
-                    <div class="step-title">Draw a BLUE Key</div>
-                </div>
-                <div class="step-desc">
-                    Leader draws and runs the pre-mission strategy talk.
-                </div>
+          <!-- 1. Setup -->
+          <div class="step-card card-setup">
+            <i class="fas fa-comments step-icon-bg"></i>
+            <div class="step-header">
+              <span class="step-badge bg-setup">1. Setup</span>
+              <div class="step-title">Draw a BLUE Key</div>
             </div>
+            <div class="step-desc">
+              Review rules with teacher as needed.<br />
+              Leader draws and runs the pre-mission strategy talk.
+            </div>
+          </div>
 
-            <!-- 2. Mission -->
-            <div class="step-card card-mission">
-                <i class="fas fa-running step-icon-bg"></i>
-                <div class="step-header">
-                    <span class="step-badge bg-mission">2. Mission</span>
-                    <div class="step-title">Stealth Mode ON</div>
-                </div>
-                <div class="step-desc">
-                    Your crew chooses a <strong>Mission Card</strong>.
-                    <br>
-                    Choose one or more <strong>Mods</strong> to make it harder.
-                    <br>
-                    Attempt it in <strong>absolute silence</strong>.
-                </div>
+          <!-- 2. Mission -->
+          <div class="step-card card-mission">
+            <i class="fas fa-running step-icon-bg"></i>
+            <div class="step-header">
+              <span class="step-badge bg-mission">2. Mission</span>
+              <div class="step-title">Stealth Mode ON</div>
             </div>
+            <div class="step-desc">
+              Your crew chooses a <strong>Mission Card</strong>.
+              <br />
+              Choose one or more <strong>Mods</strong> to make it harder.
+              <br />
+              Attempt it in <strong>absolute silence</strong>.
+            </div>
+          </div>
 
-            <!-- 3. Debrief -->
-            <div class="step-card card-debrief">
-                <i class="fas fa-brain step-icon-bg"></i>
-                <div class="step-header">
-                    <span class="step-badge bg-debrief">3. Debrief</span>
-                    <div class="step-title">Draw a RED Key</div>
-                </div>
-                <div class="step-desc">
-                    Stealth Mode is OFF.
-                    <br>
-                    Leader draws and runs the after-action report.
-                </div>
+          <!-- 3. Debrief -->
+          <div class="step-card card-debrief">
+            <i class="fas fa-brain step-icon-bg"></i>
+            <div class="step-header">
+              <span class="step-badge bg-debrief">3. Debrief</span>
+              <div class="step-title">Draw a RED Key</div>
             </div>
+            <div class="step-desc">
+              Stealth Mode is OFF.
+              <br />
+              Leader draws and runs the after-action report.
+            </div>
+          </div>
 
-            <!-- 4. Dismiss -->
-            <div class="step-card card-end">
-                <i class="fas fa-door-open step-icon-bg"></i>
-                <div class="step-header">
-                    <span class="step-badge bg-end">4. Dismiss</span>
-                    <div class="step-title">Protocol Complete</div>
-                </div>
-                <div class="step-desc">
-                    Put your Squad Kit away. If you finished early, enter <strong>Spy Mode</strong>.
-                </div>
+          <!-- 4. Dismiss -->
+          <div class="step-card card-end">
+            <i class="fas fa-door-open step-icon-bg"></i>
+            <div class="step-header">
+              <span class="step-badge bg-end">4. Dismiss</span>
+              <div class="step-title">Protocol Complete</div>
             </div>
+            <div class="step-desc">
+              Put your Squad Kit away. If you finished early, enter
+              <strong>Spy Mode</strong>.
+            </div>
+          </div>
         </div>
       </div>
 
       <!-- SLIDE 4: CHAMPIONSHIP DAY -->
       <div class="slide bg-special" data-slide-id="championship">
         <h1><i class="fas fa-trophy"></i> Championship Day</h1>
-        
+
         <div class="target-container">
-            <div class="target-box">
-                <i class="fas fa-bullseye target-icon"></i>
-                <div><strong>Your Goal:</strong> Compete with focus and respect for my squad.</div>
+          <div class="target-box">
+            <i class="fas fa-bullseye target-icon"></i>
+            <div>
+              <strong>Your Goal:</strong> Compete with focus and respect for my
+              squad.
             </div>
-            <div class="target-box">
-                <i class="fas fa-check-circle success-icon"></i>
-                <div><strong>Success:</strong> Our squad celebrated the winners and supported everyone who played.</div>
+          </div>
+          <div class="target-box">
+            <i class="fas fa-check-circle success-icon"></i>
+            <div>
+              <strong>Success:</strong> Our squad celebrated the winners and
+              supported everyone who played.
             </div>
+          </div>
         </div>
 
         <div class="content-box">
-            <!-- 1. Setup -->
-            <div class="step-card card-setup">
-                <i class="fas fa-comments step-icon-bg"></i>
-                <div class="step-header">
-                    <span class="step-badge bg-setup">1. Setup</span>
-                    <div class="step-title">Final Strategy</div>
-                </div>
-                <div class="step-desc">
-                    Use a <strong>Setup Key</strong> to prepare your squad for the final competition.
-                </div>
+          <!-- 1. Setup -->
+          <div class="step-card card-setup">
+            <i class="fas fa-comments step-icon-bg"></i>
+            <div class="step-header">
+              <span class="step-badge bg-setup">1. Setup</span>
+              <div class="step-title">Final Strategy</div>
             </div>
+            <div class="step-desc">
+              Use a <strong>Setup Key</strong> to prepare your squad for the
+              final competition.
+            </div>
+          </div>
 
-            <!-- 2. Vote -->
-            <div class="step-card card-mission">
-                <i class="fas fa-vote-yea step-icon-bg"></i>
-                <div class="step-header">
-                    <span class="step-badge bg-mission">2. Vote</span>
-                    <div class="step-title">Choose Your Arena</div>
-                </div>
-                <div class="step-desc">
-                    Your squad must silently vote on your favorite <strong>Arena</strong> or <strong>Lab</strong> mission to compete in.
-                </div>
+          <!-- 2. Vote -->
+          <div class="step-card card-mission">
+            <i class="fas fa-vote-yea step-icon-bg"></i>
+            <div class="step-header">
+              <span class="step-badge bg-mission">2. Vote</span>
+              <div class="step-title">Choose Your Arena</div>
             </div>
+            <div class="step-desc">
+              Your squad must silently vote on your favorite
+              <strong>Arena</strong> or <strong>Lab</strong> mission to compete
+              in.
+            </div>
+          </div>
 
-            <!-- 3. Compete -->
-            <div class="step-card card-debrief">
-                <i class="fas fa-fist-raised step-icon-bg"></i>
-                <div class="step-header">
-                    <span class="step-badge bg-debrief">3. Compete</span>
-                    <div class="step-title">Squad Tournament</div>
-                </div>
-                <div class="step-desc">
-                    Run an internal tournament or time trial for your chosen mission. Find your squad's champion!
-                </div>
+          <!-- 3. Compete -->
+          <div class="step-card card-debrief">
+            <i class="fas fa-fist-raised step-icon-bg"></i>
+            <div class="step-header">
+              <span class="step-badge bg-debrief">3. Compete</span>
+              <div class="step-title">Squad Tournament</div>
             </div>
+            <div class="step-desc">
+              Run an internal tournament or time trial for your chosen mission.
+              Find your squad's champion!
+            </div>
+          </div>
 
-            <!-- 4. Debrief -->
-            <div class="step-card card-end">
-                <i class="fas fa-handshake step-icon-bg"></i>
-                <div class="step-header">
-                    <span class="step-badge bg-end">4. Debrief</span>
-                    <div class="step-title">Sportsmanship</div>
-                </div>
-                <div class="step-desc">
-                    Debrief with <strong>The Ally Key</strong> or <strong>The Bounce Key</strong>.
-                    <br>
-                    How did it feel to win or lose?
-                </div>
+          <!-- 4. Debrief -->
+          <div class="step-card card-end">
+            <i class="fas fa-handshake step-icon-bg"></i>
+            <div class="step-header">
+              <span class="step-badge bg-end">4. Debrief</span>
+              <div class="step-title">Sportsmanship</div>
             </div>
+            <div class="step-desc">
+              Debrief with <strong>The Ally Key</strong> or
+              <strong>The Bounce Key</strong>.
+              <br />
+              How did it feel to win or lose?
+            </div>
+          </div>
         </div>
       </div>
 
       <!-- SLIDE 5: GRADUATION DAY -->
       <div class="slide bg-special" data-slide-id="graduation">
         <h1><i class="fas fa-graduation-cap"></i> Graduation Day</h1>
-        
+
         <div class="target-container">
-            <div class="target-box">
-                <i class="fas fa-bullseye target-icon"></i>
-                <div><strong>Your Goal:</strong> Reflect on our squad's journey.</div>
+          <div class="target-box">
+            <i class="fas fa-bullseye target-icon"></i>
+            <div>
+              <strong>Your Goal:</strong> Reflect on our squad's journey.
             </div>
-            <div class="target-box">
-                <i class="fas fa-check-circle success-icon"></i>
-                <div><strong>Success Looks Like:</strong> Our squad performed its final handshake and shared memories of becoming a team.</div>
+          </div>
+          <div class="target-box">
+            <i class="fas fa-check-circle success-icon"></i>
+            <div>
+              <strong>Success Looks Like:</strong> Our squad performed its final
+              handshake and shared memories of becoming a team.
             </div>
+          </div>
         </div>
 
-        <div class="content-box" style="grid-template-columns: 1fr; grid-template-rows: repeat(3, 1fr);">
-            
-            <div class="step-card card-special" style="grid-column: 1 / -1;">
-                <i class="fas fa-handshake step-icon-bg"></i>
-                <div class="step-header">
-                    <span class="step-badge bg-special">1. Final Mission</span>
-                    <div class="step-title">The Secret Handshake</div>
-                </div>
-                <div class="step-desc">
-                    Assemble in your squads. Perform your secret handshake one last time with focus and respect.
-                </div>
+        <div
+          class="content-box"
+          style="grid-template-columns: 1fr; grid-template-rows: repeat(3, 1fr)"
+        >
+          <div class="step-card card-special" style="grid-column: 1 / -1">
+            <i class="fas fa-handshake step-icon-bg"></i>
+            <div class="step-header">
+              <span class="step-badge bg-special">1. Final Mission</span>
+              <div class="step-title">The Secret Handshake</div>
             </div>
-            
-            <div class="step-card card-special" style="grid-column: 1 / -1;">
-                <i class="fas fa-users step-icon-bg"></i>
-                <div class="step-header">
-                    <span class="step-badge bg-special">2. Final Debrief</span>
-                    <div class="step-title">Whole Class Discussion</div>
-                </div>
-                <div class="step-desc">
-                    <strong>The Question:</strong> What can your squad do now without talking that was impossible in Week 1?
-                </div>
+            <div class="step-desc">
+              Assemble in your squads. Perform your secret handshake one last
+              time with focus and respect.
             </div>
+          </div>
 
-            <div class="step-card card-special" style="grid-column: 1 / -1;">
-                <i class="fas fa-award step-icon-bg"></i>
-                <div class="step-header">
-                    <span class="step-badge bg-special">3. Dismissal</span>
-                    <div class="step-title">Protocol Complete</div>
-                </div>
-                <div class="step-desc">
-                    You are no longer recruits; you are graduates. Well done.
-                </div>
+          <div class="step-card card-special" style="grid-column: 1 / -1">
+            <i class="fas fa-users step-icon-bg"></i>
+            <div class="step-header">
+              <span class="step-badge bg-special">2. Final Debrief</span>
+              <div class="step-title">Whole Class Discussion</div>
             </div>
+            <div class="step-desc">
+              <strong>The Question:</strong> What can your squad do now without
+              talking that was impossible in Week 1?<br>
+              How does it feel to be part of the team?
+            </div>
+          </div>
 
+          <div class="step-card card-special" style="grid-column: 1 / -1">
+            <i class="fas fa-award step-icon-bg"></i>
+            <div class="step-header">
+              <span class="step-badge bg-special">3. Dismissal</span>
+              <div class="step-title">Protocol Complete</div>
+            </div>
+            <div class="step-desc">
+              You are no longer recruits; you are graduates. Well done.
+            </div>
+          </div>
         </div>
       </div>
-
     </div>
 
     <!-- TIMER COMPONENT -->
@@ -604,52 +814,69 @@
     </div>
 
     <!-- NAVIGATION CONTROLS -->
-    <button id="prev" class="nav-button"><i class="fas fa-chevron-left"></i></button>
-    <button id="next" class="nav-button"><i class="fas fa-chevron-right"></i></button>
-    
+    <button id="prev" class="nav-button">
+      <i class="fas fa-chevron-left"></i>
+    </button>
+    <button id="next" class="nav-button">
+      <i class="fas fa-chevron-right"></i>
+    </button>
+
     <div class="slide-nav">
       <button data-slide-id="launch" class="active">Launch</button>
       <button data-slide-id="grades1-2">Grades 1-2</button>
       <button data-slide-id="grades3-5">Grades 3-5</button>
       <button data-slide-id="championship">Championship</button>
       <button data-slide-id="graduation">Graduation</button>
-      <button id="toggle-timer-btn" style="margin-left:10px; width:40px; text-align:center;"><i class="fas fa-clock"></i></button>
+      <button
+        id="toggle-timer-btn"
+        style="margin-left: 10px; width: 40px; text-align: center"
+      >
+        <i class="fas fa-clock"></i>
+      </button>
     </div>
 
-    <audio id="alarm-sound" src="https://actions.google.com/sounds/v1/alarms/medium_bell_ringing_near.ogg" preload="auto"></audio>
+    <audio
+      id="alarm-sound"
+      src="https://actions.google.com/sounds/v1/alarms/medium_bell_ringing_near.ogg"
+      preload="auto"
+    ></audio>
 
     <script>
       /* --- NAVIGATION LOGIC --- */
       let currentSlideIndex = 0;
       const slides = document.querySelectorAll(".slide");
-      const navButtons = document.querySelectorAll(".slide-nav button[data-slide-id]");
+      const navButtons = document.querySelectorAll(
+        ".slide-nav button[data-slide-id]",
+      );
 
       function showSlide(slideId) {
-        let targetIndex = Array.from(slides).findIndex(s => s.dataset.slideId === slideId);
+        let targetIndex = Array.from(slides).findIndex(
+          (s) => s.dataset.slideId === slideId,
+        );
         if (targetIndex === -1) targetIndex = 0;
-        
-        slides.forEach(slide => slide.classList.remove("active"));
+
+        slides.forEach((slide) => slide.classList.remove("active"));
         slides[targetIndex].classList.add("active");
-        
+
         currentSlideIndex = targetIndex;
-        
-        navButtons.forEach(btn => {
+
+        navButtons.forEach((btn) => {
           btn.classList.toggle("active", btn.dataset.slideId === slideId);
         });
       }
 
       document.getElementById("next").addEventListener("click", () => {
-          let nextIndex = currentSlideIndex + 1;
-          if (nextIndex >= slides.length) nextIndex = 0;
-          showSlide(slides[nextIndex].dataset.slideId);
+        let nextIndex = currentSlideIndex + 1;
+        if (nextIndex >= slides.length) nextIndex = 0;
+        showSlide(slides[nextIndex].dataset.slideId);
       });
       document.getElementById("prev").addEventListener("click", () => {
-          let prevIndex = currentSlideIndex - 1;
-          if (prevIndex < 0) prevIndex = slides.length - 1;
-          showSlide(slides[prevIndex].dataset.slideId);
+        let prevIndex = currentSlideIndex - 1;
+        if (prevIndex < 0) prevIndex = slides.length - 1;
+        showSlide(slides[prevIndex].dataset.slideId);
       });
 
-      navButtons.forEach(btn => {
+      navButtons.forEach((btn) => {
         btn.addEventListener("click", () => showSlide(btn.dataset.slideId));
       });
 
@@ -676,8 +903,9 @@
         const mins = Math.floor(remainingTime / 60);
         const secs = remainingTime % 60;
         timerDisplay.textContent = `${mins}:${secs < 10 ? "0" : ""}${secs}`;
-        
-        const offset = circumference - (remainingTime / totalTime) * circumference;
+
+        const offset =
+          circumference - (remainingTime / totalTime) * circumference;
         progressBar.style.strokeDashoffset = offset;
       }
 
@@ -712,30 +940,31 @@
         alarmSound.currentTime = 0;
       }
 
-      timeAdjustBtns.forEach(btn => {
+      timeAdjustBtns.forEach((btn) => {
         btn.addEventListener("click", () => {
           if (isRunning) return;
           const adjustment = parseInt(btn.dataset.time);
           if (totalTime + adjustment >= 0) {
-              totalTime += adjustment;
-              remainingTime = totalTime;
-              updateDisplay();
+            totalTime += adjustment;
+            remainingTime = totalTime;
+            updateDisplay();
           }
         });
       });
-      
+
       toggleTimerBtn.addEventListener("click", () => {
         const currentOp = getComputedStyle(timerContainer).opacity;
         timerContainer.style.opacity = currentOp === "1" ? "0" : "1";
-        timerContainer.style.pointerEvents = currentOp === "1" ? "none" : "auto";
+        timerContainer.style.pointerEvents =
+          currentOp === "1" ? "none" : "auto";
       });
 
       startPauseBtn.addEventListener("click", toggleTimer);
       resetBtn.addEventListener("click", resetTimer);
-      
+
       // Init
       updateDisplay();
-      showSlide('launch'); // Start on the first slide
+      showSlide("launch"); // Start on the first slide
     </script>
   </body>
 </html>
