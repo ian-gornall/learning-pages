@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<!-- Student Facing Fluency Dashboard -->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fluency Practice</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Bangers&family=Poppins:wght@400;700;800&display=swap");
+      :root {
+        --primary-color: #ff6347;
+        --secondary-color: #4a90e2;
+        --accent-color: #f0c419;
+        --dark-text: #2c3e50;
+        --danger-color: #e74c3c;
+        --success-color: #2ecc71;
+        --math-color: #4a90e2; /* Blue for Math */
+        --typing-color: #9b59b6; /* Purple for Typing */
+      }
+      body {
+        margin: 0;
+        font-family: "Poppins", sans-serif;
+        background-color: var(--dark-text);
+        overflow: hidden;
+      }
+      .slideshow-container {
+        position: relative;
+        width: 100vw;
+        height: 100vh;
+        /* Dynamic background for energy */
+        background: linear-gradient(-45deg, #FF9A9E, #FECFEF, #E0C3FC, #8EC5FC);
+        background-size: 400% 400%;
+        animation: gradient-pan 15s ease infinite;
+      }
+
+      @keyframes gradient-pan {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+      }
+
+      .slide {
+        display: flex; /* Always visible, no nav needed */
+        width: 100%;
+        height: 100%;
+        padding: 10px 40px;
+        box-sizing: border-box;
+        text-align: center;
+        justify-content: flex-start;
+        align-items: center;
+        flex-direction: column;
+      }
+
+      h1 {
+        font-family: "Bangers", cursive;
+        font-size: clamp(3em, 6vw, 4.5em);
+        margin: 10px 0 5px 0;
+        color: #fff;
+        -webkit-text-stroke: 2px #2c3e50;
+        text-shadow: 3px 3px 0px #2c3e50;
+        letter-spacing: 2px;
+      }
+
+      .learning-target {
+        background: rgba(255, 255, 255, 0.9);
+        padding: 5px 20px;
+        border-radius: 20px;
+        font-weight: 700;
+        font-size: 1.2em;
+        color: var(--dark-text);
+        margin-bottom: 10px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        border: 2px solid #2c3e50;
+      }
+
+      /* MAIN CONTENT BOX */
+      .content-box {
+        background: rgba(255, 255, 255, 0.95);
+        margin: 5px 0;
+        padding: 15px;
+        border-radius: 20px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        border: 4px solid #fff;
+        height: 75vh;
+        width: 95%;
+        max-width: 1400px;
+        display: flex;
+        flex-direction: row; /* Split screen */
+        gap: 20px;
+        box-sizing: border-box;
+      }
+
+      /* SPLIT SCREEN COLUMNS */
+      .team-column {
+        flex: 1;
+        border-radius: 15px;
+        padding: 15px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .math-column {
+        background-color: #ebf5fb; /* Light Blue */
+        border: 3px solid var(--math-color);
+      }
+      
+      .typing-column {
+        background-color: #f4ecf7; /* Light Purple */
+        border: 3px solid var(--typing-color);
+      }
+
+      .team-header {
+        font-family: "Bangers", cursive;
+        font-size: 2.5em;
+        margin: 0 0 15px 0;
+        text-transform: uppercase;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .math-header { color: var(--math-color); }
+      .typing-header { color: var(--typing-color); }
+
+      /* STEPS CARDS */
+      .step-card {
+        background: white;
+        width: 90%;
+        margin-bottom: 15px;
+        padding: 15px;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        text-align: left;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        transition: transform 0.2s;
+        border-left: 8px solid #ccc;
+      }
+      .step-card:hover { transform: scale(1.02); }
+
+      .math-column .step-card { border-left-color: var(--math-color); }
+      .typing-column .step-card { border-left-color: var(--typing-color); }
+
+      .step-num {
+        background: var(--dark-text);
+        color: white;
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-weight: 800;
+        font-size: 1.2em;
+        flex-shrink: 0;
+      }
+
+      .step-content {
+        display: flex;
+        flex-direction: column;
+      }
+      
+      .step-title {
+        font-weight: 800;
+        font-size: 1.4em;
+        color: var(--dark-text);
+      }
+      .step-desc {
+        font-size: 0.9em;
+        color: #555;
+      }
+
+      .icon-large {
+        font-size: 2em;
+        margin-left: auto;
+        color: #ccc;
+      }
+      .math-column .icon-large { color: var(--math-color); opacity: 0.3; }
+      .typing-column .icon-large { color: var(--typing-color); opacity: 0.3; }
+
+      /* SUCCESS CRITERIA FOOTER IN BOX */
+      .success-footer {
+        width: 100%;
+        margin-top: auto;
+        text-align: center;
+        font-size: 1em;
+        color: #7f8c8d;
+        font-weight: 600;
+        padding-top: 10px;
+        border-top: 2px dashed #ccc;
+      }
+
+      /* --- TIMER STYLES (Keep strict absolute positioning) --- */
+      .timer-container {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        z-index: 200;
+        background: var(--dark-text);
+        padding: 10px;
+        border-radius: 12px;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+        color: white;
+        text-align: center;
+        width: 140px;
+      }
+      .timer-visual {
+        position: relative;
+        width: 80px;
+        height: 80px;
+        margin: 0 auto 5px;
+      }
+      .timer-visual svg {
+        position: absolute;
+        top: 0; left: 0; width: 100%; height: 100%;
+        transform: rotate(-90deg);
+      }
+      .timer-progress-bg { fill: none; stroke: rgba(255, 255, 255, 0.1); stroke-width: 7; }
+      .timer-progress-bar {
+        fill: none;
+        stroke: var(--success-color);
+        stroke-width: 7;
+        stroke-linecap: round;
+        transition: stroke-dashoffset 0.2s linear, stroke 0.3s;
+      }
+      .timer-display {
+        position: absolute;
+        top: 50%; left: 50%;
+        transform: translate(-50%, -50%);
+        font-family: "Poppins", sans-serif;
+        font-weight: 800;
+        font-size: 1.2em;
+      }
+      .timer-controls { display: flex; justify-content: center; gap: 10px; margin-top: 5px;}
+      .timer-control-btn {
+        border: none; color: white; width: 30px; height: 30px; font-size: 0.8em;
+        border-radius: 50%; cursor: pointer;
+      }
+      #start-pause-timer { background-color: var(--success-color); }
+      #reset-timer { background-color: var(--danger-color); }
+      .timer-adjust { display: flex; justify-content: center; gap: 3px; margin-bottom: 5px;}
+      .timer-adjust-btn { 
+        background: #555; border: none; color: white; font-size: 0.6em; 
+        padding: 2px 5px; border-radius: 3px; cursor: pointer;
+      }
+
+    </style>
+  </head>
+  <body>
+    <div class="slideshow-container">
+      
+      <!-- SINGLE SLIDE (No Day Nav) -->
+      <div class="slide">
+        <h1><i class="fas fa-brain"></i> Brain Muscle Time!</h1>
+        
+        <div class="learning-target">
+            Target: I can practice to get faster and smarter.
+        </div>
+
+        <div class="content-box">
+            
+            <!-- LEFT COLUMN: MATH -->
+            <div class="team-column math-column">
+                <div class="team-header math-header">
+                    <i class="fas fa-calculator"></i> Math Team
+                </div>
+                
+                <!-- Step 1 -->
+                <div class="step-card">
+                    <div class="step-num">1</div>
+                    <div class="step-content">
+                        <div class="step-title">XtraMath</div>
+                        <div class="step-desc">Login with your PIN. Work until it says "Done".</div>
+                    </div>
+                    <i class="fas fa-user-lock icon-large"></i>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="step-card">
+                    <div class="step-num">2</div>
+                    <div class="step-content">
+                        <div class="step-title">Finished?</div>
+                        <div class="step-desc">Did XtraMath say stop?</div>
+                    </div>
+                    <i class="fas fa-question-circle icon-large"></i>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="step-card">
+                    <div class="step-num">3</div>
+                    <div class="step-content">
+                        <div class="step-title">Play Games</div>
+                        <div class="step-desc">Go to Arcademics or Sheppard Software.</div>
+                    </div>
+                    <i class="fas fa-gamepad icon-large"></i>
+                </div>
+            </div>
+
+            <!-- RIGHT COLUMN: TYPING -->
+            <div class="team-column typing-column">
+                <div class="team-header typing-header">
+                    <i class="fas fa-keyboard"></i> Typing Team
+                </div>
+
+                <!-- Step 1 -->
+                <div class="step-card">
+                    <div class="step-num">1</div>
+                    <div class="step-content">
+                        <div class="step-title">1-Minute Test</div>
+                        <div class="step-desc">Show what you know!</div>
+                    </div>
+                    <i class="fas fa-stopwatch icon-large"></i>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="step-card">
+                    <div class="step-num">2</div>
+                    <div class="step-content">
+                        <div class="step-title">One Lesson</div>
+                        <div class="step-desc">Complete 1 full lesson.</div>
+                    </div>
+                    <i class="fas fa-pencil-alt icon-large"></i>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="step-card">
+                    <div class="step-num">3</div>
+                    <div class="step-content">
+                        <div class="step-title">Type Games</div>
+                        <div class="step-desc">Play a game on Typing.com</div>
+                    </div>
+                    <i class="fas fa-rocket icon-large"></i>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="success-footer">
+            <i class="fas fa-check-circle"></i> Success Criteria: I stayed focused for the whole timer.
+        </div>
+
+      </div>
+    </div>
+
+    <!-- TIMER COMPONENT -->
+    <div class="timer-container">
+      <div class="timer-visual">
+        <div class="timer-display">05:00</div>
+        <svg>
+          <circle class="timer-progress-bg" cx="40" cy="40" r="36"></circle>
+          <circle class="timer-progress-bar" cx="40" cy="40" r="36"></circle>
+        </svg>
+      </div>
+      <div class="timer-adjust">
+        <button class="timer-adjust-btn" data-time="-60">-1m</button>
+        <button class="timer-adjust-btn" data-time="60">+1m</button>
+      </div>
+      <div class="timer-controls">
+        <button class="timer-control-btn" id="start-pause-timer">
+          <i class="fas fa-play"></i>
+        </button>
+        <button class="timer-control-btn" id="reset-timer">
+          <i class="fas fa-redo"></i>
+        </button>
+      </div>
+    </div>
+
+    <audio id="alarm-sound" src="https://actions.google.com/sounds/v1/alarms/medium_bell_ringing_near.ogg" preload="auto"></audio>
+
+    <script>
+      /* --- TIMER SCRIPT START --- */
+      const timerDisplay = document.querySelector(".timer-display");
+      const startPauseButton = document.getElementById("start-pause-timer");
+      const resetButton = document.getElementById("reset-timer");
+      const timeAdjustButtons = document.querySelectorAll(".timer-adjust-btn");
+      const progressBar = document.querySelector(".timer-progress-bar");
+      const alarmSound = document.getElementById("alarm-sound");
+      alarmSound.volume = 1.0;
+
+      const radius = progressBar.r.baseVal.value;
+      const circumference = 2 * Math.PI * radius;
+      progressBar.style.strokeDasharray = circumference;
+
+      let countdown;
+      let totalTime = 300; // 5 Minutes default
+      let remainingTime = totalTime;
+      let isRunning = false;
+
+      function updateDisplay() {
+        const mins = Math.floor(remainingTime / 60);
+        const secs = remainingTime % 60;
+        timerDisplay.textContent = `${mins}:${secs < 10 ? "0" : ""}${secs}`;
+        
+        if (totalTime > 0) {
+            const offset = circumference - (remainingTime / totalTime) * circumference;
+            progressBar.style.strokeDashoffset = offset;
+        }
+      }
+
+      function toggleTimer() {
+        if (isRunning) {
+          clearInterval(countdown);
+          startPauseButton.innerHTML = '<i class="fas fa-play"></i>';
+        } else {
+          if (remainingTime <= 0) return;
+          startPauseButton.innerHTML = '<i class="fas fa-pause"></i>';
+          countdown = setInterval(() => {
+            remainingTime--;
+            updateDisplay();
+            if (remainingTime <= 0) {
+              clearInterval(countdown);
+              isRunning = false;
+              startPauseButton.innerHTML = '<i class="fas fa-play"></i>';
+              alarmSound.play();
+            }
+          }, 1000);
+        }
+        isRunning = !isRunning;
+      }
+
+      function resetTimer() {
+        clearInterval(countdown);
+        remainingTime = totalTime;
+        isRunning = false;
+        startPauseButton.innerHTML = '<i class="fas fa-play"></i>';
+        progressBar.style.strokeDashoffset = 0;
+        updateDisplay();
+      }
+
+      timeAdjustButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          if (isRunning) return;
+          const adjustment = parseInt(button.dataset.time);
+          totalTime += adjustment;
+          if (totalTime < 0) totalTime = 0;
+          remainingTime = totalTime;
+          updateDisplay();
+        });
+      });
+
+      startPauseButton.addEventListener("click", toggleTimer);
+      resetButton.addEventListener("click", resetTimer);
+      updateDisplay();
+    </script>
+  </body>
+</html>
