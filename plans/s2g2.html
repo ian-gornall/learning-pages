@@ -1,0 +1,1385 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Eager Investigators: Weeks 3-4 Sprint Plan</title>
+    
+    <!-- 
+      ************************************************************************************
+      CRITICAL TEMPLATE INSTRUCTION: PRINT MARGINS & PADDING
+      ************************************************************************************
+      DO NOT add padding or margins to the body, container, or page elements in the CSS.
+      The printable area must extend to 0px on the Top, Bottom, Left, and Right.
+      
+      Margins should be controlled ONLY by the user's specific Printer Settings 
+      (File > Print > Margins). Adding CSS margins here will cause content to be cut off 
+      or create double-margin issues during printing.
+      ************************************************************************************
+    -->
+
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        line-height: 1.3;
+        color: #333;
+        background-color: #fff;
+        /* ZERO MARGINS intended here to allow Printer Settings to control layout */
+        margin: 0;
+        padding: 0;
+      }
+      .container {
+        /* Content container */
+        width: 100%;
+        max-width: 100%;
+        padding: 10px; /* Small internal padding for screen readability, irrelevant for edge-to-edge print */
+        box-sizing: border-box;
+      }
+      h3 {
+        text-align: center;
+        font-weight: bold;
+        font-size: 1.1em;
+        padding: 5px;
+        margin-top: 20px;
+        margin-bottom: 0;
+        border: 1px solid #000;
+        border-bottom: none;
+        background-color: #f2f2f2;
+      }
+      hr {
+        border: none;
+        border-top: 1px solid #ccc;
+        margin: 20px 0;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 15px;
+      }
+      th,
+      td {
+        border: 1px solid #000;
+        padding: 5px 8px;
+        text-align: left;
+        vertical-align: top;
+      }
+      .section-title-cell {
+        background-color: #e6e6e6;
+        padding: 8px;
+        font-weight: bold;
+        font-size: 1.1em;
+        text-align: center;
+      }
+      .label-column {
+        font-weight: bold;
+        width: 25%;
+        background-color: #f9f9f9;
+      }
+      .check-cell {
+        text-align: center;
+        width: 8%;
+      }
+      .daily-plan-table {
+        margin-top: 0;
+      }
+      ul {
+        padding-left: 20px;
+        margin-top: 0;
+        margin-bottom: 0;
+      }
+      li {
+        margin-bottom: 3px;
+      }
+
+      @media print {
+        body {
+          font-size: 10pt;
+        }
+        .container {
+          padding: 0;
+          max-width: 100%;
+        }
+        .section-title-cell,
+        .label-column,
+        h3 {
+          background-color: #e6e6e6 !important;
+          -webkit-print-color-adjust: exact;
+          print-color-adjust: exact;
+        }
+        hr {
+          display: none;
+        }
+        /* Page break handling */
+        h3 {
+          page-break-before: always;
+        }
+        h3:first-of-type {
+          page-break-before: auto;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      
+      <!-- 
+        ************************************************************************************
+        INSTRUCTIONS FOR FILLING OUT SECTION A (CHECKLIST)
+        ************************************************************************************
+      -->
+      <div>
+        <table>
+          <thead>
+            <tr>
+              <th colspan="6" class="section-title-cell">
+                Section A: Strategies & Tasks Checklist
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>DCSD Unit Task</td>
+              <td class="check-cell">[ ]</td>
+              <td>Interdisciplinary Integration</td>
+              <td class="check-cell">[x]</td>
+              <td>Differentiated Instruction</td>
+              <td class="check-cell">[x]</td>
+            </tr>
+            <tr>
+              <td>GADOE Task/Activity/Resource</td>
+              <td class="check-cell">[ ]</td>
+              <td>Intervention Strategies</td>
+              <td class="check-cell">[x]</td>
+              <td>21st Century Learning Skills</td>
+              <td class="check-cell">[x]</td>
+            </tr>
+            <tr>
+              <td>STEM/STEAM Integration</td>
+              <td class="check-cell">[x]</td>
+              <td>Gifted-Extensions for Learning</td>
+              <td class="check-cell">[x]</td>
+              <td>Research-Based Instructional Strategies</td>
+              <td class="check-cell">[x]</td>
+            </tr>
+            <tr>
+              <td>Nonlinguistic Representations</td>
+              <td class="check-cell">[x]</td>
+              <td>Cooperative Learning</td>
+              <td class="check-cell">[x]</td>
+              <td>Summarizing/Note Taking</td>
+              <td class="check-cell">[x]</td>
+            </tr>
+            <tr>
+              <td>Generating/Testing Hypotheses</td>
+              <td class="check-cell">[x]</td>
+              <td>Setting Objectives/Feedback</td>
+              <td class="check-cell">[x]</td>
+              <td>Cues, Questions, Organizers</td>
+              <td class="check-cell">[x]</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- 
+        INSTRUCTION: This section now covers a TWO-WEEK SPRINT. 
+      -->
+      <div>
+        <table>
+          <thead>
+            <tr>
+              <th colspan="2" class="section-title-cell">
+                Section B: Unit & Sprint (2-Week) Overview
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td
+                colspan="2"
+                style="font-weight: bold; background-color: #f2f2f2"
+              >
+                UNIT AT-A-GLANCE
+              </td>
+            </tr>
+            <tr>
+              <td class="label-column">Unit Name & Pacing</td>
+              <td>
+                Discovery Project: Junior Investigator Edition
+              </td>
+            </tr>
+            <tr>
+              <td class="label-column">Unit Driving Question</td>
+              <td>How can we use the tools of researchers to investigate a question and share our discoveries with the world?</td>
+            </tr>
+            <tr>
+              <td class="label-column">Unit Description & Rationale</td>
+              <td>
+                This unit transforms students into research teams. They will navigate the full research cycle: establishing group norms, selecting a discipline (Science or Social Studies), conducting background research, planning a procedure/story, gathering data, and presenting findings. The pedagogy focuses on student agency, collaboration (static groups), and "learning by doing."
+              </td>
+            </tr>
+            <tr>
+              <td class="label-column">Engaging Scenario / Unit Hook</td>
+              <td>
+                Students are inducted as "Junior Investigators" signing official team contracts. They are not just students; they are scientists, anthropologists, and historians working in a "lab" environment.
+              </td>
+            </tr>
+            <tr>
+              <td
+                colspan="2"
+                style="font-weight: bold; background-color: #f2f2f2"
+              >
+                THIS SPRINT'S FOCUS (2 Weeks)
+              </td>
+            </tr>
+            <tr>
+              <td class="label-column">School Name / Teacher Name</td>
+              <td>Huntley Hills Elementary / Mr. Ian</td>
+            </tr>
+            <tr>
+              <td class="label-column">Grade/Subject/Course</td>
+              <td>2nd Grade Gifted / Eager Investigators</td>
+            </tr>
+            <tr>
+              <td class="label-column">Sprint Dates / Pacing</td>
+              <td>Jan 20, 2026 - Jan 30, 2026 / Sprint 2</td>
+            </tr>
+            <tr>
+              <td class="label-column">Sprint Focus & Summary</td>
+              <td>
+                <strong>Inquiry & Design:</strong> This sprint shifts from topic selection to deep investigation. Students will break down their broad science topics (Slime, Crystals, Electric Cars) into specific research questions, conduct background research using books/media, and design their experiments/inventions.
+                <br><strong>Analysis:</strong> In *Lion, Witch, Wardrobe*, students will analyze character motivations (Edmund's betrayal) and the logic of fantasy worlds.
+              </td>
+            </tr>
+            <tr>
+              <td class="label-column">Sprint Learning Targets & Success Criteria</td>
+              <td>
+                <strong>Learning Targets (Sprint Level):</strong>
+                <ul>
+                    <li>I can generate specific research questions to guide an investigation.</li>
+                    <li>I can cite sources and paraphrase information into notes.</li>
+                    <li>I can design a fair test (Science) or a prototype plan (Engineering).</li>
+                    <li>I can use logic to analyze character decisions and plot points.</li>
+                </ul>
+                <strong>Success Criteria (Sprint Level):</strong>
+                <ul>
+                    <li>Completed Packet Page 6 (Questions) & Page 7 (Bibliography).</li>
+                    <li>Completed "Experiment Plan" (Pg 14) or "Invention Plan" (Pg 15).</li>
+                    <li>Seesaw posts reflecting on Choice Time tasks.</li>
+                </ul>
+              </td>
+            </tr>
+            <tr>
+              <td class="label-column">Standards for the Sprint</td>
+              <td>
+                <strong>Priority Standard(s):</strong>
+                <ul>
+                  <li><strong>ELAGSE2W7:</strong> Participate in shared research and writing projects.</li>
+                  <li><strong>ELAGSE2RI1:</strong> Ask and answer such questions as who, what, where, when, why, and how to demonstrate understanding.</li>
+                  <li><strong>S2CS3:</strong> Students will use tools and instruments for observing, measuring, and manipulating objects in scientific activities.</li>
+                </ul>
+                <strong>Supporting/Integrated Standard(s):</strong>
+                <ul>
+                  <li><strong>TA2.CR.1:</strong> Organize, design, and refine complex non-verbal communication (Stealth Squads).</li>
+                  <li><strong>MGSE2.OA.2:</strong> Fluently add and subtract within 20 using mental strategies.</li>
+                </ul>
+                <strong>Non-Content Standard(s):</strong>
+                <ul>
+                  <li><strong>NAGC 4.2:</strong> Social Competence (Cooperation and leadership).</li>
+                </ul>
+              </td>
+            </tr>
+            <tr>
+              <td class="label-column">Essential Question(s) for the Sprint</td>
+              <td>
+                How do researchers turn a "cool idea" into a "testable question"? <br>
+                Why is it important to give credit to our sources?<br>
+                How does desire (like Turkish Delight) affect our logic?
+              </td>
+            </tr>
+            <tr>
+              <td class="label-column">Big Ideas for the Sprint</td>
+              <td>
+                <strong>Inquiry:</strong> Good answers come from good questions.<br>
+                <strong>Process:</strong> Planning (Design/Variables) must happen *before* doing.<br>
+                <strong>Integrity:</strong> Giving credit (citations) and owning mistakes (Edmund).
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div>
+        <table>
+          <thead>
+            <tr>
+              <th colspan="2" class="section-title-cell">
+                Section C: Instructional Logistics & Resources for the Sprint
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="label-column">Key Vocabulary</td>
+              <td>
+                <strong>Tier 2 (Academic):</strong> Logic, Premises, Superior, Eternal, Bibliography, Variable, Constraint.<br />
+                <strong>Tier 3 (Domain-Specific):</strong> Faun, Mantle, Courtiers, Hypothesis, Prototype, Primary Source.
+              </td>
+            </tr>
+            <tr>
+              <td class="label-column">Materials & Resources</td>
+              <td>
+                <strong>Texts:</strong> <em>The Lion, the Witch, and the Wardrobe</em> (Class Set), Novel-Ties Packets, Non-fiction Science Books (Slime, Crystals, Cars).<br />
+                <strong>Technology:</strong> Chromebooks (XtraMath, Arcademics, Seesaw), Projector.<br />
+                <strong>Printables:</strong> Project Guide Packets (Student copies), Puzzle Sheets, Stealth Squad Keys (Weather, Battery, Glue, Shield, Anchor, Setup, Debrief).<br />
+                <strong>Supplies:</strong> Dry-erase markers, Sticky notes, "Ready to Check" tray.
+              </td>
+            </tr>
+            <tr>
+              <td class="label-column">Differentiation & Adaptive Practices</td>
+              <td>
+                <strong>Project:</strong>
+                <ul>
+                    <li><strong>Blue/Green Teams (Science):</strong> Focus on Variables/Hypothesis (Packet pg 14).</li>
+                    <li><strong>Red Team (Engineering):</strong> Focus on Constraints/Prototyping (Packet pg 15).</li>
+                </ul>
+                <strong>Novel:</strong> Vocab support via "Novel-Ties" definitions; Read-aloud to support comprehension.
+              </td>
+            </tr>
+            <tr>
+              <td class="label-column">Homework & Extensions</td>
+              <td>
+                <strong>Extensions:</strong> Choice Time "Task Cards" encourage deeper thinking (e.g., "The Boss Block" in coding).<br>
+                <strong>Homework:</strong> None assigned.
+              </td>
+            </tr>
+            <tr>
+              <td class="label-column">Parental Engagement</td>
+              <td>
+                Students capture their Choice Time creations on Seesaw to share with families.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div>
+        <table>
+          <thead>
+            <tr>
+              <th colspan="2" class="section-title-cell">
+                Section D: Assessment Plan for the Sprint
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="label-column">Formative Assessment Strategies</td>
+              <td>
+                <strong>Project Packet:</strong> Teacher checks Page 6 (Questions), Page 7 (Biblio), and Page 14/15 (Plans).<br>
+                <strong>Novel Study:</strong> Verbal discussion participation and packet checks (Vocab/Questions).<br>
+                <strong>Seesaw:</strong> Digital artifacts from Choice Time demonstrating task completion.<br>
+                <strong>Stealth Squads:</strong> Visual observation of "Pass the Pulse" and "Sculptor" success.
+              </td>
+            </tr>
+            <tr>
+              <td class="label-column">Summative Assessment Note</td>
+              <td>
+                The "Experiment/Invention Plan" (completed Thursday 1/29) is the summative check for the Planning Phase of the project.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <hr />
+      
+      <!-- ***************** WEEK 3 ***************** -->
+
+      <!-- WEEK 3: MONDAY -->
+      <div>
+        <h3>Week 3: Daily Lesson Plan for Monday (Jan 19)</h3>
+        <table class="daily-plan-table">
+          <tbody>
+            <tr>
+              <td
+                colspan="2"
+                style="font-weight: bold; background-color: #f9f9f9"
+              >
+                CONTEXT FOR TODAY'S LESSON
+              </td>
+            </tr>
+            <tr>
+              <td class="label-column">Note</td>
+              <td><strong>MLK DAY - NO SCHOOL</strong></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- WEEK 3: TUESDAY -->
+      <div>
+        <h3>Week 3: Daily Lesson Plan for Tuesday (Jan 20)</h3>
+        <table class="daily-plan-table">
+          <tbody>
+            <tr>
+              <td
+                colspan="2"
+                style="font-weight: bold; background-color: #f9f9f9"
+              >
+                CONTEXT FOR TODAY'S LESSON
+              </td>
+            </tr>
+            <tr>
+              <td class="label-column">Unit / Focus</td>
+              <td>Project: Questioning / Fluency: Games</td>
+            </tr>
+             <tr>
+              <td class="label-column">Standard(s)</td>
+              <td>ELAGSE2RI1 (Ask/Answer Questions), MGSE2.OA.2 (Fluency)</td>
+            </tr>
+            <tr>
+              <td class="label-column">Strategies</td>
+              <td>Cooperative Learning, Generating Hypotheses, STEM Integration</td>
+            </tr>
+            <tr>
+              <td
+                colspan="2"
+                style="font-weight: bold; background-color: #f9f9f9"
+              >
+                PLAN FOR TODAY'S LESSON
+              </td>
+            </tr>
+            <tr>
+              <td class="label-column">Learning Target</td>
+              <td>
+                I can break a broad topic into specific research questions.<br>
+                I can practice math facts using digital games.
+              </td>
+            </tr>
+            <tr>
+              <td class="label-column">Success Criteria</td>
+              <td>
+                Packet Page 6 completed with 5 questions assigned to team members.<br>
+                Participation in fluency games.
+              </td>
+            </tr>
+            <tr>
+              <td class="label-column">Assessment Evidence</td>
+              <td>Packet Page 6 Check.</td>
+            </tr>
+            <tr>
+              <td class="label-column">Materials & Vocab</td>
+              <td>
+                <strong>Materials:</strong> Chromebooks (Arcademics/Sheppard Software), Project Packets.<br>
+                <strong>Vocab:</strong> Variable, Ingredient, Process, Function.
+              </td>
+            </tr>
+            <tr>
+              <td class="label-column">Differentiation</td>
+              <td>
+                <strong>Project:</strong> 
+                <ul>
+                    <li>Blue (Slime) & Green (Crystals): Ask "What" (ingredients) and "Why" (reaction) questions.</li>
+                    <li>Red (Car): Ask "How" (build) and "What" (materials) questions.</li>
+                </ul>
+              </td>
+            </tr>
+            <tr>
+              <td class="label-column">IGNITE (Fluency - 10 min)</td>
+              <td>
+                <strong>Game Choice:</strong>
+                <ul>
+                    <li><strong>Launch:</strong> Students log in to Chromebooks.</li>
+                    <li><strong>Choice:</strong> Students select a fluency game (Arcademics or Sheppard Fruit Splat) appropriate for their target operation (Add/Sub/Mult).</li>
+                    <li><strong>Play:</strong> 8 minutes of focused play.</li>
+                </ul>
+              </td>
+            </tr>
+            <tr>
+              <td class="label-column">
+                EXPLORE (Project - 15 min)
+              </td>
+              <td>
+                <strong>Teacher Action:</strong>
+                <ul>
+                  <li><strong>Review:</strong> "You have your big topic (Slime, Crystals, Car). Now we need the details."</li>
+                  <li><strong>Instruction:</strong> Direct groups to Page 6 ("Detective Work").</li>
+                  <li><strong>Model:</strong> "If I were studying baking, I wouldn't just ask 'How to bake?' I would ask 'What ingredients do I need?' 'How hot should the oven be?'"</li>
+                  <li><strong>Task:</strong> Teams generate 5 questions (Who/What/Where/Why/How) and assign a student's name to each.</li>
+                </ul>
+                <strong>Student Action:</strong>
+                <ul>
+                  <li><strong>Blue/Green (Science):</strong> Generate questions like "What makes slime sticky?" "How do crystals form?"</li>
+                  <li><strong>Red (Engineering):</strong> Generate questions like "What motor do we need?" "How do wheels attach?"</li>
+                  <li><strong>Scribe:</strong> Writes questions on Page 6.</li>
+                </ul>
+              </td>
+            </tr>
+            <tr>
+              <td class="label-column">
+                REFLECT (5 min)
+              </td>
+              <td>
+                <strong>Debrief:</strong> "Read your *own* question out loud to your group. This is your mission for Thursday."
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- WEEK 3: WEDNESDAY -->
+      <div>
+        <h3>Week 3: Daily Lesson Plan for Wednesday (Jan 21)</h3>
+        <table class="daily-plan-table">
+          <tbody>
+            <tr>
+              <td
+                colspan="2"
+                style="font-weight: bold; background-color: #f9f9f9"
+              >
+                CONTEXT FOR TODAY'S LESSON
+              </td>
+            </tr>
+             <tr>
+              <td class="label-column">Unit / Focus</td>
+              <td>Novel Study: Ch 4 / Teambuilding</td>
+            </tr>
+             <tr>
+              <td class="label-column">Standard(s)</td>
+              <td>ELAGSE2RL3 (Character Motivation), TA2.CR.1 (Non-verbal)</td>
+            </tr>
+            <tr>
+              <td class="label-column">Strategies</td>
+              <td>Nonlinguistic Representations, Cooperative Learning, Summarizing</td>
+            </tr>
+            <tr>
+              <td
+                colspan="2"
+                style="font-weight: bold; background-color: #f9f9f9"
+              >
+                PLAN FOR TODAY'S LESSON
+              </td>
+            </tr>
+            <tr>
+              <td class="label-column">Learning Target</td>
+              <td>
+                I can create a "Secret Handshake" to bond with my squad.<br>
+                I can explain why the White Witch is interested in Edmund.
+              </td>
+            </tr>
+            <tr>
+              <td class="label-column">Success Criteria</td>
+              <td>
+                Squad performs handshake from memory.<br>
+                Vocab (p.3) matching complete; Discussion Q8&9 (p.4) answered.
+              </td>
+            </tr>
+            <tr>
+              <td class="label-column">Assessment Evidence</td>
+              <td>Visual check of handshakes; Packet check (p.3 & 4).</td>
+            </tr>
+            <tr>
+              <td class="label-column">Materials & Vocab</td>
+              <td>
+                <strong>Materials:</strong> <em>Lion/Witch/Wardrobe</em> books, Novel-Ties packets, Keys (Weather, Anchor).<br>
+                <strong>Vocab:</strong> Reigns, Courtiers, Faun, Mantle, Wardrobe, Eternal.
+              </td>
+            </tr>
+            <tr>
+              <td class="label-column">Differentiation</td>
+              <td>
+                <strong>Support:</strong> "Menu" activity allows partner work for students who need writing support.<br>
+                <strong>Intervention:</strong> Provide sentence stems for the "Humor" activity (e.g., "It is funny because...").
+              </td>
+            </tr>
+            <tr>
+              <td class="label-column">IGNITE (Stealth Squads - 8 min)</td>
+              <td>
+                <strong>Secret Handshake:</strong>
+                <ul>
+                    <li><strong>Setup:</strong> Teacher displays "Weather Key" and "Anchor Key." Groups check in on mood/safety.</li>
+                    <li><strong>Mission:</strong> "Invent a secret handshake. It must have 6 moves. (Example: High five, fist bump, spin, clap, snap, bow)."</li>
+                    <li><strong>Practice:</strong> 5 minutes to learn it perfectly.</li>
+                    <li><strong>Test:</strong> Perform silently for the teacher.</li>
+                </ul>
+              </td>
+            </tr>
+            <tr>
+              <td class="label-column">
+                EXPLORE (Novel Study - 15 min)
+              </td>
+              <td>
+                <strong>Teacher Action:</strong>
+                <ul>
+                  <li><strong>Pre-Read (Guided):</strong> Guide students to <strong>Page 3</strong> of study guide. Complete matching for: Reigns, Courtiers, Faun, Mantle, Wardrobe, Eternal.</li>
+                  <li><strong>Read Aloud:</strong> Chapter 4 ("Turkish Delight").</li>
+                  <li><strong>Discussion:</strong> Guide students to <strong>Page 4</strong>. Discuss Q8 (Power of Turkish Delight) and Q9 (Witch's interest in Edmund's family).</li>
+                </ul>
+                <strong>Student Action:</strong>
+                <ul>
+                  <li><strong>Work:</strong> Students complete the Vocab matching (p.3).</li>
+                  <li><strong>Listen/Discuss:</strong> "She wants the siblings because of the prophecy!"</li>
+                  <li><strong>Menu:</strong> Partners work on <strong>Page 5</strong> "Humor" (Bookshelf titles).</li>
+                </ul>
+              </td>
+            </tr>
+            <tr>
+              <td class="label-column">
+                REFLECT (2 min)
+              </td>
+              <td>
+                <strong>Debrief:</strong> "Why did Edmund eat the food even though the Queen was scary?"
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- WEEK 3: THURSDAY -->
+      <div>
+        <h3>Week 3: Daily Lesson Plan for Thursday (Jan 22)</h3>
+        <table class="daily-plan-table">
+          <tbody>
+            <tr>
+              <td
+                colspan="2"
+                style="font-weight: bold; background-color: #f9f9f9"
+              >
+                CONTEXT FOR TODAY'S LESSON
+              </td>
+            </tr>
+            <tr>
+              <td class="label-column">Unit / Focus</td>
+              <td>Project: Resources / Fluency: XtraMath</td>
+            </tr>
+             <tr>
+              <td class="label-column">Standard(s)</td>
+              <td>ELAGSE2W8 (Recall information/Gather sources), MGSE2.OA.2 (Fluency)</td>
+            </tr>
+            <tr>
+              <td class="label-column">Strategies</td>
+              <td>Research-Based Strategies, Note Taking, STEM Integration</td>
+            </tr>
+            <tr>
+              <td
+                colspan="2"
+                style="font-weight: bold; background-color: #f9f9f9"
+              >
+                PLAN FOR TODAY'S LESSON
+              </td>
+            </tr>
+            <tr>
+              <td class="label-column">Learning Target</td>
+              <td>
+                I can locate resources that help answer my research questions.<br>
+                I can record bibliographic information (Title, Author).
+              </td>
+            </tr>
+            <tr>
+              <td class="label-column">Success Criteria</td>
+              <td>
+                At least 2 sources listed on Packet Page 7.<br>
+                XtraMath session completed.
+              </td>
+            </tr>
+            <tr>
+              <td class="label-column">Assessment Evidence</td>
+              <td>Packet Page 7 Check.</td>
+            </tr>
+            <tr>
+              <td class="label-column">Materials & Vocab</td>
+              <td>
+                <strong>Materials:</strong> Science Book Bins (Slime/Chem, Rocks/Crystals, Machines/Cars), Chromebooks, Project Packets.<br>
+                <strong>Vocab:</strong> Bibliography, Source, Author, Title, URL.
+              </td>
+            </tr>
+            <tr>
+              <td class="label-column">Differentiation</td>
+              <td>
+                <strong>Scaffold:</strong> Pre-selected websites bookmarked on Chromebooks for each team to avoid aimless searching.
+              </td>
+            </tr>
+            <tr>
+              <td class="label-column">IGNITE (Fluency - 10 min)</td>
+              <td>
+                <strong>XtraMath:</strong>
+                <ul>
+                    <li><strong>Routine:</strong> Login independently.</li>
+                    <li><strong>Goal:</strong> Complete one full session (until "You are done" screen).</li>
+                    <li><strong>Transition:</strong> Move directly to project folders.</li>
+                </ul>
+              </td>
+            </tr>
+            <tr>
+              <td class="label-column">
+                EXPLORE (Project - 15 min)
+              </td>
+              <td>
+                <strong>Teacher Action:</strong>
+                <ul>
+                  <li><strong>Instruction:</strong> "Today we find the answers. You need books and websites."</li>
+                  <li><strong>Task:</strong> Direct students to <strong>Page 7</strong> (Bibliography).</li>
+                  <li><strong>Model:</strong> Show how to find the Title and Author on a book cover. Show where to write it on Page 7.</li>
+                </ul>
+                <strong>Student Action:</strong>
+                <ul>
+                  <li><strong>Search:</strong> Teams dig through the book bins or bookmarked sites.</li>
+                  <li><strong>Record:</strong> Scribes write the Title and Author for at least 2 sources on Page 7.</li>
+                  <li><strong>Notes:</strong> If time permits, begin reading to find answers.</li>
+                </ul>
+              </td>
+            </tr>
+            <tr>
+              <td class="label-column">
+                REFLECT (5 min)
+              </td>
+              <td>
+                <strong>Debrief:</strong> "Show me your best source. Why is it useful?"
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- WEEK 3: FRIDAY -->
+      <div>
+        <h3>Week 3: Daily Lesson Plan for Friday (Jan 23)</h3>
+        <table class="daily-plan-table">
+          <tbody>
+            <tr>
+              <td
+                colspan="2"
+                style="font-weight: bold; background-color: #f9f9f9"
+              >
+                CONTEXT FOR TODAY'S LESSON
+              </td>
+            </tr>
+            <tr>
+              <td class="label-column">Unit / Focus</td>
+              <td>Critical Thinking / Choice Time</td>
+            </tr>
+             <tr>
+              <td class="label-column">Standard(s)</td>
+              <td>MGSE2.MP.1 (Perseverance), NAGC 4.2 (Self-Reflection via Seesaw)</td>
+            </tr>
+            <tr>
+              <td class="label-column">Strategies</td>
+              <td>Student Agency, Setting Objectives/Feedback, Technology Integration</td>
+            </tr>
+            <tr>
+              <td
+                colspan="2"
+                style="font-weight: bold; background-color: #f9f9f9"
+              >
+                PLAN FOR TODAY'S LESSON
+              </td>
+            </tr>
+            <tr>
+              <td class="label-column">Learning Target</td>
+              <td>
+                I can solve logic puzzles with a partner.<br>
+                I can reflect on my choice time activity using Seesaw.
+              </td>
+            </tr>
+            <tr>
+              <td class="label-column">Success Criteria</td>
+              <td>
+                Puzzle sheet completed and checked.<br>
+                Seesaw post uploaded responding to a specific Task Card.
+              </td>
+            </tr>
+            <tr>
+              <td class="label-column">Assessment Evidence</td>
+              <td>Teacher check of puzzle; Seesaw post review.</td>
+            </tr>
+            <tr>
+              <td class="label-column">Materials & Vocab</td>
+              <td>
+                <strong>Materials:</strong> Logic Puzzle Sheets, Choice Time Stations, iPads/Chromebooks (Seesaw).<br>
+                <strong>Vocab:</strong> Reflection, Documentation, Evidence.
+              </td>
+            </tr>
+            <tr>
+              <td class="label-column">Differentiation</td>
+              <td>
+                <strong>Choice:</strong> Students select station and specific "Task Card" (e.g., "The Smartest Move" for Board Games).
+              </td>
+            </tr>
+            <tr>
+              <td class="label-column">IGNITE (Critical Thinking - 15 min)</td>
+              <td>
+                <strong>Logic Puzzles:</strong>
+                <ul>
+                    <li><strong>Workflow:</strong> Select Puzzle -> Work -> Submit to Tray -> Teacher Check.</li>
+                    <li><strong>Goal:</strong> Complete at least one sheet accurately.</li>
+                </ul>
+              </td>
+            </tr>
+            <tr>
+              <td class="label-column">
+                EXPLORE (Choice Time - 15 min)
+              </td>
+              <td>
+                <strong>Teacher Action:</strong>
+                <ul>
+                  <li><strong>Prompt:</strong> "Choose your station. Grab the Task Cards. You must do the activity AND answer the card on Seesaw."</li>
+                  <li><strong>Monitor:</strong> Ensure students are taking photos/recording voice on Seesaw.</li>
+                </ul>
+                <strong>Student Action:</strong>
+                <ul>
+                  <li><strong>Engage:</strong> Play game, build lego, code, etc.</li>
+                  <li><strong>Reflect:</strong> Open Seesaw. Take a photo of the work. Record voice answering the prompt from the Task Card (e.g., "The tricky part was...").</li>
+                </ul>
+              </td>
+            </tr>
+            <tr>
+              <td class="label-column">
+                REFLECT (2 min)
+              </td>
+              <td>
+                <strong>Debrief:</strong> "Who posted a 'Secret Meaning' (Reading) or a 'Master Strategy' (Games)?"
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <hr />
+
+      <!-- ***************** WEEK 4 ***************** -->
+
+      <!-- WEEK 4: MONDAY -->
+      <div>
+        <h3>Week 4: Daily Lesson Plan for Monday (Jan 26)</h3>
+        <table class="daily-plan-table">
+          <tbody>
+            <tr>
+              <td
+                colspan="2"
+                style="font-weight: bold; background-color: #f9f9f9"
+              >
+                CONTEXT FOR TODAY'S LESSON
+              </td>
+            </tr>
+            <tr>
+              <td class="label-column">Unit / Focus</td>
+              <td>Teambuilding / Novel Study</td>
+            </tr>
+             <tr>
+              <td class="label-column">Standard(s)</td>
+              <td>ELAGSE2RL3 (Characters), TA2.CR.1 (Focus)</td>
+            </tr>
+            <tr>
+              <td class="label-column">Strategies</td>
+              <td>Nonlinguistic Representations, Cooperative Learning, Summarizing</td>
+            </tr>
+            <tr>
+              <td
+                colspan="2"
+                style="font-weight: bold; background-color: #f9f9f9"
+              >
+                PLAN FOR TODAY'S LESSON
+              </td>
+            </tr>
+            <tr>
+              <td class="label-column">Learning Target</td>
+              <td>
+                I can maintain focus while passing a signal (pulse) around a circle.<br>
+                I can describe Edmund's personality using text evidence.
+              </td>
+            </tr>
+            <tr>
+              <td class="label-column">Success Criteria</td>
+              <td>
+                Pulse travels full circle without breaking.<br>
+                Vocab II (p.6) complete; Logic Qs (p.7) discussed.
+              </td>
+            </tr>
+            <tr>
+              <td class="label-column">Assessment Evidence</td>
+              <td>Visual check of Pulse; Packet check (p.6 & 7).</td>
+            </tr>
+            <tr>
+              <td class="label-column">Materials & Vocab</td>
+              <td>
+                <strong>Materials:</strong> Novel-Ties, Books, Keys (Anchor, Setup Deck).<br>
+                <strong>Vocab:</strong> Superior, Logic.
+              </td>
+            </tr>
+            <tr>
+              <td class="label-column">Differentiation</td>
+              <td>
+                <strong>Stealth Squads:</strong> "Blind Mode" option for advanced groups.<br>
+                <strong>Novel:</strong> Menu activity (Edmund's personality) can be done with a partner for support.
+              </td>
+            </tr>
+            <tr>
+              <td class="label-column">IGNITE (Stealth Squads - 8 min)</td>
+              <td>
+                <strong>Pass the Pulse:</strong>
+                <ul>
+                    <li><strong>Setup:</strong> Student Leader chooses a "Setup Key" (e.g., Battery or Glue) to focus the team.</li>
+                    <li><strong>Mission:</strong> "In a circle, hold hands. Squeeze right hand. Pass the squeeze. Speed it up."</li>
+                    <li><strong>Debrief:</strong> Review with the "Anchor Key" (Did you feel safe?).</li>
+                </ul>
+              </td>
+            </tr>
+            <tr>
+              <td class="label-column">
+                EXPLORE (Novel Study - 15 min)
+              </td>
+              <td>
+                <strong>Teacher Action:</strong>
+                <ul>
+                  <li><strong>Pre-Read (Guided):</strong> <strong>Page 6</strong> Vocab: Superior, Logic.</li>
+                  <li><strong>Read Aloud:</strong> Chapter 5 ("Back on this Side of the Door").</li>
+                  <li><strong>Discussion:</strong> <strong>Page 7</strong> "Questions of Logic for Discussion." (Professor's logic about Lucy).</li>
+                </ul>
+                <strong>Student Action:</strong>
+                <ul>
+                  <li><strong>Work:</strong> Complete Vocab (p.6).</li>
+                  <li><strong>Discussion:</strong> Debate: "Why does the Professor believe Lucy?"</li>
+                  <li><strong>Menu:</strong> <strong>Page 7</strong> Q1 (Edmund's personality). Write traits/evidence.</li>
+                </ul>
+              </td>
+            </tr>
+            <tr>
+              <td class="label-column">
+                REFLECT (2 min)
+              </td>
+              <td>
+                <strong>Debrief:</strong> "Is Edmund 'Superior'? Why does he think he is?"
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- WEEK 4: TUESDAY -->
+      <div>
+        <h3>Week 4: Daily Lesson Plan for Tuesday (Jan 27)</h3>
+        <table class="daily-plan-table">
+          <tbody>
+            <tr>
+              <td
+                colspan="2"
+                style="font-weight: bold; background-color: #f9f9f9"
+              >
+                CONTEXT FOR TODAY'S LESSON
+              </td>
+            </tr>
+            <tr>
+              <td class="label-column">Unit / Focus</td>
+              <td>Project: Note Taking / Fluency: Games</td>
+            </tr>
+             <tr>
+              <td class="label-column">Standard(s)</td>
+              <td>ELAGSE2W8 (Recall Information), MGSE2.OA.2 (Fluency)</td>
+            </tr>
+            <tr>
+              <td class="label-column">Strategies</td>
+              <td>Summarizing/Note Taking, Generating Hypotheses</td>
+            </tr>
+            <tr>
+              <td
+                colspan="2"
+                style="font-weight: bold; background-color: #f9f9f9"
+              >
+                PLAN FOR TODAY'S LESSON
+              </td>
+            </tr>
+            <tr>
+              <td class="label-column">Learning Target</td>
+              <td>
+                I can paraphrase information from sources to answer my research questions.<br>
+                I can practice math facts using digital games.
+              </td>
+            </tr>
+            <tr>
+              <td class="label-column">Success Criteria</td>
+              <td>
+                At least 3 facts recorded on Notes Pages (9-13).<br>
+                Participation in fluency games.
+              </td>
+            </tr>
+            <tr>
+              <td class="label-column">Assessment Evidence</td>
+              <td>Packet Notes check.</td>
+            </tr>
+            <tr>
+              <td class="label-column">Materials & Vocab</td>
+              <td>
+                <strong>Materials:</strong> Books, Chromebooks, Project Packets.<br>
+                <strong>Vocab:</strong> Paraphrase, Fact, Detail.
+              </td>
+            </tr>
+            <tr>
+              <td class="label-column">Differentiation</td>
+              <td>
+                <strong>Strategy:</strong> "Read, Close, Write" strategy prevents copying.
+              </td>
+            </tr>
+            <tr>
+              <td class="label-column">IGNITE (Fluency - 10 min)</td>
+              <td>
+                <strong>Game Choice:</strong>
+                <ul>
+                    <li><strong>Action:</strong> Students choose Arcademics or Sheppard Fruit Splat.</li>
+                    <li><strong>Focus:</strong> Play for high score.</li>
+                </ul>
+              </td>
+            </tr>
+            <tr>
+              <td class="label-column">
+                EXPLORE (Project - 15 min)
+              </td>
+              <td>
+                <strong>Teacher Action:</strong>
+                <ul>
+                  <li><strong>Instruction:</strong> "Look at the questions you wrote on Page 6. Today we answer them."</li>
+                  <li><strong>Task:</strong> Read sources found on Tuesday. Fill out <strong>Pages 9-13</strong> (Research Notes).</li>
+                  <li><strong>Rule:</strong> "Read the sentence. Close the book. Write it in your own words."</li>
+                </ul>
+                <strong>Student Action:</strong>
+                <ul>
+                  <li><strong>Research:</strong> Blue/Green teams look for slime recipes/crystal growth times. Red team looks for motor types/wheel axles.</li>
+                  <li><strong>Writing:</strong> Record facts and the source number.</li>
+                </ul>
+              </td>
+            </tr>
+            <tr>
+              <td class="label-column">
+                REFLECT (5 min)
+              </td>
+              <td>
+                <strong>Debrief:</strong> "Share one surprising fact you learned today."
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- WEEK 4: WEDNESDAY -->
+      <div>
+        <h3>Week 4: Daily Lesson Plan for Wednesday (Jan 28)</h3>
+        <table class="daily-plan-table">
+          <tbody>
+            <tr>
+              <td
+                colspan="2"
+                style="font-weight: bold; background-color: #f9f9f9"
+              >
+                CONTEXT FOR TODAY'S LESSON
+              </td>
+            </tr>
+             <tr>
+              <td class="label-column">Unit / Focus</td>
+              <td>Teambuilding / Novel Study</td>
+            </tr>
+             <tr>
+              <td class="label-column">Standard(s)</td>
+              <td>ELAGSE2RL3 (Plot), TA2.CR.1 (Body Control)</td>
+            </tr>
+            <tr>
+              <td class="label-column">Strategies</td>
+              <td>Nonlinguistic Representations, Cooperative Learning</td>
+            </tr>
+            <tr>
+              <td
+                colspan="2"
+                style="font-weight: bold; background-color: #f9f9f9"
+              >
+                PLAN FOR TODAY'S LESSON
+              </td>
+            </tr>
+            <tr>
+              <td class="label-column">Learning Target</td>
+              <td>
+                I can non-verbally sculpt a partner into a specific pose.<br>
+                I can explain how Edmund betrayed his siblings.
+              </td>
+            </tr>
+            <tr>
+              <td class="label-column">Success Criteria</td>
+              <td>
+                "Clay" holds the pose created by "Sculptor."<br>
+                Vocab (p.6) complete; Q3-5 (p.7) discussed.
+              </td>
+            </tr>
+            <tr>
+              <td class="label-column">Assessment Evidence</td>
+              <td>Visual check of Sculptures; Packet check (p.6 & 7).</td>
+            </tr>
+            <tr>
+              <td class="label-column">Materials & Vocab</td>
+              <td>
+                <strong>Materials:</strong> Novel-Ties, Books, Keys (Setup, Debrief).<br>
+                <strong>Vocab:</strong> Premises, Fraternize.
+              </td>
+            </tr>
+            <tr>
+              <td class="label-column">Differentiation</td>
+              <td>
+                <strong>Stealth Squads:</strong> "Living Statue" mod (hold pose for 30 seconds).<br>
+                <strong>Novel:</strong> Discussion focuses on the Robin as a symbol of good (literary device).
+              </td>
+            </tr>
+            <tr>
+              <td class="label-column">IGNITE (Stealth Squads - 8 min)</td>
+              <td>
+                <strong>Sculptor & Clay:</strong>
+                <ul>
+                    <li><strong>Setup:</strong> Student Leader chooses "Setup Key."</li>
+                    <li><strong>Mission:</strong> "One person (Sculptor) poses another (Clay). Observers must approve the pose."</li>
+                    <li><strong>Constraint:</strong> No talking. Gentle touch only.</li>
+                    <li><strong>Debrief:</strong> Student Leader chooses "Debrief Key" (e.g., The Mirror Key - Did I cause the crash?).</li>
+                </ul>
+              </td>
+            </tr>
+            <tr>
+              <td class="label-column">
+                EXPLORE (Novel Study - 15 min)
+              </td>
+              <td>
+                <strong>Teacher Action:</strong>
+                <ul>
+                  <li><strong>Pre-Read:</strong> <strong>Page 6</strong> Vocab: Premises, Fraternize.</li>
+                  <li><strong>Read Aloud:</strong> Chapter 6 ("Into the Forest").</li>
+                  <li><strong>Discussion:</strong> <strong>Page 7</strong> Q3 (How did they know Edmund was there before?), Q4 (Why stay?), Q5 (The Robin).</li>
+                </ul>
+                <strong>Student Action:</strong>
+                <ul>
+                  <li><strong>Work:</strong> Complete Vocab (p.6).</li>
+                  <li><strong>Discussion:</strong> "Edmund knew where the lamp post was!"</li>
+                  <li><strong>Menu:</strong> Continue Q1 (Edmund's personality) from Monday.</li>
+                </ul>
+              </td>
+            </tr>
+            <tr>
+              <td class="label-column">
+                REFLECT (2 min)
+              </td>
+              <td>
+                <strong>Debrief:</strong> "Why did they trust the Robin?"
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- WEEK 4: THURSDAY -->
+      <div>
+        <h3>Week 4: Daily Lesson Plan for Thursday (Jan 29)</h3>
+        <table class="daily-plan-table">
+          <tbody>
+            <tr>
+              <td
+                colspan="2"
+                style="font-weight: bold; background-color: #f9f9f9"
+              >
+                CONTEXT FOR TODAY'S LESSON
+              </td>
+            </tr>
+            <tr>
+              <td class="label-column">Unit / Focus</td>
+              <td>Project: Design / Fluency: XtraMath</td>
+            </tr>
+             <tr>
+              <td class="label-column">Standard(s)</td>
+              <td>S2CS3 (Tools/Measuring), MGSE2.OA.2 (Fluency)</td>
+            </tr>
+            <tr>
+              <td class="label-column">Strategies</td>
+              <td>Generating/Testing Hypotheses, STEM Integration, Setting Objectives</td>
+            </tr>
+            <tr>
+              <td
+                colspan="2"
+                style="font-weight: bold; background-color: #f9f9f9"
+              >
+                PLAN FOR TODAY'S LESSON
+              </td>
+            </tr>
+            <tr>
+              <td class="label-column">Learning Target</td>
+              <td>
+                I can design a fair experiment (variables) OR an invention plan (constraints).<br>
+                I can practice math facts for accuracy.
+              </td>
+            </tr>
+            <tr>
+              <td class="label-column">Success Criteria</td>
+              <td>
+                Page 14 (Science) OR Page 15 (Engineering) completed.<br>
+                XtraMath session completed.
+              </td>
+            </tr>
+            <tr>
+              <td class="label-column">Assessment Evidence</td>
+              <td>Packet Page 14/15 Check (Summative for Planning Phase).</td>
+            </tr>
+            <tr>
+              <td class="label-column">Materials & Vocab</td>
+              <td>
+                <strong>Materials:</strong> Project Packets, Chromebooks.<br>
+                <strong>Vocab:</strong> Variable, Control, Constraint, Prototype.
+              </td>
+            </tr>
+            <tr>
+              <td class="label-column">Differentiation</td>
+              <td>
+                <strong>Path B (Science):</strong> Blue/Green Teams use Page 14 (Independent/Dependent Variables).<br>
+                <strong>Path B (Engineering):</strong> Red Team (Cars) uses Page 15 (Design/Sketch/Materials).
+              </td>
+            </tr>
+            <tr>
+              <td class="label-column">IGNITE (Fluency - 10 min)</td>
+              <td>
+                <strong>XtraMath:</strong>
+                <ul>
+                    <li><strong>Action:</strong> Complete one full session.</li>
+                    <li><strong>Focus:</strong> Accuracy over speed.</li>
+                </ul>
+              </td>
+            </tr>
+            <tr>
+              <td class="label-column">
+                EXPLORE (Project - 15 min)
+              </td>
+              <td>
+                <strong>Teacher Action:</strong>
+                <ul>
+                  <li><strong>Instruction:</strong> "Today we plan the build/test."</li>
+                  <li><strong>Split:</strong> 
+                    <ul>
+                        <li>"Blue & Green Teams: Go to <strong>Page 14</strong>. What is the ONE thing you will change (Variable)?"</li>
+                        <li>"Red Team: Go to <strong>Page 15</strong>. Draw your car. What are the rules (Constraints)?"</li>
+                    </ul>
+                  </li>
+                </ul>
+                <strong>Student Action:</strong>
+                <ul>
+                  <li><strong>Blue (Slime):</strong> Plan variables (e.g., Amount of Borax).</li>
+                  <li><strong>Green (Crystals):</strong> Plan variables (e.g., Temperature of water).</li>
+                  <li><strong>Red (Car):</strong> Sketch design, list materials (batteries, wires, wheels).</li>
+                </ul>
+              </td>
+            </tr>
+            <tr>
+              <td class="label-column">
+                REFLECT (5 min)
+              </td>
+              <td>
+                <strong>Debrief:</strong> "Red Team, show us your sketch. Blue/Green, tell us your variable."
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- WEEK 4: FRIDAY -->
+      <div>
+        <h3>Week 4: Daily Lesson Plan for Friday (Jan 30)</h3>
+        <table class="daily-plan-table">
+          <tbody>
+            <tr>
+              <td
+                colspan="2"
+                style="font-weight: bold; background-color: #f9f9f9"
+              >
+                CONTEXT FOR TODAY'S LESSON
+              </td>
+            </tr>
+            <tr>
+              <td class="label-column">Unit / Focus</td>
+              <td>Critical Thinking / Choice Time</td>
+            </tr>
+             <tr>
+              <td class="label-column">Standard(s)</td>
+              <td>MGSE2.MP.1 (Perseverance), NAGC 4.2 (Self-Reflection via Seesaw)</td>
+            </tr>
+            <tr>
+              <td class="label-column">Strategies</td>
+              <td>Student Agency, Technology Integration</td>
+            </tr>
+            <tr>
+              <td
+                colspan="2"
+                style="font-weight: bold; background-color: #f9f9f9"
+              >
+                PLAN FOR TODAY'S LESSON
+              </td>
+            </tr>
+            <tr>
+              <td class="label-column">Learning Target</td>
+              <td>
+                I can solve logic puzzles with accuracy.<br>
+                I can document my learning process using Seesaw.
+              </td>
+            </tr>
+            <tr>
+              <td class="label-column">Success Criteria</td>
+              <td>
+                One puzzle sheet completed and checked.<br>
+                Seesaw post uploaded with reflection.
+              </td>
+            </tr>
+            <tr>
+              <td class="label-column">Assessment Evidence</td>
+              <td>Teacher check of puzzle; Seesaw post.</td>
+            </tr>
+            <tr>
+              <td class="label-column">Materials & Vocab</td>
+              <td>
+                <strong>Materials:</strong> Logic Puzzles, Choice Stations, iPads/Chromebooks.<br>
+                <strong>Vocab:</strong> Deductive Reasoning, Artifact.
+              </td>
+            </tr>
+            <tr>
+              <td class="label-column">Differentiation</td>
+              <td>
+                <strong>Choice:</strong> Students choose activity and reflection prompt.
+              </td>
+            </tr>
+            <tr>
+              <td class="label-column">IGNITE (Critical Thinking - 15 min)</td>
+              <td>
+                <strong>Logic Puzzles:</strong>
+                <ul>
+                    <li><strong>Action:</strong> Students select new sheets or continue previous work.</li>
+                    <li><strong>Check:</strong> Submit to tray for teacher verification.</li>
+                </ul>
+              </td>
+            </tr>
+            <tr>
+              <td class="label-column">
+                EXPLORE (Choice Time - 15 min)
+              </td>
+              <td>
+                <strong>Teacher Action:</strong>
+                <ul>
+                  <li><strong>Prompt:</strong> "Remember to use the Task Cards on the Hub. Your Seesaw post must answer the question on the card."</li>
+                </ul>
+                <strong>Student Action:</strong>
+                <ul>
+                  <li><strong>Create:</strong> Do the activity.</li>
+                  <li><strong>Record:</strong> Upload photo/video to Seesaw. Voice record the answer to the Task Card prompt (e.g., "The 'Aha!' moment was...").</li>
+                </ul>
+              </td>
+            </tr>
+            <tr>
+              <td class="label-column">
+                REFLECT (2 min)
+              </td>
+              <td>
+                <strong>Debrief:</strong> "Who thinks they leveled up in a skill today? Which one?"
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </body>
+</html>
