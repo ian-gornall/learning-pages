@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hugo Cabret: Days 4-6</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Bangers&family=Poppins:wght@400;600;700;800&display=swap");
+      :root {
+        --primary-color: #ff6347;
+        --secondary-color: #4a90e2;
+        --accent-color: #f0c419;
+        --dark-text: #2c3e50;
+        --danger-color: #e74c3c;
+        --success-color: #2ecc71;
+        --warmup-color: #e67e22;
+        --lesson-color: #3498db;
+        --work-color: #9b59b6;
+        --close-color: #27ae60;
+      }
+      body {
+        margin: 0;
+        font-family: "Poppins", sans-serif;
+        background-color: var(--dark-text);
+        overflow: hidden;
+      }
+      .slideshow-container {
+        position: relative;
+        width: 100vw;
+        height: 100vh;
+      }
+
+      /* SLIDE ANIMATIONS & LAYOUT */
+      .slide {
+        display: none;
+        width: 100%;
+        height: 100%;
+        padding: 10px 40px;
+        box-sizing: border-box;
+        text-align: center;
+        justify-content: flex-start;
+        align-items: center;
+        flex-direction: column;
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+      .slide.active {
+        display: flex;
+        animation: slideAppear 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      }
+      @keyframes slideAppear {
+        from { opacity: 0; transform: scale(0.98); }
+        to { opacity: 1; transform: scale(1); }
+      }
+
+      /* DYNAMIC BACKGROUNDS */
+      @keyframes gradient-pan {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+      }
+      /* Pink/Purple for Day 4 (The Promise) */
+      .bg-day4 { background: linear-gradient(-45deg, #ff9a9e, #fecfef, #feada6); background-size: 400% 400%; animation: gradient-pan 15s ease infinite; }
+      /* Blue/Metallic for Day 5 (The Automaton) */
+      .bg-day5 { background: linear-gradient(-45deg, #accbee, #e7f0fd, #c1dfc4); background-size: 400% 400%; animation: gradient-pan 15s ease infinite; }
+      /* Orange/Grey for Day 6 (Ashes) */
+      .bg-day6 { background: linear-gradient(-45deg, #bdc3c7, #2c3e50, #e67e22); background-size: 400% 400%; animation: gradient-pan 15s ease infinite; }
+
+      /* TYPOGRAPHY */
+      h1 {
+        font-family: "Bangers", cursive;
+        font-size: clamp(2.5em, 5vw, 4em);
+        margin: 5px 0 0 0;
+        color: #fff;
+        -webkit-text-stroke: 2px #2c3e50;
+        text-shadow: 3px 3px 0px rgba(0,0,0,0.3);
+        letter-spacing: 1px;
+        z-index: 10;
+        line-height: 1;
+      }
+      
+      .date-subtitle {
+        font-family: "Poppins", sans-serif;
+        font-weight: 700;
+        color: white;
+        background: rgba(44, 62, 80, 0.8);
+        padding: 2px 15px;
+        border-radius: 15px;
+        margin-bottom: 10px;
+        font-size: 1rem;
+        z-index: 10;
+      }
+
+      /* TARGET BOX STYLES */
+      .target-container {
+        display: flex;
+        gap: 15px;
+        width: 90%;
+        max-width: 1200px;
+        margin-bottom: 10px;
+        z-index: 10;
+      }
+      .target-box {
+        background: rgba(255, 255, 255, 0.95);
+        padding: 8px 20px;
+        border-radius: 15px;
+        font-weight: 700;
+        font-size: 1.1em;
+        color: var(--dark-text);
+        box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        border: 2px solid #2c3e50;
+        flex: 1;
+        text-align: left;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .target-icon { font-size: 1.5em; color: var(--secondary-color); }
+      .success-icon { font-size: 1.5em; color: var(--success-color); }
+
+      /* MAIN CONTENT BOX */
+      .content-box {
+        background: rgba(255, 255, 255, 0.93);
+        margin: 5px 0;
+        padding: 20px 30px;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        border: 4px solid #fff;
+        height: 68vh;
+        width: 95%;
+        max-width: 1400px;
+        display: grid;
+        grid-template-columns: 1fr 1fr; /* 2 Columns */
+        grid-template-rows: 1fr 1fr;    /* 2 Rows */
+        gap: 20px;
+        box-sizing: border-box;
+      }
+
+      /* LESSON STEP CARDS */
+      .step-card {
+        background: white;
+        border-radius: 15px;
+        padding: 15px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        text-align: left;
+        border-left: 10px solid #ccc;
+        transition: transform 0.2s;
+        position: relative;
+        overflow: hidden;
+      }
+      .step-card:hover { transform: translateY(-3px); box-shadow: 0 8px 15px rgba(0,0,0,0.1); }
+
+      /* Card Variations */
+      .card-warmup { border-left-color: var(--warmup-color); background: #fff8e1; }
+      .card-lesson { border-left-color: var(--lesson-color); background: #e3f2fd; }
+      .card-work   { border-left-color: var(--work-color); background: #f3e5f5; }
+      .card-close  { border-left-color: var(--close-color); background: #e8f5e9; }
+
+      .step-header {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 8px;
+        border-bottom: 2px solid rgba(0,0,0,0.05);
+        padding-bottom: 5px;
+      }
+      .step-badge {
+        color: white;
+        padding: 4px 10px;
+        border-radius: 10px;
+        font-weight: 800;
+        font-size: 0.9em;
+        text-transform: uppercase;
+      }
+      .bg-warmup { background-color: var(--warmup-color); }
+      .bg-lesson { background-color: var(--lesson-color); }
+      .bg-work { background-color: var(--work-color); }
+      .bg-close { background-color: var(--close-color); }
+
+      .step-title { font-weight: 800; font-size: 1.3em; color: var(--dark-text); }
+      .step-desc { font-size: 1em; color: #555; line-height: 1.4; flex-grow: 1; }
+      .step-icon-bg {
+        position: absolute; bottom: -10px; right: -10px; font-size: 6em; opacity: 0.1;
+      }
+      .card-warmup .step-icon-bg { color: var(--warmup-color); }
+      .card-lesson .step-icon-bg { color: var(--lesson-color); }
+      .card-work .step-icon-bg { color: var(--work-color); }
+      .card-close .step-icon-bg { color: var(--close-color); }
+
+
+      /* NAVIGATION */
+      .nav-button {
+        position: absolute; top: 50%; transform: translateY(-50%);
+        background-color: rgba(44, 62, 80, 0.6); color: white;
+        border: none; font-size: 2em; width: 45px; height: 45px;
+        cursor: pointer; z-index: 100; border-radius: 50%;
+        display: flex; align-items: center; justify-content: center;
+        transition: all 0.2s;
+      }
+      .nav-button:hover { background-color: var(--accent-color); color: var(--dark-text); }
+      #prev { left: 15px; }
+      #next { right: 15px; }
+
+      .day-nav {
+        position: absolute; bottom: 15px; left: 50%; transform: translateX(-50%);
+        z-index: 100; background: rgba(44, 62, 80, 0.8);
+        padding: 8px 15px; border-radius: 50px;
+        display: flex; align-items: center; gap: 5px;
+      }
+      .day-nav button {
+        background: transparent; border: none; color: white;
+        font-family: "Poppins"; font-weight: 700; font-size: 0.9em;
+        padding: 8px 16px; cursor: pointer; border-radius: 30px;
+        transition: all 0.3s ease;
+      }
+      .day-nav button.active {
+        background-color: var(--accent-color); color: var(--dark-text);
+        box-shadow: 0 0 10px var(--accent-color);
+      }
+
+      /* TIMER */
+      .timer-container {
+        position: absolute; top: 15px; right: 15px; z-index: 101;
+        background: var(--dark-text); padding: 10px; border-radius: 15px;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5); color: white;
+        text-align: center; width: 150px; transition: opacity 0.3s;
+      }
+      .timer-visual { position: relative; width: 80px; height: 80px; margin: 0 auto 5px; }
+      .timer-visual svg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; transform: rotate(-90deg); }
+      .timer-progress-bg { fill: none; stroke: rgba(255, 255, 255, 0.1); stroke-width: 7; }
+      .timer-progress-bar { fill: none; stroke: var(--success-color); stroke-width: 7; stroke-linecap: round; transition: stroke-dashoffset 0.2s linear; }
+      .timer-display { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-weight: 800; font-size: 1.4em; }
+      .timer-adjust button { background: #555; border: none; color: white; border-radius: 4px; padding: 2px 6px; cursor: pointer; margin: 0 2px; font-size: 0.7em;}
+      .timer-controls button { border: none; color: white; width: 30px; height: 30px; border-radius: 50%; margin: 5px 3px 0; cursor: pointer; }
+      #start-pause-timer { background: var(--success-color); }
+      #reset-timer { background: var(--danger-color); }
+
+    </style>
+  </head>
+  <body>
+
+    <div class="slideshow-container">
+
+      <!-- DAY 4: WED 1/21/26 -->
+      <div class="slide bg-day4 active" data-day="4">
+        <h1><i class="fas fa-handshake"></i> Day 4: The Window</h1>
+        <div class="date-subtitle">Wednesday, Jan 21, 2026</div>
+        
+        <div class="target-container">
+            <div class="target-box">
+                <i class="fas fa-bullseye target-icon"></i>
+                <div><strong>Target:</strong> I can use context clues to solve a crossword puzzle.</div>
+            </div>
+            <div class="target-box">
+                <i class="fas fa-check-circle success-icon"></i>
+                <div><strong>Success:</strong> I can explain why Hugo trusts the girl with a promise.</div>
+            </div>
+        </div>
+
+        <div class="content-box">
+            <!-- 1. Warmup -->
+            <div class="step-card card-warmup">
+                <i class="fas fa-cogs step-icon-bg"></i>
+                <div class="step-header">
+                    <span class="step-badge bg-warmup">Warmup</span>
+                    <div class="step-title">Vocab: Guide Page 15</div>
+                </div>
+                <div class="step-desc">
+                    <strong>Automaton:</strong> A moving mechanical device (robot).<br>
+                    <strong>Cogs:</strong> Gears.<br>
+                    <strong>Nips:</strong> Small pieces (or pen tips/nibs).
+                </div>
+            </div>
+
+            <!-- 2. Mini-Lesson -->
+            <div class="step-card card-lesson">
+                <i class="fas fa-book-reader step-icon-bg"></i>
+                <div class="step-header">
+                    <span class="step-badge bg-lesson">Read Aloud</span>
+                    <div class="step-title">Chapter 4: The Window</div>
+                </div>
+                <div class="step-desc">
+                    Hugo takes a risk. Follow along as we read.<br>
+                    <em>Leader Focus: How does the girl treat Hugo?</em>
+                </div>
+            </div>
+
+            <!-- 3. Work Period -->
+            <div class="step-card card-work">
+                <i class="fas fa-users step-icon-bg"></i>
+                <div class="step-header">
+                    <span class="step-badge bg-work">Menu Activity</span>
+                    <div class="step-title">Discussion & Crossword</div>
+                </div>
+                <div class="step-desc">
+                    <strong>1. Whole Group:</strong> The Promise (Page 17, Q3).<br>
+                    <strong>2. Menu:</strong> Complete Vocab Crossword (Page 15-16).
+                </div>
+            </div>
+
+            <!-- 4. Closing -->
+            <div class="step-card card-close">
+                <i class="fas fa-comment-dots step-icon-bg"></i>
+                <div class="step-header">
+                    <span class="step-badge bg-close">Closing</span>
+                    <div class="step-title">Prediction</div>
+                </div>
+                <div class="step-desc">
+                    Will the girl keep her promise not to burn the notebook? Why or why not?
+                </div>
+            </div>
+        </div>
+      </div>
+
+      <!-- DAY 5: MON 1/26/26 -->
+      <div class="slide bg-day5" data-day="5">
+        <h1><i class="fas fa-robot"></i> Day 5: Hugo's Father</h1>
+        <div class="date-subtitle">Monday, Jan 26, 2026</div>
+        
+        <div class="target-container">
+            <div class="target-box">
+                <i class="fas fa-bullseye target-icon"></i>
+                <div><strong>Target:</strong> I can analyze what motivates a character to hide.</div>
+            </div>
+            <div class="target-box">
+                <i class="fas fa-check-circle success-icon"></i>
+                <div><strong>Success:</strong> I can create similes to describe the story.</div>
+            </div>
+        </div>
+
+        <div class="content-box">
+            <!-- 1. Warmup -->
+            <div class="step-card card-warmup">
+                <i class="fas fa-clock step-icon-bg"></i>
+                <div class="step-header">
+                    <span class="step-badge bg-warmup">Warmup</span>
+                    <div class="step-title">Vocab: Guide Page 15</div>
+                </div>
+                <div class="step-desc">
+                    <strong>Apprentice:</strong> Someone learning a trade.<br>
+                    <strong>Horologist:</strong> A clock maker.
+                </div>
+            </div>
+
+            <!-- 2. Mini-Lesson -->
+            <div class="step-card card-lesson">
+                <i class="fas fa-book-open step-icon-bg"></i>
+                <div class="step-header">
+                    <span class="step-badge bg-lesson">Read Aloud</span>
+                    <div class="step-title">Chapter 5: Hugo's Father</div>
+                </div>
+                <div class="step-desc">
+                    We learn the history of the Automaton.<br>
+                    <em>Leader Focus: Why is this machine so special?</em>
+                </div>
+            </div>
+
+            <!-- 3. Work Period -->
+            <div class="step-card card-work">
+                <i class="fas fa-heart-broken step-icon-bg"></i>
+                <div class="step-header">
+                    <span class="step-badge bg-work">Menu Activity</span>
+                    <div class="step-title">Discussion & Similes</div>
+                </div>
+                <div class="step-desc">
+                    <strong>1. Discuss:</strong> What has Hugo lost? Why hide?<br>
+                    <strong>2. Menu:</strong> Create Similes (Page 23).
+                </div>
+            </div>
+
+            <!-- 4. Closing -->
+            <div class="step-card card-close">
+                <i class="fas fa-user-secret step-icon-bg"></i>
+                <div class="step-header">
+                    <span class="step-badge bg-close">Closing</span>
+                    <div class="step-title">Reflection</div>
+                </div>
+                <div class="step-desc">
+                    If you were Hugo, would you try to fix the machine? Why?
+                </div>
+            </div>
+        </div>
+      </div>
+
+      <!-- DAY 6: WED 1/28/26 -->
+      <div class="slide bg-day6" data-day="6">
+        <h1><i class="fas fa-fire"></i> Day 6: Ashes</h1>
+        <div class="date-subtitle">Wednesday, Jan 28, 2026</div>
+        
+        <div class="target-container">
+            <div class="target-box">
+                <i class="fas fa-bullseye target-icon"></i>
+                <div><strong>Target:</strong> I can evaluate the ethics of a character's choices (stealing).</div>
+            </div>
+            <div class="target-box">
+                <i class="fas fa-check-circle success-icon"></i>
+                <div><strong>Success:</strong> I can participate in a debate about right and wrong.</div>
+            </div>
+        </div>
+
+        <div class="content-box">
+            <!-- 1. Warmup -->
+            <div class="step-card card-warmup">
+                <i class="fas fa-home step-icon-bg"></i>
+                <div class="step-header">
+                    <span class="step-badge bg-warmup">Warmup</span>
+                    <div class="step-title">Vocab: Guide Page 15</div>
+                </div>
+                <div class="step-desc">
+                    <strong>Orphanage:</strong> A home for children without parents.<br>
+                    <strong>Exception:</strong> Something that doesn't follow the rule.
+                </div>
+            </div>
+
+            <!-- 2. Mini-Lesson -->
+            <div class="step-card card-lesson">
+                <i class="fas fa-book step-icon-bg"></i>
+                <div class="step-header">
+                    <span class="step-badge bg-lesson">Read Aloud</span>
+                    <div class="step-title">Chapter 6: Ashes</div>
+                </div>
+                <div class="step-desc">
+                    The Old Man gives Hugo a handkerchief of ashes.<br>
+                    <em>Leader Focus: How does Hugo feel right now?</em>
+                </div>
+            </div>
+
+            <!-- 3. Work Period -->
+            <div class="step-card card-work">
+                <i class="fas fa-balance-scale step-icon-bg"></i>
+                <div class="step-header">
+                    <span class="step-badge bg-work">Menu Activity</span>
+                    <div class="step-title">Ethics Discussion</div>
+                </div>
+                <div class="step-desc">
+                    <strong>1. Debate:</strong> Is stealing always wrong? (Hugo steals food/toys).<br>
+                    <strong>2. Menu:</strong> Finish Similes (Page 23).
+                </div>
+            </div>
+
+            <!-- 4. Closing -->
+            <div class="step-card card-close">
+                <i class="fas fa-door-open step-icon-bg"></i>
+                <div class="step-header">
+                    <span class="step-badge bg-close">Closing</span>
+                    <div class="step-title">Exit Ticket</div>
+                </div>
+                <div class="step-desc">
+                    What would you do if you were given the ashes? Give up or keep trying?
+                </div>
+            </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- TIMER COMPONENT -->
+    <div class="timer-container">
+      <div class="timer-visual">
+        <div class="timer-display">05:00</div>
+        <svg>
+          <circle class="timer-progress-bg" cx="40" cy="40" r="36"></circle>
+          <circle class="timer-progress-bar" cx="40" cy="40" r="36"></circle>
+        </svg>
+      </div>
+      <div class="timer-adjust">
+        <button class="timer-adjust-btn" data-time="-60">-1m</button>
+        <button class="timer-adjust-btn" data-time="-15">-15s</button>
+        <button class="timer-adjust-btn" data-time="15">+15s</button>
+        <button class="timer-adjust-btn" data-time="60">+1m</button>
+      </div>
+      <div class="timer-controls">
+        <button id="start-pause-timer"><i class="fas fa-play"></i></button>
+        <button id="reset-timer"><i class="fas fa-redo"></i></button>
+      </div>
+    </div>
+
+    <!-- NAVIGATION CONTROLS -->
+    <button id="prev" class="nav-button"><i class="fas fa-chevron-left"></i></button>
+    <button id="next" class="nav-button"><i class="fas fa-chevron-right"></i></button>
+    
+    <div class="day-nav">
+      <button data-day="4" class="active">Day 4</button>
+      <button data-day="5">Day 5</button>
+      <button data-day="6">Day 6</button>
+      <button id="toggle-timer-btn" style="margin-left:10px; width:40px; text-align:center;"><i class="fas fa-clock"></i></button>
+    </div>
+
+    <audio id="alarm-sound" src="https://actions.google.com/sounds/v1/alarms/medium_bell_ringing_near.ogg" preload="auto"></audio>
+
+    <script>
+      /* --- NAVIGATION LOGIC --- */
+      let currentSlideIndex = 0;
+      const slides = document.querySelectorAll(".slide");
+      const dayButtons = document.querySelectorAll(".day-nav button[data-day]");
+
+      function showSlide(index) {
+        if (index >= slides.length) index = 0;
+        if (index < 0) index = slides.length - 1;
+        
+        slides.forEach(slide => slide.classList.remove("active"));
+        slides[index].classList.add("active");
+        
+        currentSlideIndex = index;
+        
+        const currentDay = slides[index].getAttribute("data-day");
+        dayButtons.forEach(btn => {
+          btn.classList.toggle("active", btn.getAttribute("data-day") === currentDay);
+        });
+      }
+
+      document.getElementById("next").addEventListener("click", () => showSlide(currentSlideIndex + 1));
+      document.getElementById("prev").addEventListener("click", () => showSlide(currentSlideIndex - 1));
+
+      dayButtons.forEach((btn, index) => {
+        btn.addEventListener("click", () => showSlide(index));
+      });
+
+      /* --- TIMER LOGIC --- */
+      const timerDisplay = document.querySelector(".timer-display");
+      const startPauseBtn = document.getElementById("start-pause-timer");
+      const resetBtn = document.getElementById("reset-timer");
+      const toggleTimerBtn = document.getElementById("toggle-timer-btn");
+      const timerContainer = document.querySelector(".timer-container");
+      const timeAdjustBtns = document.querySelectorAll(".timer-adjust-btn");
+      const progressBar = document.querySelector(".timer-progress-bar");
+      const alarmSound = document.getElementById("alarm-sound");
+
+      const radius = progressBar.r.baseVal.value;
+      const circumference = 2 * Math.PI * radius;
+      progressBar.style.strokeDasharray = circumference;
+
+      let countdown;
+      let totalTime = 300; // 5 Minutes
+      let remainingTime = totalTime;
+      let isRunning = false;
+
+      function updateDisplay() {
+        const mins = Math.floor(remainingTime / 60);
+        const secs = remainingTime % 60;
+        timerDisplay.textContent = `${mins}:${secs < 10 ? "0" : ""}${secs}`;
+        
+        const offset = circumference - (remainingTime / totalTime) * circumference;
+        progressBar.style.strokeDashoffset = offset;
+      }
+
+      function toggleTimer() {
+        if (isRunning) {
+          clearInterval(countdown);
+          startPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+        } else {
+          startPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+          countdown = setInterval(() => {
+            if (remainingTime > 0) {
+              remainingTime--;
+              updateDisplay();
+            } else {
+              clearInterval(countdown);
+              isRunning = false;
+              startPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+              alarmSound.play();
+            }
+          }, 1000);
+        }
+        isRunning = !isRunning;
+      }
+
+      function resetTimer() {
+        clearInterval(countdown);
+        isRunning = false;
+        remainingTime = totalTime;
+        updateDisplay();
+        startPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+        alarmSound.pause();
+        alarmSound.currentTime = 0;
+      }
+
+      timeAdjustBtns.forEach(btn => {
+        btn.addEventListener("click", () => {
+          if (isRunning) return;
+          totalTime += parseInt(btn.dataset.time);
+          if (totalTime < 0) totalTime = 0;
+          remainingTime = totalTime;
+          updateDisplay();
+        });
+      });
+
+      toggleTimerBtn.addEventListener("click", () => {
+        const currentOp = getComputedStyle(timerContainer).opacity;
+        timerContainer.style.opacity = currentOp === "1" ? "0" : "1";
+        timerContainer.style.pointerEvents = currentOp === "1" ? "none" : "auto";
+      });
+
+      startPauseBtn.addEventListener("click", toggleTimer);
+      resetBtn.addEventListener("click", resetTimer);
+      
+      // Init
+      updateDisplay();
+
+    </script>
+  </body>
+</html>

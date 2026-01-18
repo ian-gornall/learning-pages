@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Narnia Unit: Days 4-6</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Bangers&family=Poppins:wght@400;600;700;800&display=swap");
+      :root {
+        --dark-text: #2c3e50;
+        --danger-color: #e74c3c;
+        --success-color: #27ae60;
+        --accent-gold: #f1c40f;
+        --wardrobe-brown: #8d6e63;
+        --magic-purple: #9b59b6;
+        --turkish-red: #ff6b6b;
+        --forest-green: #2e7d32;
+        --logic-blue: #1565c0;
+      }
+      body {
+        margin: 0;
+        font-family: "Poppins", sans-serif;
+        background-color: var(--dark-text);
+        overflow: hidden;
+      }
+      .slideshow-container {
+        position: relative;
+        width: 100vw;
+        height: 100vh;
+      }
+
+      /* BACKGROUND ANIMATIONS */
+      @keyframes gradient-pan {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+      }
+      
+      /* Day 4: Turkish Delight (Red/Gold) */
+      .bg-day4 {
+        background: linear-gradient(-45deg, #FFCDD2, #FFECB3, #FFAB91);
+        background-size: 400% 400%;
+        animation: gradient-pan 15s ease infinite;
+      }
+
+      /* Day 5: The Professor/Logic (Deep Blue/Bookish) */
+      .bg-day5 {
+        background: linear-gradient(-45deg, #E3F2FD, #BBDEFB, #90CAF9, #E1BEE7);
+        background-size: 400% 400%;
+        animation: gradient-pan 15s ease infinite;
+      }
+
+      /* Day 6: Into the Forest (Green/Snow) */
+      .bg-day6 {
+        background: linear-gradient(-45deg, #E8F5E9, #C8E6C9, #B2DFDB, #FFFFFF);
+        background-size: 400% 400%;
+        animation: gradient-pan 15s ease infinite;
+      }
+
+      /* SLIDE LAYOUT */
+      .slide {
+        display: none;
+        width: 100%;
+        height: 100%;
+        padding: 10px 40px;
+        box-sizing: border-box;
+        text-align: center;
+        flex-direction: column;
+        align-items: center;
+        position: absolute;
+        top: 0; left: 0;
+      }
+      .slide.active {
+        display: flex;
+        animation: fadeIn 0.5s ease;
+      }
+      @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+      h1 {
+        font-family: "Bangers", cursive;
+        font-size: clamp(2.5em, 5vw, 4em);
+        margin: 10px 0 5px 0;
+        color: #fff;
+        -webkit-text-stroke: 2px #2c3e50;
+        text-shadow: 3px 3px 0px rgba(0,0,0,0.3);
+        letter-spacing: 2px;
+        z-index: 10;
+      }
+
+      /* TARGET BANNER */
+      .target-banner {
+        background: rgba(255, 255, 255, 0.95);
+        padding: 8px 30px;
+        border-radius: 50px;
+        border: 3px solid var(--dark-text);
+        color: var(--dark-text);
+        font-weight: 700;
+        font-size: 1.2rem;
+        margin-bottom: 10px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        z-index: 10;
+        display: inline-block;
+      }
+      .target-label { color: var(--danger-color); text-transform: uppercase; margin-right: 5px; }
+
+      /* CONTENT BOX */
+      .content-box {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        height: 72vh;
+        width: 95%;
+        max-width: 1400px;
+        display: flex;
+        flex-direction: column;
+        padding: 20px;
+        box-sizing: border-box;
+        border: 1px solid rgba(255,255,255,0.5);
+        position: relative;
+      }
+
+      .content-split {
+        display: flex;
+        flex: 1;
+        gap: 20px;
+        overflow: hidden;
+      }
+
+      .col-left, .col-right {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        overflow-y: auto;
+        padding-right: 10px; 
+      }
+
+      .col-right {
+        border-left: 2px dashed #ccc;
+        padding-left: 20px;
+      }
+
+      /* HEADERS & CARDS */
+      .section-header {
+        font-family: "Bangers", cursive;
+        font-size: 1.8em;
+        color: var(--dark-text);
+        text-align: left;
+        margin-bottom: 5px;
+        border-bottom: 2px solid var(--accent-gold);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .card {
+        background: #f8f9fa;
+        border-radius: 12px;
+        padding: 15px;
+        text-align: left;
+        border-left: 6px solid;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        margin-bottom: 5px;
+      }
+      .card-hook { border-color: var(--magic-purple); }
+      .card-read { border-color: var(--wardrobe-brown); }
+      .card-discuss { border-color: var(--success-color); }
+      .card-menu { border-color: var(--logic-blue); background-color: #E3F2FD; }
+
+      .card h3 { margin: 0 0 5px 0; font-size: 1.1em; font-weight: 800; color: var(--dark-text); }
+      .card p { margin: 0; font-size: 0.95em; line-height: 1.4; color: #555; }
+      
+      .vocab-word {
+        background: var(--accent-gold);
+        padding: 2px 8px;
+        border-radius: 4px;
+        font-weight: 700;
+        color: var(--dark-text);
+      }
+
+      .question-box {
+        background: #e8f5e9;
+        border: 2px solid var(--success-color);
+        border-radius: 12px;
+        padding: 15px;
+        text-align: left;
+        flex-grow: 1;
+      }
+      .question-list { padding-left: 20px; margin: 0; }
+      .question-list li { margin-bottom: 10px; font-size: 1em; line-height: 1.3; }
+
+      /* FOOTER */
+      .success-footer {
+        margin-top: auto;
+        background: var(--dark-text);
+        color: var(--accent-gold);
+        padding: 15px;
+        border-radius: 12px;
+        font-size: 1.3em;
+        font-weight: 700;
+        text-align: center;
+        border: 3px solid var(--accent-gold);
+        box-shadow: 0 -4px 15px rgba(0,0,0,0.1);
+      }
+      .success-label { color: #fff; text-transform: uppercase; font-size: 0.8em; display: block; margin-bottom: 5px; letter-spacing: 1px;}
+
+      /* NAV & TIMER */
+      .nav-button {
+        position: absolute; top: 50%; transform: translateY(-50%);
+        background-color: rgba(44, 62, 80, 0.6); color: white;
+        border: none; font-size: 2em; width: 45px; height: 45px;
+        cursor: pointer; z-index: 100; border-radius: 50%;
+        display: flex; align-items: center; justify-content: center;
+      }
+      .nav-button:hover { background-color: rgba(44, 62, 80, 0.9); }
+      #prev { left: 15px; }
+      #next { right: 15px; }
+
+      .day-nav {
+        position: absolute; bottom: 15px; left: 50%;
+        transform: translateX(-50%); z-index: 100;
+        background: rgba(44, 62, 80, 0.8); padding: 8px;
+        border-radius: 50px; display: flex; gap: 5px;
+      }
+      .day-nav button {
+        background: transparent; border: none; color: white;
+        font-family: "Poppins"; font-weight: 700; font-size: 0.9em;
+        padding: 8px 15px; cursor: pointer; border-radius: 30px;
+        transition: all 0.3s;
+      }
+      .day-nav button.active {
+        background-color: var(--accent-gold); color: var(--dark-text);
+        transform: scale(1.05);
+      }
+
+      /* TIMER */
+      .timer-container {
+        position: absolute; top: 15px; right: 15px; z-index: 101;
+        background: var(--dark-text); padding: 10px; border-radius: 12px;
+        box-shadow: 0 6px 20px rgba(0,0,0,0.3); color: white;
+        text-align: center; width: 150px;
+      }
+      .timer-visual { position: relative; width: 90px; height: 90px; margin: 0 auto 5px; }
+      .timer-visual svg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; transform: rotate(-90deg); }
+      .timer-progress-bg { fill: none; stroke: rgba(255,255,255,0.1); stroke-width: 6; }
+      .timer-progress-bar { fill: none; stroke: var(--accent-gold); stroke-width: 6; stroke-linecap: round; transition: stroke-dashoffset 0.2s linear; }
+      .timer-display { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-weight: 800; font-size: 1.4em; }
+      .timer-controls, .timer-adjust { display: flex; justify-content: center; gap: 5px; margin-top: 5px; }
+      .timer-control-btn { border: none; color: white; width: 30px; height: 30px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+      #start-pause-timer { background: var(--success-color); }
+      #reset-timer { background: var(--danger-color); }
+      .timer-adjust-btn { background: #555; border: none; color: white; font-size: 0.7em; padding: 2px 6px; border-radius: 4px; cursor: pointer; }
+
+    </style>
+  </head>
+  <body>
+    <div class="slideshow-container">
+
+      <!-- DAY 4: Turkish Delight -->
+      <div class="slide bg-day4 active" data-day="4">
+        <h1>Day 4: Turkish Delight</h1>
+        
+        <div class="target-banner">
+            <span class="target-label">Target:</span> I can analyze the White Witch's motives.
+        </div>
+
+        <div class="content-box">
+            <div class="content-split">
+                <!-- Left Col -->
+                <div class="col-left">
+                    <div class="section-header"><i class="fas fa-lightbulb"></i> Pre-Read & Read</div>
+                    
+                    <div class="card card-hook">
+                        <h3><i class="fas fa-spell-check"></i> Vocabulary (Packet Pg. 3)</h3>
+                        <p>
+                           <span class="vocab-word">Reigns</span>
+                           <span class="vocab-word">Courtiers</span>
+                           <span class="vocab-word">Faun</span>
+                           <span class="vocab-word">Mantle</span>
+                           <span class="vocab-word">Wardrobe</span>
+                           <span class="vocab-word">Eternal</span>
+                        </p>
+                        <p><em>Complete Vocabulary I on Page 3.</em></p>
+                    </div>
+
+                    <div class="card card-read">
+                        <h3><i class="fas fa-book-open"></i> Read Aloud</h3>
+                        <p><strong>Chapter 4:</strong> Turkish Delight</p>
+                        <p><em>Focus: How does the Queen treat Edmund?</em></p>
+                    </div>
+                </div>
+
+                <!-- Right Col -->
+                <div class="col-right">
+                    <div class="section-header"><i class="fas fa-users"></i> Discuss & Do</div>
+                    <div class="question-box">
+                        <h3>Whole Group Discussion (Packet Pg. 4)</h3>
+                        <ol class="question-list">
+                            <li><strong>Q8:</strong> What was the power of the Turkish Delight candy?</li>
+                            <li><strong>Q9:</strong> What interested the White Witch <em>most</em> about Edmund's background?</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="card card-menu">
+                        <h3><i class="fas fa-pen-fancy"></i> Menu (Work Period)</h3>
+                        <p><strong>Packet Page 5 - Humor Section:</strong></p>
+                        <p>Look at the books on Mr. Tumnus's shelf. What is funny about the title <em>"Is Man a Myth?"</em></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="success-footer">
+                <span class="success-label">Success Criteria</span>
+                <i class="fas fa-check-circle"></i> I can explain why the Witch wants Edmund to bring his siblings.
+            </div>
+        </div>
+      </div>
+
+      <!-- DAY 5: Back on this Side -->
+      <div class="slide bg-day5" data-day="5">
+        <h1>Day 5: The Professor's Logic</h1>
+
+        <div class="target-banner">
+            <span class="target-label">Target:</span> I can use logic to determine the truth.
+        </div>
+
+        <div class="content-box">
+            <div class="content-split">
+                <div class="col-left">
+                    <div class="section-header"><i class="fas fa-lightbulb"></i> Pre-Read & Read</div>
+                    
+                    <div class="card card-hook">
+                        <h3><i class="fas fa-spell-check"></i> Vocabulary (Packet Pg. 6)</h3>
+                        <p>
+                            <span class="vocab-word">Superior</span>
+                            <span class="vocab-word">Logic</span>
+                        </p>
+                        <p><em>Define these on Page 6 (#1 & #2).</em></p>
+                    </div>
+
+                    <div class="card card-read">
+                        <h3><i class="fas fa-book-open"></i> Read Aloud</h3>
+                        <p><strong>Chapter 5:</strong> Back on this Side of the Door</p>
+                        <p><em>Focus: The Professor's three possibilities.</em></p>
+                    </div>
+                </div>
+
+                <div class="col-right">
+                    <div class="section-header"><i class="fas fa-users"></i> Discuss & Do</div>
+                    <div class="question-box">
+                        <h3>Whole Group Discussion (Packet Pg. 7)</h3>
+                        <p><strong>Questions of Logic:</strong></p>
+                        <p>The children say: <em>"If things are real, they're there all the time."</em></p>
+                        <p>Can you refute (argue against) that? What things are real but aren't there all the time?</p>
+                    </div>
+
+                    <div class="card card-menu">
+                        <h3><i class="fas fa-pen-fancy"></i> Menu (Work Period)</h3>
+                        <p><strong>Packet Page 7 - Question 1:</strong></p>
+                        <p>How did Edmund disappoint Lucy? Was this typical of his personality?</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="success-footer">
+                <span class="success-label">Success Criteria</span>
+                <i class="fas fa-check-circle"></i> I can apply the Professor's logic to Lucy's story.
+            </div>
+        </div>
+      </div>
+
+      <!-- DAY 6: Into the Forest -->
+      <div class="slide bg-day6" data-day="6">
+        <h1>Day 6: Into the Forest</h1>
+
+        <div class="target-banner">
+            <span class="target-label">Target:</span> I can make predictions based on character actions.
+        </div>
+
+        <div class="content-box">
+            <div class="content-split">
+                <div class="col-left">
+                    <div class="section-header"><i class="fas fa-lightbulb"></i> Pre-Read & Read</div>
+                    
+                    <div class="card card-hook">
+                        <h3><i class="fas fa-spell-check"></i> Vocabulary (Packet Pg. 6)</h3>
+                        <p>
+                            <span class="vocab-word">Premises</span>
+                            <span class="vocab-word">Fraternize</span>
+                        </p>
+                        <p><em>Define these on Page 6 (#3 & #4).</em></p>
+                    </div>
+
+                    <div class="card card-read">
+                        <h3><i class="fas fa-book-open"></i> Read Aloud</h3>
+                        <p><strong>Chapter 6:</strong> Into the Forest</p>
+                        <p><em>Focus: Why do the children go in despite the danger?</em></p>
+                    </div>
+                </div>
+
+                <div class="col-right">
+                    <div class="section-header"><i class="fas fa-users"></i> Discuss & Do</div>
+                    <div class="question-box">
+                        <h3>Whole Group Discussion (Packet Pg. 7)</h3>
+                        <ol class="question-list">
+                            <li><strong>Q3:</strong> How did they discover Edmund had been in Narnia before? (The slip-up!)</li>
+                            <li><strong>Q4:</strong> Why did they decide to stay despite the danger?</li>
+                            <li><strong>Q5:</strong> What did they think about the Robin? Why did they follow it?</li>
+                        </ol>
+                    </div>
+
+                    <div class="card card-menu">
+                        <h3><i class="fas fa-pen-fancy"></i> Menu (Work Period)</h3>
+                        <p><strong>Packet Page 7 - Continue Question 1:</strong></p>
+                        <p>Finish your answer about Edmund's personality. Is he being spiteful or just scared?</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="success-footer">
+                <span class="success-label">Success Criteria</span>
+                <i class="fas fa-check-circle"></i> I can explain how Edmund accidentally revealed his secret.
+            </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- TIMER UI -->
+    <div class="timer-container">
+      <div class="timer-visual">
+        <div class="timer-display">25:00</div>
+        <svg>
+          <circle class="timer-progress-bg" cx="45" cy="45" r="40"></circle>
+          <circle class="timer-progress-bar" cx="45" cy="45" r="40"></circle>
+        </svg>
+      </div>
+      <div class="timer-adjust">
+        <button class="timer-adjust-btn" data-time="-60">-1m</button>
+        <button class="timer-adjust-btn" data-time="60">+1m</button>
+      </div>
+      <div class="timer-controls">
+        <button class="timer-control-btn" id="start-pause-timer"><i class="fas fa-play"></i></button>
+        <button class="timer-control-btn" id="reset-timer"><i class="fas fa-redo"></i></button>
+      </div>
+    </div>
+
+    <!-- NAVIGATION -->
+    <button id="prev" class="nav-button">&#10094;</button>
+    <button id="next" class="nav-button">&#10095;</button>
+    <div class="day-nav">
+      <button data-day="4">Day 4</button>
+      <button data-day="5">Day 5</button>
+      <button data-day="6">Day 6</button>
+      <button id="toggle-timer" style="margin-left:10px;"><i class="fas fa-clock"></i></button>
+    </div>
+
+    <audio id="alarm-sound" src="https://actions.google.com/sounds/v1/alarms/medium_bell_ringing_near.ogg" preload="auto"></audio>
+
+    <script>
+      /* SLIDESHOW LOGIC */
+      let currentSlideIndex = 0;
+      const slides = document.querySelectorAll(".slide");
+      const dayButtons = document.querySelectorAll(".day-nav button[data-day]");
+
+      function showSlide(index) {
+        if (index >= slides.length) index = 0;
+        if (index < 0) index = slides.length - 1;
+        slides.forEach(slide => slide.classList.remove("active"));
+        slides[index].classList.add("active");
+        currentSlideIndex = index;
+        
+        dayButtons.forEach(btn => btn.classList.remove("active"));
+        if(dayButtons[index]) dayButtons[index].classList.add("active");
+      }
+
+      document.getElementById("next").addEventListener("click", () => showSlide(currentSlideIndex + 1));
+      document.getElementById("prev").addEventListener("click", () => showSlide(currentSlideIndex - 1));
+      
+      dayButtons.forEach((btn, index) => {
+        btn.addEventListener("click", () => showSlide(index));
+      });
+
+      showSlide(0);
+
+      /* TIMER LOGIC */
+      const timerDisplay = document.querySelector(".timer-display");
+      const progressBar = document.querySelector(".timer-progress-bar");
+      const alarmSound = document.getElementById("alarm-sound");
+      
+      let totalTime = 1500; // 25 minutes
+      let remainingTime = totalTime;
+      let timerInterval;
+      let isRunning = false;
+
+      const radius = progressBar.r.baseVal.value;
+      const circumference = 2 * Math.PI * radius;
+      progressBar.style.strokeDasharray = circumference;
+
+      function updateDisplay() {
+        let m = Math.floor(remainingTime / 60);
+        let s = remainingTime % 60;
+        timerDisplay.textContent = `${m}:${s < 10 ? '0' : ''}${s}`;
+        
+        const offset = circumference - (remainingTime / totalTime) * circumference;
+        progressBar.style.strokeDashoffset = offset;
+      }
+
+      document.getElementById("start-pause-timer").addEventListener("click", function() {
+        if(isRunning) {
+          clearInterval(timerInterval);
+          this.innerHTML = '<i class="fas fa-play"></i>';
+        } else {
+          timerInterval = setInterval(() => {
+            if(remainingTime > 0) {
+              remainingTime--;
+              updateDisplay();
+            } else {
+              clearInterval(timerInterval);
+              alarmSound.play();
+              isRunning = false;
+              document.getElementById("start-pause-timer").innerHTML = '<i class="fas fa-play"></i>';
+            }
+          }, 1000);
+          this.innerHTML = '<i class="fas fa-pause"></i>';
+        }
+        isRunning = !isRunning;
+      });
+
+      document.getElementById("reset-timer").addEventListener("click", () => {
+        clearInterval(timerInterval);
+        remainingTime = totalTime;
+        isRunning = false;
+        document.getElementById("start-pause-timer").innerHTML = '<i class="fas fa-play"></i>';
+        updateDisplay();
+      });
+
+      document.querySelectorAll(".timer-adjust-btn").forEach(btn => {
+        btn.addEventListener("click", function() {
+          totalTime += parseInt(this.dataset.time);
+          if(totalTime < 60) totalTime = 60;
+          remainingTime = totalTime;
+          updateDisplay();
+        });
+      });
+      
+      const timerContainer = document.querySelector(".timer-container");
+      document.getElementById("toggle-timer").addEventListener("click", () => {
+        if(timerContainer.style.display === "none") {
+            timerContainer.style.display = "block";
+        } else {
+            timerContainer.style.display = "none";
+        }
+      });
+
+      updateDisplay();
+    </script>
+  </body>
+</html>

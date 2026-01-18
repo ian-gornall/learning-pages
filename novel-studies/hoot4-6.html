@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Narnia Unit: Days 4-6</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Bangers&family=Poppins:wght@400;600;700;800&display=swap");
+      :root {
+        --dark-text: #2c3e50;
+        --danger-color: #e74c3c;
+        --success-color: #27ae60;
+        --accent-gold: #f1c40f;
+        --wardrobe-brown: #8d6e63;
+        --magic-purple: #9b59b6;
+        --turkish-red: #ff6b6b;
+        --forest-green: #2d6a4f;
+      }
+      body {
+        margin: 0;
+        font-family: "Poppins", sans-serif;
+        background-color: var(--dark-text);
+        overflow: hidden;
+      }
+      .slideshow-container {
+        position: relative;
+        width: 100vw;
+        height: 100vh;
+      }
+
+      /* BACKGROUND ANIMATIONS */
+      @keyframes gradient-pan {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+      }
+      
+      .bg-day4 { /* Turkish Delight - Red/Gold/Cream */
+        background: linear-gradient(-45deg, #FFCDD2, #FFECB3, #FFAB91);
+        background-size: 400% 400%;
+        animation: gradient-pan 15s ease infinite;
+      }
+      .bg-day5 { /* Professor's Study - Brown/Beige/Dusty Blue */
+        background: linear-gradient(-45deg, #D7CCC8, #EFEBE9, #B0BEC5);
+        background-size: 400% 400%;
+        animation: gradient-pan 15s ease infinite;
+      }
+      .bg-day6 { /* Forest/Winter - Dark Green/Ice Blue */
+        background: linear-gradient(-45deg, #B2DFDB, #80CBC4, #CFD8DC);
+        background-size: 400% 400%;
+        animation: gradient-pan 15s ease infinite;
+      }
+
+      /* SLIDE LAYOUT */
+      .slide {
+        display: none;
+        width: 100%;
+        height: 100%;
+        padding: 10px 40px;
+        box-sizing: border-box;
+        text-align: center;
+        flex-direction: column;
+        align-items: center;
+        position: absolute;
+        top: 0; left: 0;
+      }
+      .slide.active {
+        display: flex;
+        animation: fadeIn 0.5s ease;
+      }
+      @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+      h1 {
+        font-family: "Bangers", cursive;
+        font-size: clamp(2.5em, 5vw, 4em);
+        margin: 10px 0 5px 0;
+        color: #fff;
+        -webkit-text-stroke: 2px #2c3e50;
+        text-shadow: 3px 3px 0px rgba(0,0,0,0.3);
+        letter-spacing: 2px;
+        z-index: 10;
+      }
+
+      /* LEARNING TARGET BANNER */
+      .target-banner {
+        background: rgba(255, 255, 255, 0.95);
+        padding: 8px 30px;
+        border-radius: 50px;
+        border: 3px solid var(--dark-text);
+        color: var(--dark-text);
+        font-weight: 700;
+        font-size: 1.2rem;
+        margin-bottom: 10px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        z-index: 10;
+        display: inline-block;
+      }
+      .target-label { color: var(--danger-color); text-transform: uppercase; margin-right: 5px; }
+
+      /* MAIN CONTENT BOX */
+      .content-box {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        height: 72vh;
+        width: 95%;
+        max-width: 1400px;
+        display: flex;
+        flex-direction: column;
+        padding: 20px;
+        box-sizing: border-box;
+        border: 1px solid rgba(255,255,255,0.5);
+        position: relative;
+      }
+
+      /* SPLIT COLUMNS FOR CONTENT */
+      .content-split {
+        display: flex;
+        flex: 1;
+        gap: 20px;
+        overflow: hidden;
+      }
+
+      .col-left, .col-right {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        overflow-y: auto;
+        padding-right: 10px; /* Space for scrollbar */
+      }
+
+      .col-right {
+        border-left: 2px dashed #ccc;
+        padding-left: 20px;
+      }
+
+      /* SECTION HEADERS */
+      .section-header {
+        font-family: "Bangers", cursive;
+        font-size: 1.8em;
+        color: var(--dark-text);
+        text-align: left;
+        margin-bottom: 5px;
+        border-bottom: 2px solid var(--accent-gold);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      /* CARDS FOR STEPS */
+      .card {
+        background: #f8f9fa;
+        border-radius: 12px;
+        padding: 15px;
+        text-align: left;
+        border-left: 6px solid;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        margin-bottom: 5px;
+      }
+      .card-hook { border-color: var(--magic-purple); }
+      .card-read { border-color: var(--wardrobe-brown); }
+      .card-discuss { border-color: var(--success-color); }
+      .card-menu { border-color: var(--turkish-red); background-color: #fff8f8; }
+
+      .card h3 { margin: 0 0 5px 0; font-size: 1.1em; font-weight: 800; color: var(--dark-text); }
+      .card p { margin: 0; font-size: 0.95em; line-height: 1.4; color: #555; }
+      .vocab-word {
+        background: var(--accent-gold);
+        padding: 2px 8px;
+        border-radius: 4px;
+        font-weight: 700;
+        color: var(--dark-text);
+      }
+
+      /* QUESTIONS LIST */
+      .question-box {
+        background: #e8f5e9;
+        border: 2px solid var(--success-color);
+        border-radius: 12px;
+        padding: 15px;
+        text-align: left;
+        flex-grow: 1;
+      }
+      .question-list { padding-left: 20px; margin: 0; }
+      .question-list li { margin-bottom: 10px; font-size: 1em; line-height: 1.3; }
+
+      /* SUCCESS CRITERIA FOOTER (High Visibility) */
+      .success-footer {
+        margin-top: auto;
+        background: var(--dark-text);
+        color: var(--accent-gold);
+        padding: 15px;
+        border-radius: 12px;
+        font-size: 1.3em;
+        font-weight: 700;
+        text-align: center;
+        border: 3px solid var(--accent-gold);
+        box-shadow: 0 -4px 15px rgba(0,0,0,0.1);
+      }
+      .success-label { color: #fff; text-transform: uppercase; font-size: 0.8em; display: block; margin-bottom: 5px; letter-spacing: 1px;}
+
+      /* NAV & TIMER (From Template) */
+      .nav-button {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background-color: rgba(44, 62, 80, 0.6);
+        color: white;
+        border: none;
+        font-size: 2em;
+        width: 45px;
+        height: 45px;
+        cursor: pointer;
+        z-index: 100;
+        border-radius: 50%;
+        transition: transform 0.2s;
+        display: flex; align-items: center; justify-content: center;
+      }
+      .nav-button:hover { background-color: rgba(44, 62, 80, 0.9); }
+      #prev { left: 15px; }
+      #next { right: 15px; }
+
+      .day-nav {
+        position: absolute;
+        bottom: 15px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 100;
+        background: rgba(44, 62, 80, 0.8);
+        padding: 8px;
+        border-radius: 50px;
+        display: flex; gap: 5px;
+      }
+      .day-nav button {
+        background: transparent; border: none; color: white;
+        font-family: "Poppins"; font-weight: 700; font-size: 0.9em;
+        padding: 8px 15px; cursor: pointer; border-radius: 30px;
+        transition: all 0.3s;
+      }
+      .day-nav button.active {
+        background-color: var(--accent-gold); color: var(--dark-text);
+        transform: scale(1.05);
+      }
+
+      /* TIMER STYLES */
+      .timer-container {
+        position: absolute; top: 15px; right: 15px; z-index: 101;
+        background: var(--dark-text); padding: 10px; border-radius: 12px;
+        box-shadow: 0 6px 20px rgba(0,0,0,0.3); color: white;
+        text-align: center; width: 150px;
+        transition: opacity 0.3s, transform 0.3s;
+      }
+      .timer-visual { position: relative; width: 90px; height: 90px; margin: 0 auto 5px; }
+      .timer-visual svg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; transform: rotate(-90deg); }
+      .timer-progress-bg { fill: none; stroke: rgba(255,255,255,0.1); stroke-width: 6; }
+      .timer-progress-bar { fill: none; stroke: var(--accent-gold); stroke-width: 6; stroke-linecap: round; transition: stroke-dashoffset 0.2s linear; }
+      .timer-display { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-weight: 800; font-size: 1.4em; }
+      .timer-controls, .timer-adjust { display: flex; justify-content: center; gap: 5px; margin-top: 5px; }
+      .timer-control-btn { border: none; color: white; width: 30px; height: 30px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+      #start-pause-timer { background: var(--success-color); }
+      #reset-timer { background: var(--danger-color); }
+      .timer-adjust-btn { background: #555; border: none; color: white; font-size: 0.7em; padding: 2px 6px; border-radius: 4px; cursor: pointer; }
+    </style>
+  </head>
+  <body>
+    <div class="slideshow-container">
+
+      <!-- DAY 4: TURKISH DELIGHT -->
+      <div class="slide bg-day4 active" data-day="4">
+        <h1>Day 4: Turkish Delight</h1>
+        
+        <div class="target-banner">
+            <span class="target-label">Target:</span> I can analyze character motivations and symbolism.
+        </div>
+
+        <div class="content-box">
+            <div class="content-split">
+                <!-- Left Col: Hook/Vocab -->
+                <div class="col-left">
+                    <div class="section-header"><i class="fas fa-lightbulb"></i> Guided Pre-Read</div>
+                    
+                    <div class="card card-hook">
+                        <h3><i class="fas fa-spell-check"></i> Vocab (Pg 3)</h3>
+                        <p>Finish definitions in your packet:</p>
+                        <div style="display:flex; flex-wrap:wrap; gap:5px; margin-top:5px;">
+                            <span class="vocab-word">Reigns</span>
+                            <span class="vocab-word">Courtiers</span>
+                            <span class="vocab-word">Faun</span>
+                            <span class="vocab-word">Mantle</span>
+                            <span class="vocab-word">Wardrobe</span>
+                            <span class="vocab-word">Eternal</span>
+                        </div>
+                    </div>
+
+                    <div class="section-header"><i class="fas fa-book-open"></i> Read Aloud</div>
+                    <div class="card card-read">
+                        <h3>Chapter 4</h3>
+                        <p><strong>Title:</strong> Turkish Delight</p>
+                        <p><em>Focus: How the Witch treats Edmund vs. how Tumnus treated Lucy.</em></p>
+                    </div>
+                </div>
+
+                <!-- Right Col: Discussion -->
+                <div class="col-right">
+                    <div class="section-header"><i class="fas fa-users"></i> Discussion</div>
+                    <div class="question-box">
+                        <p style="font-weight:bold; margin-bottom:10px;">Study Guide Page 4:</p>
+                        <ol class="question-list">
+                            <li><strong>Q8:</strong> What was the power of the Turkish Delight candy?</li>
+                            <li><strong>Q9:</strong> What interested the White Witch most about Edmund’s background?</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="section-header"><i class="fas fa-utensils"></i> Menu Work</div>
+                    <div class="card card-menu">
+                        <h3>Partner / Individual</h3>
+                        <p><strong>Study Guide Page 5 (Humor):</strong></p>
+                        <p>Look at the books on Mr. Tumnus's shelf. What is amusing about the title <em>Is Man a Myth?</em></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="success-footer">
+                <span class="success-label">Success Criteria</span>
+                <i class="fas fa-check-circle"></i> I can explain why the Witch is so interested in Edmund.
+            </div>
+        </div>
+      </div>
+
+      <!-- DAY 5: LOGIC AND LIES -->
+      <div class="slide bg-day5" data-day="5">
+        <h1>Day 5: Logic and Lies</h1>
+
+        <div class="target-banner">
+            <span class="target-label">Target:</span> I can apply logic to determine the truth.
+        </div>
+
+        <div class="content-box">
+            <div class="content-split">
+                <div class="col-left">
+                    <div class="section-header"><i class="fas fa-lightbulb"></i> Guided Pre-Read</div>
+                    
+                    <div class="card card-hook">
+                        <h3><i class="fas fa-spell-check"></i> Vocab (Pg 6)</h3>
+                        <p>Define these words:</p>
+                        <p><span class="vocab-word">Superior</span> <span class="vocab-word">Logic</span></p>
+                    </div>
+
+                    <div class="section-header"><i class="fas fa-book-open"></i> Read Aloud</div>
+                    <div class="card card-read">
+                        <h3>Chapter 

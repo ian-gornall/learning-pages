@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Matilda Unit: Days 4-6</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Bangers&family=Poppins:wght@400;700&display=swap");
+        
+        body { margin: 0; font-family: "Poppins", sans-serif; overflow: hidden; background: #2c3e50; }
+        
+        /* Layout */
+        .slide { display: none; height: 100vh; width: 100vw; flex-direction: column; align-items: center; padding: 20px; box-sizing: border-box; }
+        .slide.active { display: flex; animation: fadeIn 0.5s ease; }
+        
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Backgrounds */
+        .bg-day4 { background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); } /* Soft Teal/Pink */
+        .bg-day5 { background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%); } /* Lavender/Blue */
+        .bg-day6 { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); } /* Pink/Red */
+
+        /* Text */
+        h1 { font-family: "Bangers", cursive; font-size: 3.5em; color: white; -webkit-text-stroke: 2px #333; margin: 5px 0; text-shadow: 3px 3px 0 #000; }
+        .date-sub { font-weight: bold; color: #333; background: rgba(255,255,255,0.6); padding: 2px 15px; border-radius: 15px; margin-bottom: 10px; }
+        .target { background: rgba(0,0,0,0.8); color: #fff; padding: 8px 25px; border-radius: 20px; margin-bottom: 15px; font-size: 1.1em; border: 2px solid white; }
+
+        /* Content Card */
+        .content-box { background: rgba(255,255,255,0.95); width: 90%; max-width: 1000px; height: 68vh; border-radius: 20px; padding: 25px; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); overflow-y: auto; }
+        
+        .step { display: flex; align-items: center; gap: 15px; border-left: 10px solid #333; padding: 12px; background: #f8f9fa; border-radius: 10px; transition: transform 0.2s; }
+        .step:hover { transform: scale(1.01); background: #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        
+        .step-icon { width: 45px; height: 45px; background: #333; color: white; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 1.3em; flex-shrink: 0; }
+        .step-text h3 { margin: 0; font-size: 1.3em; color: #2c3e50; font-family: "Bangers", cursive; letter-spacing: 1px; }
+        .step-text p { margin: 2px 0 0 0; font-size: 1em; color: #555; line-height: 1.4; }
+        
+        .highlight { background-color: #fff3cd; padding: 0 5px; border-radius: 4px; font-weight: bold; border: 1px solid #ffeeba; color: #856404; }
+
+        /* Success Criteria */
+        .success-box { margin-top: auto; background: #d4edda; color: #155724; padding: 12px; border-radius: 10px; border: 2px solid #c3e6cb; font-weight: bold; display: flex; align-items: center; gap: 10px; }
+
+        /* Timer */
+        .timer-box { position: absolute; top: 20px; right: 20px; background: #333; color: white; padding: 10px; border-radius: 12px; text-align: center; width: 130px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+        .time { font-size: 2em; font-weight: bold; font-family: monospace; }
+        .controls { margin-top: 5px; }
+        .controls button { background: #555; border: none; color: white; padding: 5px 12px; cursor: pointer; border-radius: 5px; margin: 0 2px; transition: background 0.2s; }
+        .controls button:hover { background: #777; }
+        .controls button.green { background: #27ae60; }
+        .controls button.red { background: #c0392b; }
+
+        /* Navigation */
+        .nav-bar { position: absolute; bottom: 20px; display: flex; gap: 15px; background: rgba(0,0,0,0.7); padding: 12px 25px; border-radius: 30px; backdrop-filter: blur(5px); }
+        .nav-btn { background: transparent; border: 2px solid rgba(255,255,255,0.5); color: white; padding: 8px 20px; border-radius: 20px; cursor: pointer; font-weight: bold; font-size: 1em; transition: all 0.3s; }
+        .nav-btn:hover { background: rgba(255,255,255,0.2); border-color: white; }
+        .nav-btn.active { background: #f0c419; color: #333; border-color: #f0c419; box-shadow: 0 0 10px #f0c419; }
+
+    </style>
+</head>
+<body>
+
+    <!-- ================= DAY 4 ================= -->
+    <div class="slide active bg-day4" id="d4">
+        <h1>Day 4: The Ghost</h1>
+        <div class="date-sub">Wednesday, Jan 21</div>
+        <div class="target"><i class="fas fa-bullseye"></i> Target: I can use evidence to predict what happens next.</div>
+        
+        <div class="content-box">
+            <!-- Hook -->
+            <div class="step" style="border-left-color: #ff9f43">
+                <div class="step-icon" style="background: #ff9f43"><i class="fas fa-spell-check"></i></div>
+                <div class="step-text">
+                    <h3>Pre-Read: Vocab</h3>
+                    <p><strong>Packet Page 3:</strong> Finish definitions for: <span class="highlight">Irritable</span>, <span class="highlight">Sensitive</span>, <span class="highlight">Applauding</span>, <span class="highlight">Tolerate</span>.</p>
+                </div>
+            </div>
+
+            <!-- Read Aloud -->
+            <div class="step" style="border-left-color: #54a0ff">
+                <div class="step-icon" style="background: #54a0ff"><i class="fas fa-book-reader"></i></div>
+                <div class="step-text">
+                    <h3>Read Aloud</h3>
+                    <p><strong>Chapter 4: The Ghost</strong><br><em>Listen for:</em> How does Matilda make her parents believe the house is haunted?</p>
+                </div>
+            </div>
+
+            <!-- Discussion -->
+            <div class="step" style="border-left-color: #54a0ff">
+                <div class="step-icon" style="background: #54a0ff"><i class="fas fa-comments"></i></div>
+                <div class="step-text">
+                    <h3>Whole Group Discussion</h3>
+                    <p><strong>Packet Page 4: Prediction.</strong><br>Based on what we know, what will happen when Matilda goes to school?</p>
+                </div>
+            </div>
+
+            <!-- Menu Work -->
+            <div class="step" style="border-left-color: #ee5253">
+                <div class="step-icon" style="background: #ee5253"><i class="fas fa-pen-fancy"></i></div>
+                <div class="step-text">
+                    <h3>Menu Work</h3>
+                    <p><strong>Packet Page 5 (Activity 3):</strong> Write a letter to Mr. & Mrs. Wormwood explaining why they are wrong.</p>
+                </div>
+            </div>
+
+            <!-- Success -->
+            <div class="success-box">
+                <i class="fas fa-check-circle"></i> Success: I can write a persuasive letter to a character.
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= DAY 5 ================= -->
+    <div class="slide bg-day5" id="d5">
+        <h1>Day 5: Arithmetic</h1>
+        <div class="date-sub">Monday, Jan 26</div>
+        <div class="target"><i class="fas fa-bullseye"></i> Target: I can explain Matilda's "Magic Medicine."</div>
+        
+        <div class="content-box">
+            <!-- Hook -->
+            <div class="step" style="border-left-color: #9b59b6">
+                <div class="step-icon" style="background: #9b59b6"><i class="fas fa-brain"></i></div>
+                <div class="step-text">
+                    <h3>Pre-Read: Vocab</h3>
+                    <p><strong>Packet Page 6:</strong> Define <span class="highlight">Prodigy</span> and <span class="highlight">Genius</span>.</p>
+                </div>
+            </div>
+
+            <!-- Read Aloud -->
+            <div class="step" style="border-left-color: #54a0ff">
+                <div class="step-icon" style="background: #54a0ff"><i class="fas fa-calculator"></i></div>
+                <div class="step-text">
+                    <h3>Read Aloud</h3>
+                    <p><strong>Chapter 5: Arithmetic</strong><br><em>Listen for:</em> How fast can Matilda calculate profit?</p>
+                </div>
+            </div>
+
+            <!-- Discussion -->
+            <div class="step" style="border-left-color: #54a0ff">
+                <div class="step-icon" style="background: #54a0ff"><i class="fas fa-users"></i></div>
+                <div class="step-text">
+                    <h3>Whole Group Discussion</h3>
+                    <p><strong>Packet Page 7 (Q1 & Q2):</strong><br>1. What is "Matilda's Magic Medicine"?<br>2. Why isn't her father proud of her math skills?</p>
+                </div>
+            </div>
+
+            <!-- Menu Work -->
+            <div class="step" style="border-left-color: #ee5253">
+                <div class="step-icon" style="background: #ee5253"><i class="fas fa-crystal-ball"></i></div>
+                <div class="step-text">
+                    <h3>Menu Work</h3>
+                    <p><strong>Packet Page 4:</strong> Complete the Prediction section individually or with a partner.</p>
+                </div>
+            </div>
+
+            <!-- Success -->
+            <div class="success-box">
+                <i class="fas fa-check-circle"></i> Success: I can describe how Matilda uses her intelligence.
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= DAY 6 ================= -->
+    <div class="slide bg-day6" id="d6">
+        <h1>Day 6: The Platinum-Blond Man</h1>
+        <div class="date-sub">Wednesday, Jan 28</div>
+        <div class="target"><i class="fas fa-bullseye"></i> Target: I can write a script for a play.</div>
+        
+        <div class="content-box">
+            <!-- Hook -->
+            <div class="step" style="border-left-color: #ff9f43">
+                <div class="step-icon" style="background: #ff9f43"><i class="fas fa-theater-masks"></i></div>
+                <div class="step-text">
+                    <h3>Pre-Read: Vocab</h3>
+                    <p><strong>Packet Page 6:</strong> Define <span class="highlight">Chaos</span> and <span class="highlight">Spellbound</span>.</p>
+                </div>
+            </div>
+
+            <!-- Read Aloud -->
+            <div class="step" style="border-left-color: #54a0ff">
+                <div class="step-icon" style="background: #54a0ff"><i class="fas fa-book-open"></i></div>
+                <div class="step-text">
+                    <h3>Read Aloud</h3>
+                    <p><strong>Chapter 6: The Platinum-Blond Man</strong><br><em>Listen for:</em> The result of the "Hair Oil Switch."</p>
+                </div>
+            </div>
+
+            <!-- Discussion -->
+            <div class="step" style="border-left-color: #54a0ff">
+                <div class="step-icon" style="background: #54a0ff"><i class="fas fa-question-circle"></i></div>
+                <div class="step-text">
+                    <h3>Whole Group Discussion</h3>
+                    <p><strong>Packet Page 7 (Q3):</strong><br>How did she do it? Why did she choose this specific revenge?</p>
+                </div>
+            </div>
+
+            <!-- Menu Work -->
+            <div class="step" style="border-left-color: #ee5253">
+                <div class="step-icon" style="background: #ee5253"><i class="fas fa-feather-alt"></i></div>
+                <div class="step-text">
+                    <h3>Menu Work</h3>
+                    <p><strong>Packet Page 9 (Activity 1):</strong> Write a short play or skit of Matilda's practical joke.</p>
+                </div>
+            </div>
+
+            <!-- Success -->
+            <div class="success-box">
+                <i class="fas fa-check-circle"></i> Success: I can write dialogue for a character.
+            </div>
+        </div>
+    </div>
+
+    <!-- Timer -->
+    <div class="timer-box">
+        <div class="time" id="display">25:00</div>
+        <div class="controls">
+            <button class="green" onclick="startTimer()"><i class="fas fa-play"></i></button>
+            <button class="red" onclick="resetTimer()"><i class="fas fa-undo"></i></button>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <div class="nav-bar">
+        <button class="nav-btn active" onclick="show(4)">Wed 1/21 (Day 4)</button>
+        <button class="nav-btn" onclick="show(5)">Mon 1/26 (Day 5)</button>
+        <button class="nav-btn" onclick="show(6)">Wed 1/28 (Day 6)</button>
+    </div>
+
+    <script>
+        function show(day) {
+            // Hide all slides
+            document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+            // Show selected slide
+            document.getElementById('d'+day).classList.add('active');
+            
+            // Update buttons
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            // Map day number to button index (4->0, 5->1, 6->2)
+            const btnIndex = day - 4;
+            if(document.querySelectorAll('.nav-btn')[btnIndex]) {
+                document.querySelectorAll('.nav-btn')[btnIndex].classList.add('active');
+            }
+        }
+
+        // Timer Logic
+        let time = 1500; 
+        let timer;
+        
+        function startTimer() {
+            clearInterval(timer);
+            timer = setInterval(() => {
+                time--;
+                let m = Math.floor(time / 60);
+                let s = time % 60;
+                document.getElementById('display').innerText = `${m}:${s<10?'0':''}${s}`;
+                if (time <= 0) clearInterval(timer);
+            }, 1000);
+        }
+        
+        function resetTimer() {
+            clearInterval(timer);
+            time = 1500;
+            document.getElementById('display').innerText = "25:00";
+        }
+    </script>
+</body>
+</html>
