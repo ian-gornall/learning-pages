@@ -1,0 +1,373 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Great Math Ascent</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Patrick+Hand&display=swap"
+      rel="stylesheet"
+    />
+
+    <script src="https://cdn.lordicon.com/lordicon.js"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+
+    <style>
+      :root {
+        --bg: #0f172a; /* Deep Space Background */
+        --tier-2s: #fde047; /* Supernova Gold */
+        --tier-3s: #a855f7; /* Galaxy Purple */
+        --tier-div: #f43f5e; /* Red */
+        --tier-mul: #fb923c; /* Orange */
+        --tier-sub: #38bdf8; /* Sky Blue */
+        --tier-add: #4ade80; /* Jungle Green */
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: "Patrick Hand", cursive;
+        background-color: var(--bg);
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: white;
+      }
+
+      .ascent-container {
+        width: 100%;
+        max-width: 800px;
+        padding: 100px 20px;
+        display: flex;
+        flex-direction: column-reverse; /* This flips the visual order: Add at bottom, Supernova at top */
+      }
+
+      /* Milestone Cards */
+      .milestone-card {
+        margin: 20px 0;
+        padding: 30px;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 40px;
+        border: 2px solid rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        transition: 0.3s;
+      }
+
+      .milestone-card:hover {
+        background: rgba(255, 255, 255, 0.1);
+        transform: scale(1.02);
+      }
+
+      .header-row {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        margin-bottom: 20px;
+      }
+
+      .icon-box {
+        width: 65px;
+        height: 65px;
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2.5rem;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+      }
+
+      .title-box h2 {
+        font-family: "Fredoka", sans-serif;
+        font-size: 2rem;
+        margin: 0;
+      }
+
+      .title-box p {
+        margin: 0;
+        font-size: 1.1rem;
+        opacity: 0.6;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+      }
+
+      /* Explorers */
+      .explorer-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+
+      .explorer-pill {
+        background: rgba(255, 255, 255, 0.1);
+        padding: 10px 25px;
+        border-radius: 50px;
+        font-size: 1.5rem;
+        font-weight: 600;
+        transition: 0.2s;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      /* Tier Specifics */
+      .z-2s {
+        border-color: var(--tier-2s);
+        box-shadow: 0 0 30px rgba(253, 224, 71, 0.2);
+      }
+      .z-2s .icon-box {
+        background: var(--tier-2s);
+        color: #000;
+      }
+      .z-2s .explorer-pill {
+        color: var(--tier-2s);
+      }
+
+      .z-3s {
+        border-color: var(--tier-3s);
+      }
+      .z-3s .icon-box {
+        background: var(--tier-3s);
+      }
+      .z-3s .explorer-pill {
+        color: var(--tier-3s);
+      }
+
+      .z-div {
+        border-color: var(--tier-div);
+      }
+      .z-div .icon-box {
+        background: var(--tier-div);
+      }
+      .z-div .explorer-pill {
+        color: var(--tier-div);
+      }
+
+      .z-mul {
+        border-color: var(--tier-mul);
+      }
+      .z-mul .icon-box {
+        background: var(--tier-mul);
+      }
+      .z-mul .explorer-pill {
+        color: var(--tier-mul);
+      }
+
+      .z-sub {
+        border-color: var(--tier-sub);
+      }
+      .z-sub .icon-box {
+        background: var(--tier-sub);
+      }
+      .z-sub .explorer-pill {
+        color: var(--tier-sub);
+      }
+
+      .z-add {
+        border-color: var(--tier-add);
+      }
+      .z-add .icon-box {
+        background: var(--tier-add);
+      }
+      .z-add .explorer-pill {
+        color: var(--tier-add);
+      }
+
+      /* Bottom Welcome Banner */
+      .base-camp {
+        order: -1; /* Forces it to the absolute bottom in flex-direction: column-reverse */
+        text-align: center;
+        padding: 60px 20px;
+        background: linear-gradient(
+          to top,
+          rgba(74, 222, 128, 0.2),
+          transparent
+        );
+        border-radius: 40px 40px 0 0;
+        margin-top: 50px;
+      }
+
+      .base-camp h1 {
+        font-family: "Fredoka", sans-serif;
+        font-size: 3.5rem;
+        margin: 0;
+        color: var(--tier-add);
+      }
+
+      .empty-msg {
+        opacity: 0.4;
+        font-style: italic;
+      }
+    </style>
+  </head>
+  <body id="top">
+    <div class="ascent-container" id="quest-root">
+      <!-- BASE CAMP (This appears at the bottom due to column-reverse) -->
+      <div class="base-camp">
+        <lord-icon
+          src="https://cdn.lordicon.com/vhyenxsy.json"
+          trigger="loop"
+          colors="primary:#4ade80,secondary:#4ade80"
+          style="width: 100px; height: 100px"
+        ></lord-icon>
+        <h1>Math Base Camp</h1>
+        <p style="font-size: 1.5rem; opacity: 0.8">
+          The journey begins here. Look up to see our milestones!
+        </p>
+        <p style="font-size: 1.1rem; opacity: 0.5">
+          Jan 26 • Mr. Ian's Explorers
+        </p>
+      </div>
+    </div>
+
+    <script>
+      const zones = [
+        {
+          id: "add",
+          title: "Addition Jungle",
+          desc: "The Foundation",
+          icon: "noto:evergreen-tree",
+          students: [
+            "Millie",
+            "John",
+            "Maximus",
+            "Corinne",
+            "Birk",
+            "Austin",
+            "Isabella",
+            "Ellie",
+            "Bivan",
+            "Theodora",
+            "Obio",
+            "Aiden",
+            "Henry",
+            "Lenny",
+            "Daniella",
+            "Leonardo",
+            "Yago",
+          ],
+        },
+        {
+          id: "sub",
+          title: "Subtraction Shores",
+          desc: "Finding the Gap",
+          icon: "noto:water-wave",
+          students: [
+            "Charlotte",
+            "Vera",
+            "Ashton",
+            "Delilah",
+            "Jason",
+            "Blane",
+            "Jonathan",
+            "Ollie",
+            "Penny",
+            "Bridgette",
+            "Zoe",
+            "Madeline",
+            "June",
+            "Saanvi",
+            "Sophia",
+            "Beau",
+            "Harper",
+            "Hyra",
+          ],
+        },
+        {
+          id: "mul",
+          title: "Multiplication Mesa",
+          desc: "Scaling Up",
+          icon: "noto:lightning-bolt",
+          students: [
+            "Yaaseen",
+            "Beau",
+            "Ansley",
+            "Laya",
+            "Willa",
+            "Bodhi",
+            "Yago",
+            "Terrance",
+          ],
+        },
+        {
+          id: "div",
+          title: "Division Station",
+          desc: "6-Second Mastery",
+          icon: "noto:volcano",
+          students: [
+            "Rosalie",
+            "Amira",
+            "Tre",
+            "Christian",
+            "Mahzuba",
+            "Nala",
+            "Anna",
+          ],
+        },
+        {
+          id: "3s",
+          title: "Galaxy Division",
+          desc: "3-Second Precision",
+          icon: "noto:rocket",
+          students: [
+            "Brooks",
+            "Azwa",
+            "Elliott",
+            "Shafin",
+            "Jack",
+            "Ayushi",
+            "Franklin",
+          ],
+        },
+        {
+          id: "2s",
+          title: "Supernova Division",
+          desc: "2-Second Warp Speed",
+          icon: "noto:star",
+          students: [],
+        },
+      ];
+
+      const root = document.getElementById("quest-root");
+
+      zones.forEach((z) => {
+        const card = document.createElement("div");
+        card.className = `milestone-card z-${z.id}`;
+
+        let explorerHtml = z.students
+          .map((name) => `<div class="explorer-pill">${name}</div>`)
+          .join("");
+        if (z.students.length === 0)
+          explorerHtml = `<div class="empty-msg">Waiting for the first brave explorers to unlock this sector...</div>`;
+
+        card.innerHTML = `
+            <div class="header-row">
+                <div class="icon-box"><iconify-icon icon="${z.icon}"></iconify-icon></div>
+                <div class="title-box">
+                    <p>${z.desc}</p>
+                    <h2>${z.title}</h2>
+                </div>
+            </div>
+            <div class="explorer-list">${explorerHtml}</div>
+        `;
+        root.appendChild(card);
+      });
+
+      // AUTOSCROLL TO BOTTOM ON LOAD
+      window.onload = function () {
+        window.scrollTo(0, document.body.scrollHeight);
+
+        // Optional: Slow scroll up animation to show them the board
+        /*
+        setTimeout(() => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }, 2000);
+        */
+      };
+    </script>
+  </body>
+</html>
