@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<!-- Student Facing Choice Time Dashboard -->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Choice Time</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Bangers&family=Poppins:wght@400;700;800&display=swap");
+      :root {
+        --dark-text: #2c3e50;
+        --danger-color: #e74c3c;
+        --success-color: #2ecc71;
+        --choice-color: #fd7e14; /* Vibrant Orange for Choice Time */
+      }
+      body {
+        margin: 0;
+        font-family: "Poppins", sans-serif;
+        background-color: var(--dark-text);
+        overflow: hidden;
+      }
+      .slideshow-container {
+        position: relative;
+        width: 100vw;
+        height: 100vh;
+        /* Dynamic background for energy */
+        background: linear-gradient(-45deg, #f6d365, #fda085, #ff9a9e, #fad0c4);
+        background-size: 400% 400%;
+        animation: gradient-pan 15s ease infinite;
+      }
+
+      @keyframes gradient-pan {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+      }
+
+      .slide {
+        display: flex;
+        width: 100%;
+        height: 100%;
+        padding: 10px 40px;
+        box-sizing: border-box;
+        text-align: center;
+        justify-content: flex-start;
+        align-items: center;
+        flex-direction: column;
+      }
+
+      h1 {
+        font-family: "Bangers", cursive;
+        font-size: clamp(3em, 6vw, 4.5em);
+        margin: 10px 0 5px 0;
+        color: #fff;
+        -webkit-text-stroke: 2px #2c3e50;
+        text-shadow: 3px 3px 0px #2c3e50;
+        letter-spacing: 2px;
+      }
+
+      .learning-target {
+        background: rgba(255, 255, 255, 0.9);
+        padding: 5px 20px;
+        border-radius: 20px;
+        font-weight: 700;
+        font-size: 1.2em;
+        color: var(--dark-text);
+        margin-bottom: 10px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        border: 2px solid #2c3e50;
+      }
+
+      /* MAIN CONTENT BOX */
+      .content-box {
+        background: rgba(255, 255, 255, 0.95);
+        margin: 5px 0;
+        padding: 20px;
+        border-radius: 20px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        border: 4px solid #fff;
+        height: 75vh;
+        width: 95%;
+        max-width: 1000px; /* Centered single column */
+        display: flex;
+        flex-direction: column; 
+        gap: 15px;
+        box-sizing: border-box;
+      }
+
+      .choice-column {
+        width: 100%;
+        height: 100%;
+        border-radius: 15px;
+        padding: 15px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background-color: #fff9eb; /* Light Orange */
+        border: 3px solid var(--choice-color);
+      }
+
+      .team-header {
+        font-family: "Bangers", cursive;
+        font-size: 2.5em;
+        margin: 0 0 15px 0;
+        text-transform: uppercase;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: var(--choice-color);
+      }
+
+      /* STEPS CARDS */
+      .step-card {
+        background: white;
+        width: 90%;
+        max-width: 600px;
+        margin-bottom: 15px;
+        padding: 15px;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        text-align: left;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        transition: transform 0.2s;
+        border-left: 8px solid var(--choice-color);
+      }
+      .step-card:hover { transform: scale(1.03); }
+
+      .step-num {
+        background: var(--dark-text);
+        color: white;
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-weight: 800;
+        font-size: 1.2em;
+        flex-shrink: 0;
+      }
+
+      .step-content {
+        display: flex;
+        flex-direction: column;
+      }
+      
+      .step-title {
+        font-weight: 800;
+        font-size: 1.4em;
+        color: var(--dark-text);
+      }
+      .step-desc {
+        font-size: 0.9em;
+        color: #555;
+      }
+
+      .icon-large {
+        font-size: 2em;
+        margin-left: auto;
+        color: var(--choice-color);
+        opacity: 0.3;
+      }
+
+      /* SUCCESS CRITERIA - MORE VISIBLE */
+      .success-footer {
+        width: 100%;
+        margin-top: auto; /* Pushes to the bottom */
+        text-align: center;
+        font-size: 1.5em; /* Larger font */
+        color: var(--dark-text);
+        font-weight: 700;
+        padding: 15px; /* More padding */
+        border-top: 3px dashed var(--choice-color);
+        background: #fff;
+        border-radius: 0 0 12px 12px;
+      }
+      .success-footer i {
+        color: var(--success-color);
+        margin-right: 10px;
+      }
+
+      /* --- TIMER STYLES (No changes needed) --- */
+      .timer-container {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        z-index: 200;
+        background: var(--dark-text);
+        padding: 10px;
+        border-radius: 12px;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+        color: white;
+        text-align: center;
+        width: 140px;
+      }
+      .timer-visual {
+        position: relative;
+        width: 80px;
+        height: 80px;
+        margin: 0 auto 5px;
+      }
+      .timer-visual svg {
+        position: absolute;
+        top: 0; left: 0; width: 100%; height: 100%;
+        transform: rotate(-90deg);
+      }
+      .timer-progress-bg { fill: none; stroke: rgba(255, 255, 255, 0.1); stroke-width: 7; }
+      .timer-progress-bar {
+        fill: none;
+        stroke: var(--success-color);
+        stroke-width: 7;
+        stroke-linecap: round;
+        transition: stroke-dashoffset 0.2s linear, stroke 0.3s;
+      }
+      .timer-display {
+        position: absolute;
+        top: 50%; left: 50%;
+        transform: translate(-50%, -50%);
+        font-family: "Poppins", sans-serif;
+        font-weight: 800;
+        font-size: 1.2em;
+      }
+      .timer-controls { display: flex; justify-content: center; gap: 10px; margin-top: 5px;}
+      .timer-control-btn {
+        border: none; color: white; width: 30px; height: 30px; font-size: 0.8em;
+        border-radius: 50%; cursor: pointer;
+      }
+      #start-pause-timer { background-color: var(--success-color); }
+      #reset-timer { background-color: var(--danger-color); }
+      .timer-adjust { display: flex; justify-content: center; gap: 3px; margin-bottom: 5px;}
+      .timer-adjust-btn { 
+        background: #555; border: none; color: white; font-size: 0.6em; 
+        padding: 2px 5px; border-radius: 3px; cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="slideshow-container">
+      
+      <div class="slide">
+        <h1><i class="fas fa-compass-drafting"></i> Choice Time!</h1>
+        
+        <div class="learning-target">
+            Target: I can explore my interests and share what I create.
+        </div>
+
+        <div class="content-box">
+            
+            <div class="choice-column">
+                <div class="team-header">
+                    <i class="fas fa-map-signs"></i> Your Adventure Path
+                </div>
+                
+                <!-- Step 1 -->
+                <div class="step-card">
+                    <div class="step-num">1</div>
+                    <div class="step-content">
+                        <div class="step-title">Choose Your Activity</div>
+                        <div class="step-desc">Open the "Choice Time Hub" and pick an activity you want to do today.</div>
+                    </div>
+                    <i class="fas fa-mouse-pointer icon-large"></i>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="step-card">
+                    <div class="step-num">2</div>
+                    <div class="step-content">
+                        <div class="step-title">Pick a Task Card</div>
+                        <div class="step-desc">After you choose your activity, pick one Task Card to be your goal for the day.</div>
+                    </div>
+                    <i class="fas fa-clone icon-large"></i>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="step-card">
+                    <div class="step-num">3</div>
+                    <div class="step-content">
+                        <div class="step-title">Work on Your Task</div>
+                        <div class="step-desc">Read the card carefully. Spend your time working hard on your chosen activity.</div>
+                    </div>
+                    <i class="fas fa-brain icon-large"></i>
+                </div>
+                 
+                <!-- Step 4 -->
+                <div class="step-card">
+                    <div class="step-num">4</div>
+                    <div class="step-content">
+                        <div class="step-title">Create in Your Journal</div>
+                        <div class="step-desc">Use the last 5-10 minutes to create the artifact from your task card.</div>
+                    </div>
+                    <i class="fas fa-pencil-alt icon-large"></i>
+                </div>
+
+                <!-- VISIBLE SUCCESS CRITERIA -->
+                <div class="success-footer">
+                    <i class="fas fa-check-circle"></i> I created an artifact in my journal based on my task card.
+                </div>
+
+            </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- TIMER COMPONENT -->
+    <div class="timer-container">
+      <div class="timer-visual">
+        <div class="timer-display">15:00</div>
+        <svg>
+          <circle class="timer-progress-bg" cx="40" cy="40" r="36"></circle>
+          <circle class="timer-progress-bar" cx="40" cy="40" r="36"></circle>
+        </svg>
+      </div>
+      <div class="timer-adjust">
+        <button class="timer-adjust-btn" data-time="-60">-1m</button>
+        <button class="timer-adjust-btn" data-time="300">+5m</button>
+      </div>
+      <div class="timer-controls">
+        <button class="timer-control-btn" id="start-pause-timer">
+          <i class="fas fa-play"></i>
+        </button>
+        <button class="timer-control-btn" id="reset-timer">
+          <i class="fas fa-redo"></i>
+        </button>
+      </div>
+    </div>
+
+    <audio id="alarm-sound" src="https://actions.google.com/sounds/v1/alarms/medium_bell_ringing_near.ogg" preload="auto"></audio>
+
+    <script>
+      /* --- TIMER SCRIPT START --- */
+      const timerDisplay = document.querySelector(".timer-display");
+      const startPauseButton = document.getElementById("start-pause-timer");
+      const resetButton = document.getElementById("reset-timer");
+      const timeAdjustButtons = document.querySelectorAll(".timer-adjust-btn");
+      const progressBar = document.querySelector(".timer-progress-bar");
+      const alarmSound = document.getElementById("alarm-sound");
+      alarmSound.volume = 1.0;
+
+      const radius = progressBar.r.baseVal.value;
+      const circumference = 2 * Math.PI * radius;
+      progressBar.style.strokeDasharray = circumference;
+
+      let countdown;
+      let totalTime = 900; // 15 Minutes default
+      let remainingTime = totalTime;
+      let isRunning = false;
+
+      function updateDisplay() {
+        const mins = Math.floor(remainingTime / 60);
+        const secs = remainingTime % 60;
+        timerDisplay.textContent = `${mins < 10 ? "0" : ""}${mins}:${secs < 10 ? "0" : ""}${secs}`;
+        
+        if (totalTime > 0) {
+            const offset = circumference - (remainingTime / totalTime) * circumference;
+            progressBar.style.strokeDashoffset = offset;
+        } else {
+            progressBar.style.strokeDashoffset = circumference;
+        }
+      }
+
+      function toggleTimer() {
+        if (isRunning) {
+          clearInterval(countdown);
+          startPauseButton.innerHTML = '<i class="fas fa-play"></i>';
+        } else {
+          if (remainingTime <= 0) return;
+          startPauseButton.innerHTML = '<i class="fas fa-pause"></i>';
+          countdown = setInterval(() => {
+            remainingTime--;
+            updateDisplay();
+            if (remainingTime <= 0) {
+              clearInterval(countdown);
+              isRunning = false;
+              startPauseButton.innerHTML = '<i class="fas fa-play"></i>';
+              alarmSound.play();
+            }
+          }, 1000);
+        }
+        isRunning = !isRunning;
+      }
+
+      function resetTimer() {
+        clearInterval(countdown);
+        remainingTime = totalTime;
+        isRunning = false;
+        startPauseButton.innerHTML = '<i class="fas fa-play"></i>';
+        progressBar.style.strokeDashoffset = 0;
+        updateDisplay();
+      }
+
+      timeAdjustButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          if (isRunning) return;
+          const adjustment = parseInt(button.dataset.time);
+          totalTime += adjustment;
+          if (totalTime < 0) totalTime = 0;
+          remainingTime = totalTime;
+          updateDisplay();
+        });
+      });
+
+      startPauseButton.addEventListener("click", toggleTimer);
+      resetButton.addEventListener("click", resetTimer);
+      updateDisplay();
+    </script>
+  </body>
+</html>
