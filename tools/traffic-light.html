@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Mission Control Launcher</title>
+<style>
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: #f0f0f0;
+}
+button {
+    padding: 20px 40px;
+    font-size: 22px;
+    cursor: pointer;
+}
+</style>
+</head>
+<body>
+
+<button onclick="launchCue()">Launch Mission Control</button>
+
+<script>
+function launchCue() {
+    const width = 280;
+    const height = 340;
+    const left = screen.availWidth - width - 20;
+    const top = screen.availHeight - height - 60;
+    
+    const win = window.open(
+        '',
+        'MissionControlCue',
+        `width=${width},height=${height},left=${left},top=${top},resizable=yes`
+    );
+
+    win.document.write(`
+<!DOCTYPE html>
+<html>
+<head>
+<title>Mission Control</title>
+<style>
+html, body {
+    margin: 0;
+    height: 100%;
+    background: #222;
+    color: white;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0.5rem;
+    box-sizing: border-box;
+    user-select: none;
+}
+
+#circle-wrap {
+    width: min(80vw, 80vh);
+    aspect-ratio: 1;
+    position: relative;
+}
+
+svg {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+#light {
+    position: absolute;
+    inset: 10%;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    cursor: pointer;
+    text-align: center;
+    box-shadow: 0 0 30px rgba(0,0,0,0.8);
+}
+
+.green { background:#2ecc40; color:#111; }
+.yellow { background:#ffdc00; color:#111; }
+.red { background:#ff4136; }
+
+#time {
+    font-size: clamp(1.2rem, 5vw, 1.6rem);
+    margin-top: 0.3rem;
+    cursor: pointer;
+}
+
+#time:hover {
+    text-decoration: underline;
+}
+
+#time.paused {
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    50% { opacity: 0.3; }
+}
+
+#noise {
+    font-size: 2rem;
+    margin-top: 0.4rem;
+}
+.letter { opacity:0.6; cursor:pointer; padding:0 0.15em; }
+.crossed { text-decoration: line-through 0.2em #ff4136; color:#ff4136; opacity:1; }
+
+#controls {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.4rem;
+    margin-top: 0.5rem;
+}
+
+.ctrl {
+    background: #444;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 0.5rem 0.7rem;
+    font-size: 0.75rem;
+    cursor: pointer;
+}
+.ctrl:hover { background:#555; }
+
+.hidden { display:none; }
+</style>
+</head>
+<body>
+
+<div id="circle-wrap">
+    <svg id="ring" viewBox="0 0 100 100" class="hidden">
+        <circle cx="50" cy="50" r="45" stroke="#444" stroke-width="10" fill="none"/>
+        <circle id="progress" cx="50" cy="50" r="45"
+            stroke="#00e0ff" stroke-width="10"
+            fill="none" stroke-linecap="round"
+            transform="rotate(-90 50 50)"/>
+    </svg>
+
+    <div id="light" class="green">
+        <div id="label">SQUAD WHISPER</div>
+        <div id="time" class="hidden">10:00</div>
+    </div>
+</div>
+
+<div id="noise">
+    <span class="letter">N</span><span class="letter">O</span>
+    <span class="letter">I</span><span class="letter">S</span>
+    <span class="letter">E</span>
+</div>
+
+<div id="controls">
+    <button class="ctrl" onclick="addTime(-60)">− 1m</button>
+    <button class="ctrl" id="mainBtn" onclick="mainAction()">Timer</button>
+    <button class="ctrl" onclick="addTime(60)">+ 1m</button>
+</div>
+
+<script>
+const light = document.getElementById('light');
+const label = document.getElementById('label');
+const timeEl = document.getElementById('time');
+const ring = document.getElementById('ring');
+const progress = document.getElementById('progress');
+const letters = document.querySelectorAll('.letter');
+const mainBtn = document.getElementById('mainBtn');
+
+const CIRC = 2 * Math.PI * 45;
+
+const modes = [
+ {cls:'green', label:'SQUAD WHISPER'},
+ {cls:'yellow', label:'PARTNER WHISPER'},
+ {cls:'red', label:'SILENT'}
+];
+
+let mode = 0;
+let noise = 0;
+
+let timerOn = false;
+let running = false;
+let total = 600;
+let remaining = 600;
+let tick = null;
+
+function formatTime(sec) {
+    const m = Math.floor(sec / 60);
+    const s = sec % 60;
+    return m + ':' + s.toString().padStart(2,'0');
+}
+
+function updateUI() {
+    timeEl.textContent = formatTime(remaining);
+    const pct = remaining / total;
+    const offset = CIRC * (1 - pct);
+    progress.style.strokeDasharray = CIRC;
+    progress.style.strokeDashoffset = offset;
+}
+
+function tickTimer() {
+    if (!running) return;
+    remaining--;
+    if (remaining <= 0) {
+        remaining = 0;
+        running = false;
+        mainBtn.textContent = 'Start';
+        playTone();
+    }
+    updateUI();
+}
+
+function mainAction() {
+    if (!timerOn) {
+        timerOn = true;
+        ring.classList.remove('hidden');
+        timeEl.classList.remove('hidden');
+        mainBtn.textContent = 'Start';
+        updateUI();
+    } else if (!running) {
+        if (remaining <= 0) remaining = total;
+        running = true;
+        timeEl.classList.remove('paused');
+        mainBtn.textContent = 'Pause';
+        if (!tick) tick = setInterval(tickTimer, 1000);
+        updateUI();
+    } else {
+        running = false;
+        timeEl.classList.add('paused');
+        mainBtn.textContent = 'Start';
+    }
+}
+
+function addTime(sec) {
+    const wasFinished = remaining <= 0;
+    
+    if (wasFinished && sec > 0) {
+        remaining = sec;
+        total = sec;
+    } else {
+        remaining = remaining + sec;
+        if (remaining < 0) remaining = 0;
+        if (remaining > total) total = remaining;
+        if (total < 60) total = 60;
+    }
+    
+    if (!timerOn) {
+        timerOn = true;
+        ring.classList.remove('hidden');
+        timeEl.classList.remove('hidden');
+        mainBtn.textContent = running ? 'Pause' : 'Start';
+    }
+    updateUI();
+}
+
+function resetTimer() {
+    remaining = total;
+    running = false;
+    timeEl.classList.remove('paused');
+    mainBtn.textContent = 'Start';
+    updateUI();
+}
+
+function playTone() {
+    try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.frequency.value = 440;
+        gain.gain.value = 0.3;
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start();
+        setTimeout(() => { osc.stop(); ctx.close(); }, 1500);
+    } catch(e) {}
+}
+
+light.onclick = () => {
+    light.classList.remove(modes[mode].cls);
+    mode = (mode + 1) % modes.length;
+    light.classList.add(modes[mode].cls);
+    label.textContent = modes[mode].label;
+    noise = 0;
+    letters.forEach(l => l.classList.remove('crossed'));
+};
+
+timeEl.onclick = (e) => {
+    e.stopPropagation();
+    resetTimer();
+};
+
+letters.forEach(l => l.onclick = (e) => {
+    e.stopPropagation();
+    if (mode === 2 || l.classList.contains('crossed')) return;
+    l.classList.add('crossed');
+    noise++;
+    if (noise === 5) {
+        light.classList.remove(modes[mode].cls);
+        mode = 2;
+        light.classList.add('red');
+        label.textContent = modes[2].label;
+        noise = 0;
+        letters.forEach(x => x.classList.remove('crossed'));
+    }
+});
+
+updateUI();
+<\/script>
+
+</body>
+</html>
+`);
+    win.document.close();
+}
+</script>
+
+</body>
+</html>
