@@ -1,481 +1,766 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Choice Time Hub</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Bangers&family=Poppins:wght@400;700&display=swap');
+      @import url("https://fonts.googleapis.com/css2?family=Bangers&family=Poppins:wght@400;700&display=swap");
 
-        :root {
-            --bg-color: #f0f8ff;
-            --card-color: #ffffff;
-            --header-font: 'Bangers', cursive;
-            --body-font: 'Poppins', sans-serif;
-            --text-dark: #333333;
-            --border-light: #e0e0e0;
-            --shadow-light: rgba(0,0,0,0.1);
-            --link-color: #007bff;
-        }
+      :root {
+        --bg-color: #f0f8ff;
+        --card-color: #ffffff;
+        --header-font: "Bangers", cursive;
+        --body-font: "Poppins", sans-serif;
+        --text-dark: #333333;
+        --border-light: #e0e0e0;
+        --shadow-light: rgba(0, 0, 0, 0.1);
+        --link-color: #007bff;
+        --before-color: #28a745;
+        --after-color: #fd7e14;
+      }
 
-        * { box-sizing: border-box; }
+      * {
+        box-sizing: border-box;
+      }
 
-        body {
-            font-family: var(--body-font);
-            background-color: var(--bg-color);
-            margin: 0;
-            padding: 1em;
-            color: var(--text-dark);
-            -webkit-font-smoothing: antialiased;
-        }
+      body {
+        font-family: var(--body-font);
+        background-color: var(--bg-color);
+        margin: 0;
+        padding: 1em;
+        color: var(--text-dark);
+        -webkit-font-smoothing: antialiased;
+      }
 
-        /* --- Screen Management --- */
-        .screen {
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            width: 100%;
-            max-width: 1100px;
-            margin: auto;
-            padding: 1em;
-        }
-        .screen.active {
-            display: flex;
-        }
+      /* --- Screen Management --- */
+      .screen {
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        max-width: 1100px;
+        margin: auto;
+        padding: 1em;
+      }
+      .screen.active {
+        display: flex;
+      }
 
-        h1.screen-title {
-            font-family: var(--header-font);
-            font-size: clamp(3em, 10vw, 5em);
-            letter-spacing: 4px;
-            margin: 0.2em 0 0.5em 0;
-            text-align: center;
-            color: var(--text-dark);
-        }
-        
-        h1.screen-title i {
-            margin-right: 0.2em;
-        }
+      h1.screen-title {
+        font-family: var(--header-font);
+        font-size: clamp(3em, 10vw, 5em);
+        letter-spacing: 4px;
+        margin: 0.2em 0 0.5em 0;
+        text-align: center;
+        color: var(--text-dark);
+      }
+      h1.screen-title i {
+        margin-right: 0.2em;
+      }
 
-        /* --- Generic Grid for Choices --- */
-        .choice-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 2em;
-            width: 100%;
-        }
-        .choice-card {
-            background: var(--card-color);
-            border-radius: 20px;
-            padding: 1.5em;
-            text-align: center;
-            box-shadow: 0 5px 15px var(--shadow-light);
-            cursor: pointer;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-            border: 4px solid transparent;
-        }
-        .choice-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
-        }
-        .choice-card i {
-            font-size: 5em;
-            margin-bottom: 0.2em;
-        }
-        .choice-card h2 {
-            font-family: var(--header-font);
-            font-size: 2.2em;
-            margin: 0;
-            letter-spacing: 2px;
-        }
-        
-        /* Card Colors */
-        [data-activity="reading"] i, [data-sub-type="fiction"] i, [data-sub-type="nonFiction"] i { color: #ff6347; }
-        [data-activity="coding"] i { color: #1e90ff; }
-        [data-activity="building"] i { color: #ffc107; }
-        [data-activity="art"] i { color: #9b59b6; }
-        [data-activity="boardGames"] i { color: #2ecc71; }
-        [data-activity="puzzles"] i { color: #e67e22; }
-        [data-activity="skillsPractice"] i { color: #3498db; }
-        
-        /* --- FOCUSED TASK SCREEN --- */
-        #task-screen {
-            max-width: 800px;
-        }
-        .task-container {
-            background-color: var(--card-color);
-            width: 100%;
-            border-radius: 20px;
-            padding: 2.5em;
-            box-shadow: 0 5px 15px var(--shadow-light);
-        }
-        #task-instructions ul {
-            list-style: none;
-            padding: 0;
-            font-size: 1.5em;
-            line-height: 1.7;
-        }
-        #task-instructions li {
-            margin-bottom: 1em;
-        }
-        #task-example {
-            font-size: 1em;
-            margin-top: 2em;
-            padding-top: 1.5em;
-            border-top: 3px dashed var(--border-light);
-            color: #555;
-        }
-        #task-example p:first-of-type {
-            font-weight: bold;
-        }
-        
-        /* --- Resource Links on Task Page --- */
-        #resource-links-container {
-            width: 100%;
-            margin-bottom: 2em;
-            padding: 1.5em;
-            background-color: #e7f3ff;
-            border-radius: 15px;
-            border: 2px dashed var(--link-color);
-        }
-        #resource-links-container h3 {
-            font-family: var(--header-font);
-            font-size: 2em;
-            text-align: center;
-            margin: 0 0 1em 0;
-        }
-        .resource-list {
-            display: flex;
-            flex-direction: column;
-            gap: 1em;
-            align-items: center;
-        }
-        .resource-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-        }
-        .resource-item p {
-            margin: 0.2em 0 0 0;
-            font-style: italic;
-            color: #555;
-        }
+      /* --- Choice Grid --- */
+      .choice-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 2em;
+        width: 100%;
+      }
+      .choice-card {
+        background: var(--card-color);
+        border-radius: 20px;
+        padding: 1.5em;
+        text-align: center;
+        box-shadow: 0 5px 15px var(--shadow-light);
+        cursor: pointer;
+        transition:
+          transform 0.2s ease,
+          box-shadow 0.2s ease;
+        border: 4px solid transparent;
+      }
+      .choice-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+      }
+      .choice-card i {
+        font-size: 5em;
+        margin-bottom: 0.2em;
+      }
+      .choice-card h2 {
+        font-family: var(--header-font);
+        font-size: 2.2em;
+        margin: 0;
+        letter-spacing: 2px;
+      }
 
-        /* --- Navigation Buttons --- */
-        .button-container {
-            width: 100%;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 1em;
-            margin-top: 1.5em;
-        }
-        .nav-button {
-            font-size: 1.2em;
-            font-weight: bold;
-            padding: 12px 30px;
-            background-color: #eee;
-            border: 2px solid #ddd;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: background-color 0.2s;
-            text-decoration: none;
-            color: var(--text-dark);
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5em;
-        }
-        .nav-button:hover {
-            background-color: #ddd;
-        }
-        .resource-link {
-            background-color: var(--link-color);
-            color: white;
-            border-color: var(--link-color);
-        }
-         .resource-link:hover {
-            background-color: #0056b3;
-        }
+      /* Card Colors */
+      [data-activity="reading"] i,
+      [data-sub-type="fiction"] i,
+      [data-sub-type="nonFiction"] i {
+        color: #ff6347;
+      }
+      [data-activity="coding"] i {
+        color: #1e90ff;
+      }
+      [data-activity="building"] i {
+        color: #ffc107;
+      }
+      [data-activity="art"] i {
+        color: #9b59b6;
+      }
+      [data-activity="boardGames"] i {
+        color: #2ecc71;
+      }
+      [data-activity="puzzles"] i {
+        color: #e67e22;
+      }
+      [data-activity="skillsPractice"] i {
+        color: #3498db;
+      }
+
+      /* --- FOCUSED TASK SCREEN --- */
+      #task-screen {
+        max-width: 800px;
+      }
+      .task-section {
+        background-color: var(--card-color);
+        width: 100%;
+        border-radius: 20px;
+        padding: 2em;
+        box-shadow: 0 5px 15px var(--shadow-light);
+        margin-bottom: 2em;
+      }
+      .task-section h2 {
+        font-family: var(--header-font);
+        font-size: 2.5em;
+        letter-spacing: 2px;
+        margin: 0 0 0.5em 0;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+      }
+      .task-section.before h2 {
+        color: var(--before-color);
+      }
+      .task-section.after h2 {
+        color: var(--after-color);
+      }
+      .task-prompt {
+        font-size: 1.5em;
+        line-height: 1.6;
+      }
+      .task-example {
+        font-size: 1em;
+        margin-top: 1.5em;
+        padding-top: 1.5em;
+        border-top: 3px dashed var(--border-light);
+        color: #555;
+      }
+      .task-example p:first-of-type {
+        font-weight: bold;
+      }
+
+      /* Resource Links */
+      #resource-links-container {
+        width: 100%;
+        margin-bottom: 2em;
+        padding: 1.5em;
+        background-color: #e7f3ff;
+        border-radius: 15px;
+        border: 2px dashed var(--link-color);
+      }
+      #resource-links-container h3 {
+        font-family: var(--header-font);
+        font-size: 2em;
+        text-align: center;
+        margin: 0 0 1em 0;
+      }
+      .resource-list {
+        display: flex;
+        flex-direction: column;
+        gap: 1em;
+        align-items: center;
+      }
+      .resource-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+      .resource-item p {
+        margin: 0.2em 0 0 0;
+        font-style: italic;
+        color: #555;
+      }
+
+      /* Navigation Buttons */
+      .button-container {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1em;
+        margin-top: 1.5em;
+      }
+      .nav-button {
+        font-size: 1.2em;
+        font-weight: bold;
+        padding: 12px 30px;
+        background-color: #eee;
+        border: 2px solid #ddd;
+        border-radius: 12px;
+        cursor: pointer;
+        transition: background-color 0.2s;
+        text-decoration: none;
+        color: var(--text-dark);
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5em;
+      }
+      .nav-button:hover {
+        background-color: #ddd;
+      }
+      .resource-link {
+        background-color: var(--link-color);
+        color: white;
+        border-color: var(--link-color);
+      }
+      .resource-link:hover {
+        background-color: #0056b3;
+      }
     </style>
-</head>
-<body>
-
-    <!-- SCREEN 1: Main Menu of Choices -->
+  </head>
+  <body>
+    <!-- SCREEN 1: Main Menu -->
     <div id="hub-screen" class="screen active">
-        <h1 class="screen-title">Choice Time Hub</h1>
-        <div id="hub-grid" class="choice-grid">
-            <!-- Hub cards generated by JS -->
-        </div>
+      <h1 class="screen-title">Choice Time Hub</h1>
+      <div id="hub-grid" class="choice-grid"></div>
     </div>
 
-    <!-- SCREEN 2a: Sub-Menu for Reading -->
+    <!-- SCREEN 2a: Reading Sub-Menu -->
     <div id="reading-submenu-screen" class="screen">
-        <h1 class="screen-title"><i class="fa-solid fa-book-open"></i> Reading</h1>
-        <div id="reading-submenu-grid" class="choice-grid">
-             <div class="choice-card" data-sub-type="fiction">
-                <i class="fa-solid fa-dragon"></i>
-                <h2>Fiction</h2>
-            </div>
-            <div class="choice-card" data-sub-type="nonFiction">
-                <i class="fa-solid fa-landmark"></i>
-                <h2>Non-Fiction</h2>
-            </div>
+      <h1 class="screen-title">
+        <i class="fa-solid fa-book-open"></i> Reading
+      </h1>
+      <div id="reading-submenu-grid" class="choice-grid">
+        <div class="choice-card" data-sub-type="fiction">
+          <i class="fa-solid fa-dragon"></i>
+          <h2>Fiction</h2>
         </div>
-        <div class="button-container">
-            <button class="nav-button" data-target="hub-screen"><i class="fa-solid fa-arrow-left"></i> Back to All Choices</button>
+        <div class="choice-card" data-sub-type="nonFiction">
+          <i class="fa-solid fa-landmark"></i>
+          <h2>Non-Fiction</h2>
         </div>
+      </div>
+      <div class="button-container">
+        <button class="nav-button" data-target="hub-screen">
+          <i class="fa-solid fa-arrow-left"></i> Back to All Choices
+        </button>
+      </div>
     </div>
 
-    <!-- SCREEN 2b: Menu of Tasks for a specific Activity -->
+    <!-- SCREEN 2b: Task Menu -->
     <div id="activity-menu-screen" class="screen">
-        <h1 id="activity-menu-title" class="screen-title"></h1>
-        <div id="task-grid" class="choice-grid">
-            <!-- Task choice cards generated by JS -->
-        </div>
-        <div class="button-container">
-            <button class="nav-button" id="back-to-hub-or-reading-button"><i class="fa-solid fa-arrow-left"></i> Back</button>
-        </div>
+      <h1 id="activity-menu-title" class="screen-title"></h1>
+      <div id="task-grid" class="choice-grid"></div>
+      <div class="button-container">
+        <button class="nav-button" id="back-to-hub-or-reading-button">
+          <i class="fa-solid fa-arrow-left"></i> Back
+        </button>
+      </div>
     </div>
-    
-    <!-- SCREEN 3: The Focused Task View -->
+
+    <!-- SCREEN 3: Focused Task View -->
     <div id="task-screen" class="screen">
-        <h1 id="task-title" class="screen-title"></h1>
-        <div id="resource-links-container">
-            <!-- Resource links will be injected here by JS -->
-        </div>
-        <div class="task-container">
-            <div id="task-instructions"></div>
-            <div id="task-example"></div>
-        </div>
-         <div class="button-container">
-            <button class="nav-button" id="back-to-tasks-button"><i class="fa-solid fa-arrow-left"></i> Back to Tasks</button>
-            <button class="nav-button" data-target="hub-screen"><i class="fa-solid fa-house"></i> Back to Main Menu</button>
-        </div>
+      <h1 id="task-title" class="screen-title"></h1>
+      <div id="resource-links-container"></div>
+      <div class="task-section before">
+        <h2><i class="fa-solid fa-seedling"></i> Before You Start</h2>
+        <div id="before-prompt" class="task-prompt"></div>
+      </div>
+      <div class="task-section after">
+        <h2><i class="fa-solid fa-tree"></i> After You Finish</h2>
+        <div id="after-prompt" class="task-prompt"></div>
+        <div id="task-example" class="task-example"></div>
+      </div>
+      <div class="button-container">
+        <button class="nav-button" id="back-to-tasks-button">
+          <i class="fa-solid fa-arrow-left"></i> Back to Tasks
+        </button>
+        <button class="nav-button" data-target="hub-screen">
+          <i class="fa-solid fa-house"></i> Back to Main Menu
+        </button>
+      </div>
     </div>
 
-
-<script>
-const activitiesData = {
-    reading: { 
-        title: "Reading", 
-        icon: "fa-solid fa-book-open",
-        links: [
-            { name: "Epic Books", url: "https://www.getepic.com/students", description: "Read thousands of books online! Class Code: kiu8865" }
-        ],
-        fiction: {
+    <script>
+      const activitiesData = {
+        reading: {
+          title: "Reading",
+          icon: "fa-solid fa-book-open",
+          beforePrompt:
+            "What is your reading goal? (Examples: read one chapter, learn three new things, finish my book)",
+          links: [
+            {
+              name: "Epic Books",
+              url: "https://www.getepic.com/students",
+              description:
+                "Read thousands of books online! Class Code: kiu8865",
+            },
+          ],
+          fiction: {
             title: "Fiction Reading",
             cards: [
-                { title: "The Other Side", instructions: ["<strong>1. Find:</strong> A 'bad guy' character.", "<strong>2. Think:</strong> Why did they do what they did?", "<strong>3. Create:</strong> Write one sentence that the 'bad guy' would say to explain their side of the story."], example: "<p>Example from <em>Jack and the Beanstalk</em>:</p><p>First, I find the 'bad guy': The Giant. Then, I think about why he was so angry. Jack snuck into his house and tried to steal his stuff! He was probably scared and just protecting his home. I'll write his sentence: 'Fee fi fo fum, I'm trying to stop a little boy from robbing me!'</p>" },
-                { title: "Secret Meaning", instructions: ["<strong>1. Find:</strong> An important object in the story.", "<strong>2. Think:</strong> What big idea does it stand for?", "<strong>3. Create:</strong> Give the object a new name that is its secret meaning."], example: "<p>Example from <em>Aladdin</em>:</p><p>First, I find the object: The magic lamp. Then, I think about the big idea. The lamp gives you wishes, which is a lot of power. So, I will give it a new name: 'The Lamp of Power.'</p>" },
-                { title: "Author's Message", instructions: ["<strong>1. Find:</strong> A moment where a character learns a lesson.", "<strong>2. Think:</strong> What does the author want us all to learn?", "<strong>3. Create:</strong> Write the lesson as a 'Rule for Life.'"], example: "<p>Example from <em>The Little Engine That Could</em>:</p><p>First, I find the lesson: The little engine kept saying 'I think I can' and didn't give up. The author wants us to learn to believe in ourselves. My 'Rule for Life' is: 'If you believe in yourself, you can do hard things.'</p>" }
-            ]
-        },
-        nonFiction: {
+              {
+                title: "The Other Side",
+                afterPrompt:
+                  "In your journal, write one sentence the 'bad guy' from your story would say to explain their side.",
+                example:
+                  "<p>Example from <em>The Three Little Pigs</em>:</p><p>First, I think about the Wolf. He seems mean. But why was he so angry? Maybe he just had a really bad cold! I'll write his excuse: 'I just wanted a cup of sugar for my grandma, and I sneezed the houses down by accident!'</p>",
+              },
+              {
+                title: "Secret Meaning",
+                afterPrompt:
+                  "Find an important object in your story. In your journal, give it a new name that is its secret meaning.",
+                example:
+                  "<p>Example from <em>Cinderella</em>:</p><p>The important object is the glass slipper. It proves who Cinderella is. So, its secret meaning is about truth. My new name for it is: 'The Slipper of Truth.'</p>",
+              },
+              {
+                title: "Author's Message",
+                afterPrompt:
+                  "Think about the lesson the character learned. In your journal, write that lesson as a 'Rule for Life.'",
+                example:
+                  "<p>Example from <em>The Tortoise and the Hare</em>:</p><p>The Hare learned that being fast isn't enough. The author wants us to learn to keep trying. My 'Rule for Life' is: 'Slow and steady wins the race.'</p>",
+              },
+            ],
+          },
+          nonFiction: {
             title: "Non-Fiction Reading",
             cards: [
-                { title: "Headline News", instructions: ["<strong>1. Find:</strong> The most surprising fact on the page.", "<strong>2. Think:</strong> What is the big idea of the whole section?", "<strong>3. Create:</strong> Write a short 'Newspaper Headline' for it."], example: "<p>Example from a book about Bees:</p><p>I find a surprising fact: A bee flaps its wings 200 times every second! The big idea is that bees are busy. My headline is: 'BUZZY BEES HAVE SUPER-FAST WINGS!'</p>" },
-                { title: "Ask the Picture", instructions: ["<strong>1. Find:</strong> A picture or a map.", "<strong>2. Think:</strong> What does this teach you that the words don't?", "<strong>3. Create:</strong> Write one 'I wonder...' question about the picture."], example: "<p>Example from a book about Whales:</p><p>I find a picture of a blue whale next to a school bus. The picture shows the whale is way bigger than a bus. My question is: 'I wonder if a blue whale is the biggest animal that has ever lived?'</p>" },
-                { title: "Make a Connection", instructions: ["<strong>1. Find:</strong> One new fact.", "<strong>2. Think:</strong> How does this connect to something I already know?", "<strong>3. Create:</strong> Write an equation: [Fact I Learned] + [What I Knew] = [My New Idea]."], example: "<p>Example from a book on Penguins:</p><p>[The fact I learned]: Penguins huddle together to stay warm.<br>+<br>[What I knew]: My friends and I have group hugs.<br>=<br>[My new idea]: Huddling is a smart way for animals and people to share heat!</p>" }
-            ]
+              {
+                title: "Headline News",
+                afterPrompt:
+                  "Find the most surprising fact you read. In your journal, write a 'Newspaper Headline' about it.",
+                example:
+                  "<p>Example from a book about Bees:</p><p>I learned a bee flaps its wings 200 times a second! That's very surprising. My headline is: 'BUZZY BEES HAVE SUPER-FAST WINGS!'</p>",
+              },
+              {
+                title: "Ask the Picture",
+                afterPrompt:
+                  "Look at one picture or map in your book. In your journal, write one 'I wonder...' question about it.",
+                example:
+                  "<p>Example from a book about Whales:</p><p>I see a picture of a blue whale next to a school bus. The picture shows the whale is way bigger. My question is: 'I wonder if a blue whale is the biggest animal that has ever lived?'</p>",
+              },
+              {
+                title: "Make a Connection",
+                afterPrompt:
+                  "Write an equation in your journal: [Fact I Learned] + [What I Knew] = [My New Idea].",
+                example:
+                  "<p>Example from a book on Penguins:</p><p>[The fact I learned]: Penguins huddle together to stay warm.<br>+<br>[What I knew]: My friends and I have group hugs.<br>=<br>[My new idea]: Huddling is a smart way for animals and people to share heat!</p>",
+              },
+            ],
+          },
+        },
+        coding: {
+          title: "Coding",
+          icon: "fa-solid fa-laptop-code",
+          beforePrompt:
+            "What is your coding goal today? (Examples: finish a tutorial, learn one new block, make a character move)",
+          links: [
+            {
+              name: "MakeCode Arcade",
+              url: "https://arcade.makecode.com/",
+              description:
+                "<strong style='color: red;'>Do NOT play existing games!</strong> Use the Skillmaps and Tutorials to build your own.",
+            },
+            {
+              name: "Rodo Codo",
+              url: "https://game.rodocodo.com/hour-of-code/",
+              description: "Solve puzzle mazes with code blocks.",
+            },
+            {
+              name: "freeCodeCamp",
+              url: "https://www.freecodecamp.org/",
+              description: "For an advanced challenge.",
+            },
+          ],
+          cards: [
+            {
+              title: "The Boss Block",
+              afterPrompt:
+                "Finish a tutorial. In your journal, name the one 'boss block' that is most important for the game and explain its job.",
+              example:
+                "<p><em>From a pizza game:</em> The 'on game update' block is the boss. Its job is to make a new pizza show up every few seconds.</p>",
+            },
+            {
+              title: "Game Remix",
+              afterPrompt:
+                "Finish a tutorial. In your journal, write down one change you made to the game to make it your own.",
+              example:
+                "<p><em>From a flower game:</em> 'I changed the water drops to fireballs. I also changed the grass background to a volcano to match!'</p>",
+            },
+            {
+              title: "The Big Idea",
+              afterPrompt:
+                "Finish one lesson. In your journal, write one sentence explaining the big idea you learned.",
+              example:
+                "<p><em>From a website lesson:</em> 'The <strong>&lt;img&gt;</strong> code puts a picture on a website, and <strong>src=</strong> tells the code where to find the picture.'</p>",
+            },
+          ],
+        },
+        building: {
+          title: "Building",
+          icon: "fa-solid fa-cubes",
+          beforePrompt:
+            "What is your plan for building today? (Examples: finish a model, build something strong, use only red pieces)",
+          links: [
+            {
+              name: "LEGO WeDo 2.0 App",
+              url: "https://play.google.com/store/apps/details?id=com.lego.education.wedo&hl=en",
+              description: "For LEGO WeDo robots.",
+            },
+            {
+              name: "LEGO SPIKE App",
+              url: "https://spike.legoeducation.com/",
+              description: "For LEGO SPIKE robots.",
+            },
+          ],
+          cards: [
+            {
+              title: "The Key Step",
+              afterPrompt:
+                "Build a model. In your journal, draw the one step that was most important for making it strong.",
+              example:
+                "<p><em>From a LEGO car:</em> 'Putting the long piece on the bottom was the key. It connected the wheels and made the car sturdy.'</p>",
+            },
+            {
+              title: "My Upgrade",
+              afterPrompt:
+                "Build a model. In your journal, draw your creation with an 'upgrade' you added to make it better.",
+              example:
+                "<p><em>From a Keva tower:</em> 'I added flying supports on the sides, so now my tower is much stronger.'</p>",
+            },
+            {
+              title: "Build a Blueprint",
+              afterPrompt:
+                "Build a model. In your journal, draw it from two different views. Label them 'Top View' and 'Side View.'",
+              example:
+                "<p>A drawing of a car from above is a rectangle with circles. A drawing from the side shows the car's body and two wheels.</p>",
+            },
+          ],
+        },
+        art: {
+          title: "Art",
+          icon: "fa-solid fa-palette",
+          beforePrompt:
+            "What is your creative goal? (Examples: learn to draw a cat, practice shading, make a 3D monster)",
+          links: [
+            {
+              name: "Epic Drawing Books",
+              url: "https://www.getepic.com/collection/12528291/drawing-instruction",
+              description: "A great collection of how-to-draw books.",
+            },
+            {
+              name: "Learn to Draw",
+              url: "https://www.getepic.com/app/content-title/547f03c7-1686-49ce-a507-636efbb7a1b4",
+              description: "A series of books on Epic.",
+            },
+            {
+              name: "Tinkercad",
+              url: "https://www.tinkercad.com/login",
+              description: "Create amazing 3D models. Class Code: NBQ-DRT-MZP",
+            },
+          ],
+          cards: [
+            {
+              title: "The Artist's Secret",
+              afterPrompt:
+                "Follow an art lesson. In your journal, write down the #1 'secret' or trick the lesson taught you.",
+              example:
+                "<p><em>From a lesson on shading:</em> 'The secret is to leave a little white spot where the light hits to make it look shiny and round.'</p>",
+            },
+            {
+              title: "Art Remix",
+              afterPrompt:
+                "Finish an art lesson. In your journal, draw the original art and your new 'remixed' version with your changes.",
+              example:
+                "<p>A drawing of a cat from a tutorial, then another drawing of the same cat but now it's wearing a wizard hat.</p>",
+            },
+            {
+              title: "Change the Mood",
+              afterPrompt:
+                "Create a character or scene. In your journal, re-draw it with a new mood (like spooky or silly) and explain what you changed.",
+              example:
+                "<p><em>From a drawing of a happy dog:</em> 'To make the dog look sad, I changed its smile to a frown and made its ears droop down.'</p>",
+            },
+          ],
+        },
+        boardGames: {
+          title: "Board Games",
+          icon: "fa-solid fa-chess-board",
+          beforePrompt:
+            "What is one strategy you want to try in your game today?",
+          cards: [
+            {
+              title: "The Smartest Move",
+              afterPrompt:
+                "After your game, draw the board in your journal and circle the smartest move anyone made. Explain why it was so good.",
+              example:
+                "<p><em>From Connect Four:</em> 'This move blocked my opponent AND set me up for a trap where I could win two different ways.'</p>",
+            },
+            {
+              title: "A Better Rule",
+              afterPrompt:
+                "Think about the rules. In your journal, write one rule you would change and explain why your new rule is better.",
+              example:
+                "<p><em>From Uno:</em> '<strong>New Rule:</strong> You CAN stack 'Draw 2' cards. <strong>Why it's better:</strong> It adds more surprise!'</p>",
+            },
+            {
+              title: "Master Strategy",
+              afterPrompt:
+                "What's the best way to win this game? Write one 'Top Secret Tip' in your journal for a new player.",
+              example:
+                "<p><em>From Tic-Tac-Toe:</em> 'Always try to go in the middle square on your first turn.'</p>",
+            },
+          ],
+        },
+        puzzles: {
+          title: "Puzzles",
+          icon: "fa-solid fa-puzzle-piece",
+          beforePrompt:
+            "What is your plan for solving this puzzle? Where will you start?",
+          cards: [
+            {
+              title: "The Starting Plan",
+              afterPrompt:
+                "After solving, was your starting plan a good one? Write 'Yes' or 'No' in your journal and explain why.",
+              example:
+                "<p><em>From a Sudoku puzzle:</em> 'Yes, my plan to start with the most common number worked because it helped me solve lots of boxes right away.'</p>",
+            },
+            {
+              title: "The 'Aha!' Moment",
+              afterPrompt:
+                "What was the key discovery that helped you solve the puzzle? Describe your 'Aha!' Moment in your journal.",
+              example:
+                "<p><em>From a pattern puzzle:</em> 'The 'Aha!' moment was when I realized the pattern was about the number of corners, not the colors.'</p>",
+            },
+            {
+              title: "The Difficulty Dial",
+              afterPrompt:
+                "Look at an easy puzzle and a hard one. In your journal, explain what makes the hard puzzles harder.",
+              example:
+                "<p>'This game gets harder when it gives you fewer clues at the start.'</p>",
+            },
+          ],
+        },
+        skillsPractice: {
+          title: "Skills Practice",
+          icon: "fa-solid fa-bullseye",
+          beforePrompt:
+            "What is your goal for this skill? (Examples: get 5 in a row correct, beat my score)",
+          links: [
+            {
+              name: "Freckle Login",
+              url: "https://student.freckle.com/#/login",
+              description: "Practice math and reading skills.",
+            },
+            {
+              name: "IXL (via Clever)",
+              url: "https://clever.com/login?student",
+              description: "Log in with your Clever account.",
+            },
+          ],
+          cards: [
+            {
+              title: "The Pattern Detective",
+              afterPrompt:
+                "What is the one big idea all the questions are about? Write a tip in your journal for a friend who is about to start this skill.",
+              example:
+                "<p><em>From a math skill on Area:</em> 'The secret is to just multiply the length by the width!'</p>",
+            },
+            {
+              title: "Write Your Own",
+              afterPrompt:
+                "Think about how the questions are made. In your journal, write your own tricky practice question for this skill.",
+              example:
+                "<p><em>From a vocabulary skill on Synonyms:</em> 'Which word is a synonym for 'gigantic': tiny, angry, or enormous?'</p>",
+            },
+            {
+              title: "The Tricky Part",
+              afterPrompt:
+                "When you found a tricky question, what made it so hard? Write down the trick in your journal.",
+              example:
+                "<p><em>From a math word problem:</em> 'The tricky part was that the problem gave me extra numbers that I didn't even need to use.'</p>",
+            },
+          ],
+        },
+      };
+
+      document.addEventListener("DOMContentLoaded", () => {
+        // Get all the elements
+        const hubGrid = document.getElementById("hub-grid");
+        const readingSubmenuGrid = document.getElementById(
+          "reading-submenu-grid",
+        );
+        const activityMenuTitle = document.getElementById(
+          "activity-menu-title",
+        );
+        const taskGrid = document.getElementById("task-grid");
+        const resourceLinksContainer = document.getElementById(
+          "resource-links-container",
+        );
+        const taskTitle = document.getElementById("task-title");
+        const beforePromptDiv = document.getElementById("before-prompt");
+        const afterPromptDiv = document.getElementById("after-prompt");
+        const taskExampleDiv = document.getElementById("task-example");
+        const backToHubOrReadingButton = document.getElementById(
+          "back-to-hub-or-reading-button",
+        );
+        const backToTasksButton = document.getElementById(
+          "back-to-tasks-button",
+        );
+
+        // Keep track of the user's location
+        let currentActivityKey = null;
+        let currentSubType = null;
+
+        // --- Navigation Logic ---
+        function showScreen(screenId) {
+          document
+            .querySelectorAll(".screen")
+            .forEach((s) => s.classList.remove("active"));
+          document.getElementById(screenId).classList.add("active");
         }
-    },
-    coding: { 
-        title: "Coding", 
-        icon: "fa-solid fa-laptop-code", 
-        links: [
-            { name: "MakeCode Arcade", url: "https://arcade.makecode.com/", description: "<strong style='color: red;'>Do NOT play existing games!</strong> Use the Skillmaps and Tutorials to build your own." },
-            { name: "Rodo Codo", url: "https://game.rodocodo.com/hour-of-code/", description: "Solve puzzle mazes with code blocks." },
-            { name: "freeCodeCamp", url: "https://www.freecodecamp.org/", description: "For an advanced challenge." }
-        ],
-        cards: [
-            { title: "The Boss Block", instructions: ["<strong>1. Do:</strong> Finish a Skillmap or Tutorial.", "<strong>2. Think:</strong> Which code block is the most important?", "<strong>3. Create:</strong> In your journal, name the 'boss block' and explain its job."], example: "<p><em>From a pizza game:</em> The 'on game update' block is the boss. Its job is to make a new pizza show up every few seconds.</p>" },
-            { title: "Game Remix", instructions: ["<strong>1. Do:</strong> Finish a Skillmap or Tutorial.", "<strong>2. Think:</strong> How can you change this game to make it YOURS?", "<strong>3. Create:</strong> Make one change to the game and write down what you did."], example: "<p><em>From a flower game:</em> 'I changed the water drops to fireballs. I also changed the grass background to a volcano to match!'</p>" },
-            { title: "The Big Idea", instructions: ["<strong>1. Do:</strong> Finish one lesson.", "<strong>2. Think:</strong> What is the #1 most important thing this lesson taught you?", "<strong>3. Create:</strong> Write one sentence explaining the big idea you learned."], example: "<p><em>From a website lesson:</em> 'The <strong>&lt;img&gt;</strong> code puts a picture on a website, and <strong>src=</strong> tells the code where to find the picture.'</p>" }
-        ]
-    },
-    building: { 
-        title: "Building", 
-        icon: "fa-solid fa-cubes", 
-        links: [
-            { name: "LEGO WeDo 2.0 App", url: "https://play.google.com/store/apps/details?id=com.lego.education.wedo&hl=en", description: "For LEGO WeDo robots." },
-            { name: "LEGO SPIKE App", url: "https://spike.legoeducation.com/", description: "For LEGO SPIKE robots." }
-        ],
-        cards: [
-            { title: "The Key Step", instructions: ["<strong>1. Build:</strong> Build one model from the instructions.", "<strong>2. Think:</strong> Which step was the most important for making it strong?", "<strong>3. Create:</strong> Draw that step. Write why it was the key."], example: "<p><em>From a LEGO car:</em> 'Putting the long piece on the bottom was the key. It connected the wheels and made the car sturdy.'</p>" },
-            { title: "My Upgrade", instructions: ["<strong>1. Build:</strong> Build a model exactly like the instructions say.", "<strong>2. Think:</strong> How can you make it better?", "<strong>3. Create:</strong> Upgrade your model. Draw your new version and write what your upgrade does."], example: "<p><em>From a Keva tower:</em> 'I added flying supports on the sides, so now my tower is much stronger.'</p>" },
-            { title: "Build a Blueprint", instructions: ["<strong>1. Build:</strong> Build one model.", "<strong>2. Think:</strong> How does it look from the top? From the side?", "<strong>3. Create:</strong> Draw your model from two different views. Label them 'Top View' and 'Side View.'"], example: "<p>A drawing of a car from above is a rectangle with circles. A drawing from the side shows the car's body and two wheels.</p>" }
-        ]
-    },
-    art: { 
-        title: "Art", 
-        icon: "fa-solid fa-palette",
-        links: [
-            { name: "DrawingNow.com", url: "https://www.drawingnow.com/", description: "Step-by-step drawing tutorials." },
-            { name: "Tinkercad", url: "https://www.tinkercad.com/login", description: "Create amazing 3D models. Class Code: NBQ-DRT-MZP" }
-        ],
-        cards: [
-            { title: "The Artist's Secret", instructions: ["<strong>1. Do:</strong> Follow any art lesson.", "<strong>2. Think:</strong> What is the #1 trick this lesson teaches?", "<strong>3. Create:</strong> Write down the 'Artist's Secret' you learned."], example: "<p><em>From a lesson on shading:</em> 'The secret is to leave a little white spot where the light hits to make it look shiny and round.'</p>" },
-            { title: "Art Remix", instructions: ["<strong>1. Do:</strong> Finish an art lesson.", "<strong>2. Think:</strong> How can you change this art to make it your own?", "<strong>3. Create:</strong> Draw the original art and your new version. Circle your change."], example: "<p>A drawing of a cat from a tutorial, then another drawing of the same cat but now it's wearing a wizard hat.</p>" },
-            { title: "Change the Mood", instructions: ["<strong>1. Do:</strong> Create a character or a scene.", "<strong>2. Think:</strong> How can you change it to make it look spooky, or silly, or sad?", "<strong>3. Create:</strong> Re-draw your art with a new mood. Explain what you changed."], example: "<p><em>From a drawing of a happy dog:</em> 'To make the dog look sad, I changed its smile to a frown and made its ears droop down.'</p>" }
-        ]
-    },
-    boardGames: { title: "Board Games", icon: "fa-solid fa-chess-board", cards: [
-        { title: "The Smartest Move", instructions: ["<strong>1. Play:</strong> Play a game.", "<strong>2. Think:</strong> What was the smartest move in the whole game?", "<strong>3. Create:</strong> Draw the game board and circle the smartest move. Write why it was the best."], example: "<p><em>From Connect Four:</em> 'This move blocked my opponent AND set me up for a trap where I could win two different ways.'</p>" },
-        { title: "A Better Rule", instructions: ["<strong>1. Play:</strong> Play the game.", "<strong>2. Think:</strong> Which rule could be more fun? How would you change it?", "<strong>3. Create:</strong> Write the <strong>Old Rule</strong>. Then, write your <strong>New Rule</strong> and why it's better."], example: "<p><em>From Uno:</em> '<strong>New Rule:</strong> You CAN stack 'Draw 2' cards. <strong>Why it's better:</strong> It adds more surprise!'</p>" },
-        { title: "Master Strategy", instructions: ["<strong>1. Play:</strong> Play a game.", "<strong>2. Think:</strong> What is the best advice you could give a new player?", "<strong>3. Create:</strong> Write one 'Top Secret Tip' for winning this game."], example: "<p><em>From Tic-Tac-Toe:</em> 'Always try to go in the middle square on your first turn.'</p>" }
-    ]},
-    puzzles: { title: "Puzzles", icon: "fa-solid fa-puzzle-piece", cards: [
-        { title: "The Starting Plan", instructions: ["<strong>1. Look:</strong> Look at a new puzzle before you begin.", "<strong>2. Think:</strong> What is your plan? Where will you start?", "<strong>3. Create:</strong> Write one sentence that is your 'Starting Plan.'"], example: "<p><em>From a Sudoku puzzle:</em> 'My plan is to find the number that's already on the board the most times and solve for that one first.'</p>" },
-        { title: "The 'Aha!' Moment", instructions: ["<strong>1. Play:</strong> Solve a puzzle.", "<strong>2. Think:</strong> What was the key discovery that helped you solve it?", "<strong>3. Create:</strong> Describe your 'Aha!' Moment in one sentence."], example: "<p><em>From a pattern puzzle:</em> 'The 'Aha!' moment was when I realized the pattern was about the number of corners, not the colors.'</p>" },
-        { title: "The Difficulty Dial", instructions: ["<strong>1. Look:</strong> Look at an easy puzzle and a hard puzzle.", "<strong>2. Think:</strong> What makes the hard one harder?", "<strong>3. Create:</strong> Write one sentence explaining what makes these puzzles hard."], example: "<p>'This game gets harder when it gives you fewer clues at the start.'</p>" }
-    ]},
-    skillsPractice: { 
-        title: "Skills Practice", 
-        icon: "fa-solid fa-bullseye",
-        links: [
-            { name: "Freckle Login", url: "https://student.freckle.com/#/login", description: "Practice math and reading skills." },
-            { name: "IXL (via Clever)", url: "https://clever.com/login?student", description: "Log in with your Clever account." }
-        ],
-        cards: [
-            { title: "The Pattern Detective", instructions: ["<strong>1. Do:</strong> Work on one skill.", "<strong>2. Look:</strong> What is the one big idea all the questions are about?", "<strong>3. Create:</strong> Write one sentence of advice for a friend who is about to start this skill."], example: "<p><em>From a math skill on Area:</em> 'The secret is to just multiply the length by the width!'</p>" },
-            { title: "Write Your Own", instructions: ["<strong>1. Do:</strong> Answer at least five questions.", "<strong>2. Think:</strong> How are these questions made?", "<strong>3. Create:</strong> Write your own practice question that would fit in this skill."], example: "<p><em>From a vocabulary skill on Synonyms:</em> 'Which word is a synonym for 'gigantic': tiny, angry, or enormous?'</p>" },
-            { title: "The Tricky Part", instructions: ["<strong>1. Do:</strong> Work until you find a tricky question.", "<strong>2. Think:</strong> What makes this question harder than the others?", "<strong>3. Create:</strong> Write down what the tricky part is and how you figured it out."], example: "<p><em>From a math word problem:</em> 'The tricky part was that the problem gave me extra numbers that I didn't even need to use.'</p>" }
-        ]
-    }
-};
 
-document.addEventListener('DOMContentLoaded', () => {
-    const hubGrid = document.getElementById('hub-grid');
-    const readingSubmenuGrid = document.getElementById('reading-submenu-grid');
-    const activityMenuTitle = document.getElementById('activity-menu-title');
-    const taskGrid = document.getElementById('task-grid');
-    const resourceLinksContainer = document.getElementById('resource-links-container');
-    const taskTitle = document.getElementById('task-title');
-    const taskInstructions = document.getElementById('task-instructions');
-    const taskExample = document.getElementById('task-example');
-    const backToHubOrReadingButton = document.getElementById('back-to-hub-or-reading-button');
-    const backToTasksButton = document.getElementById('back-to-tasks-button');
+        document
+          .querySelectorAll(".nav-button[data-target]")
+          .forEach((button) => {
+            button.addEventListener("click", () =>
+              showScreen(button.dataset.target),
+            );
+          });
 
-    let currentActivityKey = null;
-    let currentSubType = null;
-    
-    function showScreen(screenId) {
-        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-        document.getElementById(screenId).classList.add('active');
-    }
+        backToHubOrReadingButton.addEventListener("click", () => {
+          const targetScreen =
+            backToHubOrReadingButton.getAttribute("data-target");
+          if (targetScreen) showScreen(targetScreen);
+        });
 
-    document.querySelectorAll('.nav-button[data-target]').forEach(button => {
-        button.addEventListener('click', () => showScreen(button.dataset.target));
-    });
-    
-    backToHubOrReadingButton.addEventListener('click', () => {
-        const targetScreen = backToHubOrReadingButton.getAttribute('data-target');
-        if (targetScreen) showScreen(targetScreen);
-    });
-    
-    backToTasksButton.addEventListener('click', () => {
-        showActivityMenu(currentActivityKey, currentSubType);
-    });
+        backToTasksButton.addEventListener("click", () => {
+          showActivityMenu(currentActivityKey, currentSubType);
+        });
 
-    Object.keys(activitiesData).forEach(key => {
-        const activity = activitiesData[key];
-        const card = document.createElement('div');
-        card.className = 'choice-card';
-        card.dataset.activity = key;
-        card.innerHTML = `<i class="${activity.icon}"></i><h2>${activity.title}</h2>`;
-        hubGrid.appendChild(card);
-    });
+        // --- Dynamic Page Building ---
 
-    function showActivityMenu(activityKey, subType = null) {
-        currentActivityKey = activityKey;
-        currentSubType = subType;
-        
-        const activitySource = activitiesData[activityKey];
-        const activity = subType ? activitySource[subType] : activitySource;
-        const icon = activitySource.icon;
+        // Build the main hub menu on page load
+        Object.keys(activitiesData).forEach((key) => {
+          const activity = activitiesData[key];
+          const card = document.createElement("div");
+          card.className = "choice-card";
+          card.dataset.activity = key;
+          card.innerHTML = `<i class="${activity.icon}"></i><h2>${activity.title}</h2>`;
+          hubGrid.appendChild(card);
+        });
 
-        activityMenuTitle.innerHTML = `<i class="${icon}"></i> ${activity.title}`;
-        taskGrid.innerHTML = '';
-        
-        activity.cards.forEach((card, index) => {
-            const taskCard = document.createElement('div');
-            taskCard.className = 'choice-card';
+        // Build the task menu for a chosen activity
+        function showActivityMenu(activityKey, subType = null) {
+          currentActivityKey = activityKey;
+          currentSubType = subType;
+
+          const activitySource = activitiesData[activityKey];
+          const activity = subType ? activitySource[subType] : activitySource;
+          const icon = activitySource.icon;
+
+          activityMenuTitle.innerHTML = `<i class="${icon}"></i> ${activity.title}`;
+          taskGrid.innerHTML = "";
+
+          activity.cards.forEach((card, index) => {
+            const taskCard = document.createElement("div");
+            taskCard.className = "choice-card";
             taskCard.dataset.activity = activityKey;
-            taskCard.dataset.subType = subType || '';
+            taskCard.dataset.subType = subType || "";
             taskCard.dataset.taskIndex = index;
             taskCard.innerHTML = `<h2>${card.title}</h2>`;
             taskGrid.appendChild(taskCard);
-        });
+          });
 
-        const backTarget = activityKey === 'reading' ? 'reading-submenu-screen' : 'hub-screen';
-        backToHubOrReadingButton.setAttribute('data-target', backTarget);
-        
-        showScreen('activity-menu-screen');
-    }
+          const backTarget =
+            activityKey === "reading" ? "reading-submenu-screen" : "hub-screen";
+          backToHubOrReadingButton.setAttribute("data-target", backTarget);
 
-    function showTask(activityKey, subType, taskIndex) {
-        const activitySource = activitiesData[activityKey];
-        const activity = subType ? activitySource[subType] : activitySource;
-        const task = activity.cards[taskIndex];
-        const icon = activitySource.icon;
-        
-        taskTitle.innerHTML = `<i class="${icon}"></i> ${task.title}`;
-        taskInstructions.innerHTML = `<ul>${task.instructions.map(inst => `<li>${inst}</li>`).join('')}</ul>`;
-        taskExample.innerHTML = task.example;
-        
-        // Handle Links
-        resourceLinksContainer.innerHTML = ''; // Clear previous links
-        if (activitySource.links) {
+          showScreen("activity-menu-screen");
+        }
+
+        // Build the final, focused task screen
+        function showTask(activityKey, subType, taskIndex) {
+          const activitySource = activitiesData[activityKey];
+          const activity = subType ? activitySource[subType] : activitySource;
+          const task = activity.cards[taskIndex];
+          const icon = activitySource.icon;
+
+          taskTitle.innerHTML = `<i class="${icon}"></i> ${task.title}`;
+
+          // Populate Before/After prompts
+          beforePromptDiv.innerHTML = activitySource.beforePrompt;
+          afterPromptDiv.innerHTML = task.afterPrompt;
+          taskExampleDiv.innerHTML = task.example;
+
+          // Handle Links
+          resourceLinksContainer.innerHTML = "";
+          if (activitySource.links) {
             let linksHTML = '<h3>Helpful Links</h3><div class="resource-list">';
-            activitySource.links.forEach(link => {
-                linksHTML += `
+            activitySource.links.forEach((link) => {
+              linksHTML += `
                     <div class="resource-item">
                         <a href="${link.url}" target="_blank" rel="noopener noreferrer" class="nav-button resource-link">
                             <i class="fa-solid fa-arrow-up-right-from-square"></i> ${link.name}
                         </a>
                         <p>${link.description}</p>
-                    </div>
-                `;
+                    </div>`;
             });
-            linksHTML += '</div>';
+            linksHTML += "</div>";
             resourceLinksContainer.innerHTML = linksHTML;
-            resourceLinksContainer.style.display = 'block';
-        } else {
-            resourceLinksContainer.style.display = 'none';
-        }
-        
-        showScreen('task-screen');
-    }
+            resourceLinksContainer.style.display = "block";
+          } else {
+            resourceLinksContainer.style.display = "none";
+          }
 
-    hubGrid.addEventListener('click', e => {
-        const card = e.target.closest('.choice-card');
-        if (card) {
+          showScreen("task-screen");
+        }
+
+        // --- Event Listeners to navigate between screens ---
+
+        hubGrid.addEventListener("click", (e) => {
+          const card = e.target.closest(".choice-card");
+          if (card) {
             const activityKey = card.dataset.activity;
-            if (activityKey === 'reading') {
-                showScreen('reading-submenu-screen');
+            if (activityKey === "reading") {
+              showScreen("reading-submenu-screen");
             } else {
-                showActivityMenu(activityKey);
+              showActivityMenu(activityKey);
             }
-        }
-    });
+          }
+        });
 
-    readingSubmenuGrid.addEventListener('click', e => {
-        const card = e.target.closest('.choice-card');
-        if (card) {
-            showActivityMenu('reading', card.dataset.subType);
-        }
-    });
+        readingSubmenuGrid.addEventListener("click", (e) => {
+          const card = e.target.closest(".choice-card");
+          if (card) {
+            showActivityMenu("reading", card.dataset.subType);
+          }
+        });
 
-    taskGrid.addEventListener('click', e => {
-        const card = e.target.closest('.choice-card');
-        if (card) {
+        taskGrid.addEventListener("click", (e) => {
+          const card = e.target.closest(".choice-card");
+          if (card) {
             const { activity, subType, taskIndex } = card.dataset;
             showTask(activity, subType || null, taskIndex);
-        }
-    });
-});
-</script>
-
-</body>
+          }
+        });
+      });
+    </script>
+  </body>
 </html>
