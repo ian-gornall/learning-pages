@@ -1,0 +1,785 @@
+<!doctype html>
+<!-- 
+LESSON PLAN: Coping Strategies 3-1 (The Save Button)
+FLOW: Warmup -> Mini-Lesson (The Science) -> The Tool -> Practice -> Closing 
+-->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Coping Strategies: The Save Button</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Bangers&family=Poppins:wght@400;700;800&display=swap");
+      :root {
+        --primary-color: #ff6347;
+        --secondary-color: #4a90e2;
+        --accent-color: #f0c419;
+        --dark-text: #2c3e50;
+        --danger-color: #e74c3c;
+        --success-color: #2ecc71;
+        --highlight: #d35400;
+      }
+      body {
+        margin: 0;
+        font-family: "Poppins", sans-serif;
+        background-color: var(--dark-text);
+        overflow: hidden;
+      }
+      .slideshow-container {
+        position: relative;
+        width: 100vw;
+        height: 100vh;
+      }
+
+      .slide {
+        display: none;
+        width: 100%;
+        height: 100%;
+        padding: 20px 75px;
+        box-sizing: border-box;
+        text-align: center;
+        justify-content: flex-start;
+        align-items: center;
+        flex-direction: column;
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+      .slide.active {
+        display: flex;
+        animation: slideAppear 0.05s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      }
+      @keyframes slideAppear {
+        from {
+          opacity: 0;
+          transform: scale(0.97);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+
+      @keyframes gradient-pan {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+      /* Visual Themes for Lesson Parts */
+      .bg-intro {
+        background: linear-gradient(-45deg, #a18cd1, #fbc2eb, #a6c0fe);
+        background-size: 400% 400%;
+        animation: gradient-pan 15s ease infinite;
+      }
+      .bg-warmup {
+        background: linear-gradient(-45deg, #ffecd2, #fcb69f, #ff9a9e);
+        background-size: 400% 400%;
+        animation: gradient-pan 15s ease infinite;
+      }
+      .bg-concept {
+        background: linear-gradient(-45deg, #fffde4, #fef189, #ffda77, #ffc371);
+        background-size: 400% 400%;
+        animation: gradient-pan 15s ease infinite;
+      }
+      .bg-tool {
+        background: linear-gradient(-45deg, #e0c3fc, #8ec5fc, #a1c4fd, #c2e9fb);
+        background-size: 400% 400%;
+        animation: gradient-pan 15s ease infinite;
+      }
+      .bg-practice {
+        background: linear-gradient(-45deg, #84fab0, #8fd3f4, #a8e063);
+        background-size: 400% 400%;
+        animation: gradient-pan 15s ease infinite;
+      }
+      .bg-exit {
+        background: linear-gradient(-45deg, #fa709a, #fee140, #fdcbf1);
+        background-size: 400% 400%;
+        animation: gradient-pan 15s ease infinite;
+      }
+
+      .slide.active > * {
+        animation: contentFadeUp 0.6s 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94)
+          both;
+      }
+      .slide.active > *:nth-child(2) {
+        animation-delay: 0.3s;
+      }
+
+      @keyframes contentFadeUp {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      h1 {
+        font-family: "Bangers", cursive;
+        font-size: clamp(3em, 7vw, 5em);
+        margin: 0 0 5px 0;
+        -webkit-text-stroke: 2px #2c3e50;
+        text-stroke: 2px #2c3e50;
+        text-shadow: 0px 4px 10px rgba(0, 0, 0, 0.4);
+        line-height: 1.1;
+      }
+
+      /* Heading Colors per Theme */
+      .bg-intro h1 {
+        color: #ffffff;
+        -webkit-text-stroke-color: #5e3c8f;
+      }
+      .bg-warmup h1 {
+        color: #ff6347;
+        -webkit-text-stroke-color: #8b0000;
+      }
+      .bg-concept h1 {
+        color: #ffc900;
+        -webkit-text-stroke-color: #8c6d00;
+      }
+      .bg-tool h1 {
+        color: #00a8ff;
+        -webkit-text-stroke-color: #005a8a;
+      }
+      .bg-practice h1 {
+        color: #2ecc71;
+        -webkit-text-stroke-color: #006400;
+      }
+      .bg-exit h1 {
+        color: #ff007f;
+        -webkit-text-stroke-color: #8b0000;
+      }
+
+      h2 {
+        font-family: "Poppins", sans-serif;
+        font-weight: 800;
+        font-size: clamp(1.5em, 4vw, 2.5em);
+        color: var(--dark-text);
+        margin-bottom: 15px;
+        text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .vocab {
+        color: var(--highlight);
+        font-weight: 800;
+        text-transform: uppercase;
+        background: rgba(255, 255, 255, 0.5);
+        padding: 0 5px;
+        border-radius: 4px;
+      }
+
+      .content-box {
+        background: rgba(255, 255, 255, 0.95);
+        margin: 10px 0px 50px;
+        padding: 30px 50px;
+        border-radius: 20px;
+        box-shadow: 0 10px 40px 0 rgba(31, 38, 135, 0.3);
+        border: 2px solid rgba(255, 255, 255, 0.6);
+        height: 70vh;
+        width: 90%;
+        max-width: 1200px;
+        overflow-y: auto;
+        box-sizing: border-box;
+        font-size: 1.4rem;
+        line-height: 1.6;
+        color: var(--dark-text);
+      }
+
+      ul {
+        text-align: left;
+        display: inline-block;
+      }
+
+      li {
+        margin-bottom: 15px;
+      }
+
+      .big-icon {
+        font-size: 3em;
+        margin: 20px;
+        color: var(--secondary-color);
+      }
+
+      .nav-button {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background-color: rgba(44, 62, 80, 0.6);
+        color: white;
+        border: none;
+        font-size: 2em;
+        width: 50px;
+        height: 50px;
+        cursor: pointer;
+        z-index: 100;
+        border-radius: 50%;
+        transition:
+          transform 0.2s,
+          background-color 0.2s;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      #prev {
+        left: 20px;
+      }
+      #next {
+        right: 20px;
+      }
+      .nav-button:hover {
+        background-color: rgba(44, 62, 80, 0.9);
+        transform: translateY(-50%) scale(1.1);
+      }
+
+      .step-nav {
+        position: absolute;
+        bottom: 15px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 100;
+        background: rgba(44, 62, 80, 0.85);
+        padding: 8px 15px;
+        border-radius: 50px;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 6px 25px rgba(0, 0, 0, 0.4);
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+      .step-nav button {
+        background: transparent;
+        border: none;
+        color: #ecf0f1;
+        font-family: "Poppins";
+        font-weight: 700;
+        font-size: 0.85em;
+        padding: 8px 16px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border-radius: 30px;
+        white-space: nowrap;
+      }
+      .step-nav button:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+      }
+      .step-nav button.active {
+        background-color: var(--accent-color);
+        color: var(--dark-text);
+        transform: scale(1.05);
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      }
+
+      /* --- TIMER STYLES (Unchanged from template) --- */
+      .timer-container {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        z-index: 101;
+        background: var(--dark-text);
+        padding: 10px;
+        border-radius: 12px;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+        color: white;
+        text-align: center;
+        width: 160px;
+        transition:
+          opacity 0.3s,
+          transform 0.3s;
+      }
+      .timer-visual {
+        position: relative;
+        width: 100px;
+        height: 100px;
+        margin: 0 auto 10px;
+      }
+      .timer-visual svg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        transform: rotate(-90deg);
+      }
+      .timer-progress-bg {
+        fill: none;
+        stroke: rgba(255, 255, 255, 0.1);
+        stroke-width: 7;
+      }
+      .timer-progress-bar {
+        fill: none;
+        stroke: var(--accent-color);
+        stroke-width: 7;
+        stroke-linecap: round;
+        transition:
+          stroke-dashoffset 0.2s linear,
+          stroke 0.3s;
+      }
+      .timer-display {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-family: "Poppins", sans-serif;
+        font-weight: 800;
+        font-size: 1.5em;
+        color: white;
+        text-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
+        letter-spacing: 1px;
+      }
+      .timer-adjust,
+      .timer-controls {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .timer-adjust {
+        gap: 5px;
+        margin-bottom: 10px;
+      }
+      .timer-controls {
+        gap: 8px;
+      }
+      .timer-adjust-btn {
+        background-color: var(--secondary-color);
+        border: none;
+        color: white;
+        width: 32px;
+        height: 24px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 0.6em;
+        font-family: "Poppins", sans-serif;
+        font-weight: 600;
+        transition:
+          background-color 0.2s,
+          transform 0.1s;
+      }
+      .timer-adjust-btn:active,
+      .timer-control-btn:active {
+        transform: scale(0.95);
+      }
+      .timer-control-btn {
+        border: none;
+        color: white;
+        width: 38px;
+        height: 38px;
+        font-size: 1em;
+        border-radius: 50%;
+        cursor: pointer;
+        transition:
+          background-color 0.2s,
+          transform 0.1s;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+      #start-pause-timer {
+        background-color: var(--success-color);
+      }
+      #reset-timer {
+        background-color: var(--danger-color);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="slideshow-container">
+      <!-- Slide 1: Intro -->
+      <div class="slide active bg-intro" data-step="1">
+        <h1>Coping Strategies</h1>
+        <div class="content-box">
+          <h2><i class="fas fa-brain"></i> The "Save" Button</h2>
+          <p>And Understanding Silent Signals</p>
+          <hr style="width: 50%; border-color: #ddd" />
+          <p style="font-size: 1.2em">
+            Today we will learn how to hack our brains to save ideas without
+            crashing the class.
+          </p>
+        </div>
+      </div>
+
+      <!-- Slide 3: The Concept (Science) -->
+      <div class="slide bg-concept" data-step="3">
+        <h1>The "Now or Never" Feeling</h1>
+        <div class="content-box">
+          <h2>Critical Thinking Debrief</h2>
+          <ul>
+            <li>
+              Have you ever had an idea that felt like holding a
+              <strong>Hot Potato</strong>?
+            </li>
+            <li>
+              Did you feel like if you didn't say it <em>right now</em>, you
+              would explode or forget it?
+            </li>
+          </ul>
+          <div
+            style="
+              background: #fff;
+              padding: 15px;
+              border-radius: 10px;
+              margin-top: 20px;
+            "
+          >
+            <i class="fas fa-microscope" style="color: var(--highlight)"></i>
+            <strong>The Science:</strong>
+            <p>
+              This is your <span class="vocab">Working Memory</span> panic. Your
+              brain thinks, "Dump this info out before it vanishes!"
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 4: The Tool -->
+      <div class="slide bg-tool" data-step="4">
+        <h1>The Manual Save</h1>
+        <div class="content-box">
+          <h2>How to "Dump" Info Safely</h2>
+          <p>
+            When you type on a computer, you hit "Save" so you don't lose work.
+            <br />We are installing a Save Button for your brain using
+            <span class="vocab">Kinesthetic Redirection</span>.
+          </p>
+
+          <div
+            style="
+              display: flex;
+              justify-content: space-around;
+              margin-top: 30px;
+              text-align: left;
+            "
+          >
+            <div style="width: 45%">
+              <h3>Option A: Invisible Ink</h3>
+              <p>
+                Use your index finger to "write" the keyword on your desk
+                surface.
+              </p>
+            </div>
+            <div style="width: 45%">
+              <h3>Option B: The Parking Lot</h3>
+              <p>Write the keyword on your notecard</p>
+            </div>
+          </div>
+          <p style="margin-top: 20px; font-weight: bold">
+            Why? Moving your finger tells your brain: "Data Saved."
+          </p>
+        </div>
+      </div>
+
+      <!-- Slide 5: The Signal -->
+      <div class="slide bg-tool" data-step="5">
+        <h1>Silent Signals</h1>
+        <div class="content-box">
+          <h2>The "Air Scribble"</h2>
+          <i class="fas fa-pen-fancy big-icon"></i>
+          <p>
+            <strong>The Teacher's Role:</strong> I will not say "Stop." I will
+            make a scribbling motion in the air.
+          </p>
+          <hr />
+          <p><strong>The Student's Role:</strong></p>
+          <ul style="font-size: 1.2rem">
+            <li>
+              <i class="fas fa-times-circle" style="color: red"></i> It does
+              <strong>NOT</strong> mean "You are in trouble."
+            </li>
+            <li>
+              <i class="fas fa-check-circle" style="color: green"></i> It
+              <strong>DOES</strong> mean "Your brain is overheating. Hit the
+              Save Button."
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Slide 6: Practice -->
+      <div class="slide bg-practice" data-step="6">
+        <h1>The Save Drill</h1>
+        <div class="content-box">
+          <h2>Let's Practice the Code</h2>
+          <ol>
+            <li>Teacher starts reading.</li>
+            <li>Student intentionally interrupts (Fake it!).</li>
+            <li>
+              Teacher gives the <strong>Silent Signal</strong> (Air Scribble).
+            </li>
+            <li>
+              Student immediately uses
+              <span class="vocab">Manual Save</span> (Finger write on desk).
+            </li>
+          </ol>
+          <p><em>(Let's try 3 rounds!)</em></p>
+        </div>
+      </div>
+
+      <!-- Slide 7: Exit Ticket -->
+      <div class="slide bg-exit" data-step="7">
+        <h1>Exit Ticket</h1>
+        <div class="content-box">
+          <h2>Check Your Understanding</h2>
+          <p>
+            <strong>1. True or False:</strong> If the teacher gives me the
+            signal, it means I am in big trouble.
+          </p>
+          <p>
+            <strong>2. The Strategy:</strong> The signal means I should
+            __________________ my idea so I don't forget it.
+          </p>
+          <p>
+            <strong>3. The Why:</strong> Why does "Invisible Ink" help the
+            class?
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- TIMER UI -->
+    <div class="timer-container">
+      <div class="timer-visual">
+        <div class="timer-display">05:00</div>
+        <svg>
+          <circle class="timer-progress-bg" cx="50" cy="50" r="46"></circle>
+          <circle class="timer-progress-bar" cx="50" cy="50" r="46"></circle>
+        </svg>
+      </div>
+      <div class="timer-adjust">
+        <button class="timer-adjust-btn" data-time="-60">-1m</button>
+        <button class="timer-adjust-btn" data-time="-15">-15s</button>
+        <button class="timer-adjust-btn" data-time="15">+15s</button>
+        <button class="timer-adjust-btn" data-time="60">+1m</button>
+      </div>
+      <div class="timer-controls">
+        <button class="timer-control-btn" id="start-pause-timer">
+          <i class="fas fa-play"></i>
+        </button>
+        <button class="timer-control-btn" id="reset-timer">
+          <i class="fas fa-redo"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Navigation -->
+    <button id="prev" class="nav-button" aria-label="Previous Slide">
+      &#10094;
+    </button>
+    <button id="next" class="nav-button" aria-label="Next Slide">
+      &#10095;
+    </button>
+
+    <!-- Lesson Step Navigation -->
+    <div class="step-nav">
+      <button data-step="1">Intro</button>
+      <button data-step="3">Why?</button>
+      <button data-step="4">The Tool</button>
+      <button data-step="5">Signal</button>
+      <button data-step="6">Practice</button>
+      <button data-step="7">Exit</button>
+      <button
+        id="toggle-timer"
+        style="
+          margin-left: 10px;
+          padding: 8px 10px;
+          background: rgba(255, 255, 255, 0.2);
+        "
+      >
+        <i class="fas fa-eye"></i>
+      </button>
+      <button
+        id="play-sound-btn"
+        style="padding: 8px 12px; background: rgba(255, 255, 255, 0.2)"
+      >
+        <i class="fas fa-bell"></i>
+      </button>
+    </div>
+
+    <audio
+      id="alarm-sound"
+      src="https://actions.google.com/sounds/v1/alarms/medium_bell_ringing_near.ogg"
+      preload="auto"
+    ></audio>
+
+    <script>
+      let currentSlideIndex = 0;
+      const slides = document.querySelectorAll(".slide");
+      const stepButtons = document.querySelectorAll(
+        ".step-nav button[data-step]",
+      );
+
+      function showSlide(index) {
+        if (index >= slides.length) {
+          index = 0;
+        } else if (index < 0) {
+          index = slides.length - 1;
+        }
+        slides.forEach((slide) => slide.classList.remove("active"));
+        slides[index].classList.add("active");
+        currentSlideIndex = index;
+        const currentStep = slides[index].getAttribute("data-step");
+        stepButtons.forEach((button) => {
+          button.classList.toggle(
+            "active",
+            button.getAttribute("data-step") == currentStep,
+          );
+        });
+      }
+
+      document
+        .getElementById("next")
+        .addEventListener("click", () => showSlide(currentSlideIndex + 1));
+      document
+        .getElementById("prev")
+        .addEventListener("click", () => showSlide(currentSlideIndex - 1));
+
+      stepButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          const targetStep = button.getAttribute("data-step");
+          const i = Array.from(slides).findIndex(
+            (slide) => slide.getAttribute("data-step") === targetStep,
+          );
+          if (i !== -1) {
+            showSlide(i);
+          }
+        });
+      });
+      showSlide(0);
+
+      // --- TIMER SCRIPT START ---
+      const timerDisplay = document.querySelector(".timer-display");
+      const startPauseButton = document.getElementById("start-pause-timer");
+      const resetButton = document.getElementById("reset-timer");
+      const toggleTimerButton = document.getElementById("toggle-timer");
+      const playSoundButton = document.getElementById("play-sound-btn");
+      const timerContainer = document.querySelector(".timer-container");
+      const timeAdjustButtons = document.querySelectorAll(".timer-adjust-btn");
+      const progressBar = document.querySelector(".timer-progress-bar");
+      const alarmSound = document.getElementById("alarm-sound");
+      alarmSound.volume = 1.0;
+
+      const radius = progressBar.r.baseVal.value;
+      const circumference = 2 * Math.PI * radius;
+      progressBar.style.strokeDasharray = circumference;
+
+      let countdown;
+      let alarmTimeout;
+      let totalTime = 300;
+      let remainingTime = totalTime;
+      let isRunning = false;
+
+      function updateDisplay() {
+        const mins = Math.floor(remainingTime / 60);
+        const secs = remainingTime % 60;
+        timerDisplay.textContent = `${mins < 10 ? "0" : ""}${mins}:${
+          secs < 10 ? "0" : ""
+        }${secs}`;
+        updateProgressBar();
+      }
+
+      function updateProgressBar() {
+        if (totalTime === 0) {
+          progressBar.style.strokeDashoffset = circumference;
+          return;
+        }
+        const offset =
+          circumference - (remainingTime / totalTime) * circumference;
+        progressBar.style.strokeDashoffset = offset;
+        progressBar.style.stroke =
+          remainingTime <= 10 ? "var(--danger-color)" : "var(--accent-color)";
+      }
+
+      function startAlarm() {
+        alarmSound.loop = true;
+        alarmSound.play();
+        alarmTimeout = setTimeout(stopAlarm, 5000);
+      }
+
+      function stopAlarm() {
+        clearTimeout(alarmTimeout);
+        alarmSound.pause();
+        alarmSound.currentTime = 0;
+        alarmSound.loop = false;
+      }
+
+      function toggleTimer() {
+        stopAlarm();
+        if (isRunning) {
+          clearInterval(countdown);
+          startPauseButton.innerHTML = '<i class="fas fa-play"></i>';
+        } else {
+          if (remainingTime <= 0) return;
+          startPauseButton.innerHTML = '<i class="fas fa-pause"></i>';
+          countdown = setInterval(() => {
+            remainingTime--;
+            updateDisplay();
+            if (remainingTime <= 0) {
+              clearInterval(countdown);
+              isRunning = false;
+              startPauseButton.innerHTML = '<i class="fas fa-play"></i>';
+              startAlarm();
+            }
+          }, 1000);
+        }
+        isRunning = !isRunning;
+      }
+
+      function resetTimer() {
+        clearInterval(countdown);
+        stopAlarm();
+        remainingTime = totalTime;
+        isRunning = false;
+        startPauseButton.innerHTML = '<i class="fas fa-play"></i>';
+        updateDisplay();
+      }
+
+      timeAdjustButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          if (isRunning) return;
+          stopAlarm();
+          const adjustment = parseInt(button.dataset.time);
+          totalTime += adjustment;
+          if (totalTime < 0) totalTime = 0;
+          remainingTime = totalTime;
+          updateDisplay();
+        });
+      });
+
+      startPauseButton.addEventListener("click", toggleTimer);
+      resetButton.addEventListener("click", resetTimer);
+
+      toggleTimerButton.addEventListener("click", () => {
+        const isVisible = timerContainer.style.opacity !== "0";
+        timerContainer.style.opacity = isVisible ? "0" : "1";
+        timerContainer.style.transform = isVisible
+          ? "translateY(-10px)"
+          : "translateY(0)";
+        toggleTimerButton.innerHTML = isVisible
+          ? '<i class="fas fa-eye-slash"></i>'
+          : '<i class="fas fa-eye"></i>';
+      });
+
+      playSoundButton.addEventListener("click", () => {
+        if (!alarmSound.paused) {
+          stopAlarm();
+        } else {
+          alarmSound.currentTime = 0;
+          alarmSound.loop = false;
+          alarmSound.play();
+        }
+      });
+
+      updateDisplay();
+      // --- TIMER SCRIPT END ---
+    </script>
+  </body>
+</html>
