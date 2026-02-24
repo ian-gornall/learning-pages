@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Narnia Unit: Chapters 7-9</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Bangers&family=Poppins:wght@400;600;700;800&display=swap");
+      :root {
+        --dark-text: #2c3e50;
+        --danger-color: #e74c3c;
+        --success-color: #27ae60;
+        --accent-gold: #f1c40f;
+        --beaver-brown: #795548;
+        --magic-purple: #8e24aa;
+        --ice-blue: #90caf9;
+      }
+      body {
+        margin: 0;
+        font-family: "Poppins", sans-serif;
+        background-color: var(--dark-text);
+        overflow: hidden;
+      }
+      .slideshow-container {
+        position: relative;
+        width: 100vw;
+        height: 100vh;
+      }
+
+      /* BACKGROUND ANIMATIONS */
+      @keyframes gradient-pan {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+      }
+      
+      /* Ch 7: Cozy/Beaver Dam (Warm Browns/Oranges) */
+      .bg-ch7 {
+        background: linear-gradient(-45deg, #D7CCC8, #FFCCBC, #8D6E63, #EFEBE9);
+        background-size: 400% 400%;
+        animation: gradient-pan 15s ease infinite;
+      }
+
+      /* Ch 8: Prophecy/Mystery (Purples/Dark Blues) */
+      .bg-ch8 {
+        background: linear-gradient(-45deg, #D1C4E9, #9575CD, #B39DDB, #EDE7F6);
+        background-size: 400% 400%;
+        animation: gradient-pan 15s ease infinite;
+      }
+
+      /* Ch 9: Witch's House (Stark White/Grey/Ice) */
+      .bg-ch9 {
+        background: linear-gradient(-45deg, #CFD8DC, #ECEFF1, #B0BEC5, #FFFFFF);
+        background-size: 400% 400%;
+        animation: gradient-pan 15s ease infinite;
+      }
+
+      /* SLIDE LAYOUT */
+      .slide {
+        display: none;
+        width: 100%;
+        height: 100%;
+        padding: 10px 40px;
+        box-sizing: border-box;
+        text-align: center;
+        flex-direction: column;
+        align-items: center;
+        position: absolute;
+        top: 0; left: 0;
+      }
+      .slide.active {
+        display: flex;
+        animation: fadeIn 0.5s ease;
+      }
+      @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+      h1 {
+        font-family: "Bangers", cursive;
+        font-size: clamp(2.5em, 5vw, 4em);
+        margin: 10px 0 5px 0;
+        color: #fff;
+        -webkit-text-stroke: 2px #2c3e50;
+        text-shadow: 3px 3px 0px rgba(0,0,0,0.3);
+        letter-spacing: 2px;
+        z-index: 10;
+      }
+
+      /* TARGET BANNER */
+      .target-banner {
+        background: rgba(255, 255, 255, 0.95);
+        padding: 8px 30px;
+        border-radius: 50px;
+        border: 3px solid var(--dark-text);
+        color: var(--dark-text);
+        font-weight: 700;
+        font-size: 1.2rem;
+        margin-bottom: 10px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        z-index: 10;
+        display: inline-block;
+      }
+      .target-label { color: var(--danger-color); text-transform: uppercase; margin-right: 5px; }
+
+      /* CONTENT BOX */
+      .content-box {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        height: 72vh;
+        width: 95%;
+        max-width: 1400px;
+        display: flex;
+        flex-direction: column;
+        padding: 20px;
+        box-sizing: border-box;
+        border: 1px solid rgba(255,255,255,0.5);
+        position: relative;
+      }
+
+      .content-split {
+        display: flex;
+        flex: 1;
+        gap: 20px;
+        overflow: hidden;
+      }
+
+      .col-left, .col-right {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        overflow-y: auto;
+        padding-right: 10px; 
+      }
+
+      .col-right {
+        border-left: 2px dashed #ccc;
+        padding-left: 20px;
+      }
+
+      /* HEADERS & CARDS */
+      .section-header {
+        font-family: "Bangers", cursive;
+        font-size: 1.6em;
+        color: var(--dark-text);
+        text-align: left;
+        margin-bottom: 5px;
+        border-bottom: 2px solid var(--accent-gold);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .card {
+        background: #f8f9fa;
+        border-radius: 12px;
+        padding: 12px;
+        text-align: left;
+        border-left: 6px solid;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        margin-bottom: 5px;
+      }
+      .card-vocab { border-color: var(--magic-purple); }
+      .card-theme { border-color: var(--accent-gold); background-color: #FFFDE7; }
+      .card-read { border-color: var(--beaver-brown); }
+      .card-dilemma { border-color: var(--danger-color); background-color: #FFEBEE; }
+      .card-discuss { border-color: var(--success-color); }
+      .card-exit { border-color: #2c3e50; background-color: #ECEFF1; }
+
+      .card h3 { margin: 0 0 5px 0; font-size: 1.1em; font-weight: 800; color: var(--dark-text); }
+      .card p { margin: 0; font-size: 0.95em; line-height: 1.4; color: #555; }
+      
+      .vocab-word {
+        background: var(--accent-gold);
+        padding: 2px 8px;
+        border-radius: 4px;
+        font-weight: 700;
+        color: var(--dark-text);
+      }
+
+      .question-box {
+        background: #e8f5e9;
+        border: 2px solid var(--success-color);
+        border-radius: 12px;
+        padding: 10px;
+        text-align: left;
+      }
+      .question-list { padding-left: 20px; margin: 0; }
+      .question-list li { margin-bottom: 5px; font-size: 0.95em; line-height: 1.3; }
+
+      /* FOOTER */
+      .success-footer {
+        margin-top: auto;
+        background: var(--dark-text);
+        color: var(--accent-gold);
+        padding: 10px;
+        border-radius: 12px;
+        font-size: 1.2em;
+        font-weight: 700;
+        text-align: center;
+        border: 3px solid var(--accent-gold);
+      }
+      .success-label { color: #fff; text-transform: uppercase; font-size: 0.8em; display: block; margin-bottom: 2px; letter-spacing: 1px;}
+
+      /* NAV & TIMER */
+      .nav-button {
+        position: absolute; top: 50%; transform: translateY(-50%);
+        background-color: rgba(44, 62, 80, 0.6); color: white;
+        border: none; font-size: 2em; width: 45px; height: 45px;
+        cursor: pointer; z-index: 100; border-radius: 50%;
+        display: flex; align-items: center; justify-content: center;
+      }
+      .nav-button:hover { background-color: rgba(44, 62, 80, 0.9); }
+      #prev { left: 15px; }
+      #next { right: 15px; }
+
+      .day-nav {
+        position: absolute; bottom: 15px; left: 50%;
+        transform: translateX(-50%); z-index: 100;
+        background: rgba(44, 62, 80, 0.8); padding: 8px;
+        border-radius: 50px; display: flex; gap: 5px;
+      }
+      .day-nav button {
+        background: transparent; border: none; color: white;
+        font-family: "Poppins"; font-weight: 700; font-size: 0.9em;
+        padding: 8px 15px; cursor: pointer; border-radius: 30px;
+        transition: all 0.3s;
+      }
+      .day-nav button.active {
+        background-color: var(--accent-gold); color: var(--dark-text);
+        transform: scale(1.05);
+      }
+
+      /* TIMER */
+      .timer-container {
+        position: absolute; top: 15px; right: 15px; z-index: 101;
+        background: var(--dark-text); padding: 10px; border-radius: 12px;
+        box-shadow: 0 6px 20px rgba(0,0,0,0.3); color: white;
+        text-align: center; width: 150px;
+      }
+      .timer-visual { position: relative; width: 90px; height: 90px; margin: 0 auto 5px; }
+      .timer-visual svg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; transform: rotate(-90deg); }
+      .timer-progress-bg { fill: none; stroke: rgba(255,255,255,0.1); stroke-width: 6; }
+      .timer-progress-bar { fill: none; stroke: var(--accent-gold); stroke-width: 6; stroke-linecap: round; transition: stroke-dashoffset 0.2s linear; }
+      .timer-display { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-weight: 800; font-size: 1.4em; }
+      .timer-controls, .timer-adjust { display: flex; justify-content: center; gap: 5px; margin-top: 5px; }
+      .timer-control-btn { border: none; color: white; width: 30px; height: 30px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+      #start-pause-timer { background: var(--success-color); }
+      #reset-timer { background: var(--danger-color); }
+      .timer-adjust-btn { background: #555; border: none; color: white; font-size: 0.7em; padding: 2px 6px; border-radius: 4px; cursor: pointer; }
+
+    </style>
+  </head>
+  <body>
+    <div class="slideshow-container">
+
+      <!-- CHAPTER 7: The Beavers -->
+      <div class="slide bg-ch7 active" data-chapter="7">
+        <h1>Chapter 7: A Day with the Beavers</h1>
+        
+        <div class="target-banner">
+            <span class="target-label">Target:</span> I can evaluate whether a character is trustworthy.
+        </div>
+
+        <div class="content-box">
+            <div class="content-split">
+                <!-- Left Col -->
+                <div class="col-left">
+                    <div class="section-header"><i class="fas fa-search"></i> Pre-Reading</div>
+                    
+                    <div class="card card-vocab">
+                        <h3><i class="fas fa-spell-check"></i> Vocabulary (Packet Pg. 6)</h3>
+                        <p>Look for: <span class="vocab-word">Larder</span> <span class="vocab-word">Contentment</span></p>
+                        <p><em>(Bottom of the list on Page 6)</em></p>
+                    </div>
+
+                    <div class="card card-theme">
+                        <h3><i class="fas fa-compass"></i> Theme: Trust & Instinct</h3>
+                        <p><strong>Prediction:</strong> The children are lost in a snowy wood. A stranger (animal) approaches. Would you follow it? Why or why not?</p>
+                    </div>
+
+                    <div class="card card-read">
+                        <h3><i class="fas fa-book-open"></i> Read Aloud</h3>
+                        <p><strong>Chapter 7:</strong> A Day with the Beavers</p>
+                        <p><em>Listen for: The secret token the Beaver shows.</em></p>
+                    </div>
+                </div>
+
+                <!-- Right Col -->
+                <div class="col-right">
+                    <div class="section-header"><i class="fas fa-users"></i> Discuss & Do</div>
+                    
+                    <div class="card card-dilemma">
+                        <h3><i class="fas fa-balance-scale"></i> Moral Dilemma</h3>
+                        <p><strong>Analogy:</strong> You get separated from your parents in a huge store. A stranger approaches and says, "I know where your mom is, follow me." They show you a candy bar your mom likes. <strong>Do you follow them?</strong></p>
+                    </div>
+
+                    <div class="question-box">
+                        <h3>Packet Discussion (Pg. 7)</h3>
+                        <ol class="question-list">
+                            <li><strong>Q6:</strong> Why did the children trust the Beaver? Was it smart?</li>
+                            <li><strong>Q7:</strong> How did each child feel when the name "Aslan" was mentioned? Why did they feel differently?</li>
+                        </ol>
+                    </div>
+
+                    <div class="card card-exit">
+                        <h3><i class="fas fa-ticket-alt"></i> Exit Ticket</h3>
+                        <p>Write <strong>one word</strong> to describe the feeling inside the Beaver's house.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="success-footer">
+                <span class="success-label">Success Criteria</span>
+                <i class="fas fa-check-circle"></i> I can explain why the children chose to follow Mr. Beaver.
+            </div>
+        </div>
+      </div>
+
+      <!-- CHAPTER 8: After Dinner -->
+      <div class="slide bg-ch8" data-chapter="8">
+        <h1>Chapter 8: What Happened After Dinner</h1>
+
+        <div class="target-banner">
+            <span class="target-label">Target:</span> I can analyze how destiny and betrayal change the story.
+        </div>
+
+        <div class="content-box">
+            <div class="content-split">
+                <div class="col-left">
+                    <div class="section-header"><i class="fas fa-search"></i> Pre-Reading</div>
+                    
+                    <div class="card card-vocab">
+                        <h3><i class="fas fa-spell-check"></i> Vocabulary (Packet Pg. 8)</h3>
+                        <p>Look for: <span class="vocab-word">Prophecy</span> <span class="vocab-word">Stratagem</span> <span class="vocab-word">Treacherous</span></p>
+                        <p><em>(Top of the list on Page 8)</em></p>
+                    </div>
+
+                    <div class="card card-theme">
+                        <h3><i class="fas fa-crow"></i> Theme: Destiny</h3>
+                        <p><strong>Prediction:</strong> What if an old poem or song was actually about <em>you</em>? How would that change how you act?</p>
+                    </div>
+
+                    <div class="card card-read">
+                        <h3><i class="fas fa-book-open"></i> Read Aloud</h3>
+                        <p><strong>Chapter 8:</strong> What Happened After Dinner</p>
+                        <p><em>Listen for: What Mr. Beaver says about Edmund's eyes.</em></p>
+                    </div>
+                </div>
+
+                <div class="col-right">
+                    <div class="section-header"><i class="fas fa-users"></i> Discuss & Do</div>
+
+                    <div class="card card-dilemma">
+                        <h3><i class="fas fa-balance-scale"></i> Moral Dilemma</h3>
+                        <p><strong>Analogy:</strong> You and your friends are planning a surprise party. One friend leaves early without saying goodbye. Do you assume they just went home, or do you panic that they went to ruin the surprise? At what point do you "snitch" on them?</p>
+                    </div>
+
+                    <div class="question-box">
+                        <h3>Packet Discussion (Pg. 9)</h3>
+                        <ol class="question-list">
+                            <li><strong>Q1:</strong> Read the old rhyme. What does it suggest about the children?</li>
+                            <li><strong>Q3:</strong> What was Mr. Beaver's prophecy? Why is it dangerous for the children?</li>
+                        </ol>
+                    </div>
+
+                    <div class="card card-exit">
+                        <h3><i class="fas fa-ticket-alt"></i> Exit Ticket</h3>
+                        <p><strong>Prediction:</strong> Where do you think Edmund went when he snuck out?</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="success-footer">
+                <span class="success-label">Success Criteria</span>
+                <i class="fas fa-check-circle"></i> I can explain the prophecy and why Edmund left.
+            </div>
+        </div>
+      </div>
+
+      <!-- CHAPTER 9: Witch's House -->
+      <div class="slide bg-ch9" data-chapter="9">
+        <h1>Chapter 9: In the Witch's House</h1>
+
+        <div class="target-banner">
+            <span class="target-label">Target:</span> I can contrast a character's expectations with reality.
+        </div>
+
+        <div class="content-box">
+            <div class="content-split">
+                <div class="col-left">
+                    <div class="section-header"><i class="fas fa-search"></i> Pre-Reading</div>
+                    
+                    <div class="card card-vocab">
+                        <h3><i class="fas fa-spell-check"></i> Vocabulary (Packet Pg. 8)</h3>
+                        <p>Look for: <span class="vocab-word">Gloating</span> <span class="vocab-word">Venture</span></p>
+                        <p><em>(Middle of the list on Page 8)</em></p>
+                    </div>
+
+                    <div class="card card-theme">
+                        <h3><i class="fas fa-eye-slash"></i> Theme: Illusion vs. Reality</h3>
+                        <p><strong>Prediction:</strong> Edmund expects to be made a King. What do you think he will actually find at the castle?</p>
+                    </div>
+
+                    <div class="card card-read">
+                        <h3><i class="fas fa-book-open"></i> Read Aloud</h3>
+                        <p><strong>Chapter 9:</strong> In the Witch's House</p>
+                        <p><em>Listen for: The scribbles on the stone lion.</em></p>
+                    </div>
+                </div>
+
+                <div class="col-right">
+                    <div class="section-header"><i class="fas fa-users"></i> Discuss & Do</div>
+
+                    <div class="card card-dilemma">
+                        <h3><i class="fas fa-balance-scale"></i> Moral Dilemma</h3>
+                        <p><strong>Analogy:</strong> Someone promises you the best video game console ever if you just tell a teacher that your best friend cheated on a test. You aren't 100% sure if they cheated, but you <em>really</em> want the prize. Do you do it?</p>
+                    </div>
+
+                    <div class="question-box">
+                        <h3>Packet Discussion (Pg. 9)</h3>
+                        <ol class="question-list">
+                            <li><strong>Q6:</strong> Why did Edmund try to convince himself the Witch "wasn't so bad"?</li>
+                            <li><strong>Q8:</strong> Why were there so many stone statues in the courtyard?</li>
+                        </ol>
+                    </div>
+
+                    <div class="card card-exit">
+                        <h3><i class="fas fa-ticket-alt"></i> Exit Ticket</h3>
+                        <p>Write <strong>one emotion</strong> Edmund felt when he stepped into the courtyard.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="success-footer">
+                <span class="success-label">Success Criteria</span>
+                <i class="fas fa-check-circle"></i> I can describe how the reality of the castle was different from Edmund's dream.
+            </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- TIMER UI -->
+    <div class="timer-container">
+      <div class="timer-visual">
+        <div class="timer-display">25:00</div>
+        <svg>
+          <circle class="timer-progress-bg" cx="45" cy="45" r="40"></circle>
+          <circle class="timer-progress-bar" cx="45" cy="45" r="40"></circle>
+        </svg>
+      </div>
+      <div class="timer-adjust">
+        <button class="timer-adjust-btn" data-time="-60">-1m</button>
+        <button class="timer-adjust-btn" data-time="60">+1m</button>
+      </div>
+      <div class="timer-controls">
+        <button class="timer-control-btn" id="start-pause-timer"><i class="fas fa-play"></i></button>
+        <button class="timer-control-btn" id="reset-timer"><i class="fas fa-redo"></i></button>
+      </div>
+    </div>
+
+    <!-- NAVIGATION -->
+    <button id="prev" class="nav-button">&#10094;</button>
+    <button id="next" class="nav-button">&#10095;</button>
+    <div class="day-nav">
+      <button data-chapter="7">Ch 7</button>
+      <button data-chapter="8">Ch 8</button>
+      <button data-chapter="9">Ch 9</button>
+      <button id="toggle-timer" style="margin-left:10px;"><i class="fas fa-clock"></i></button>
+    </div>
+
+    <audio id="alarm-sound" src="https://actions.google.com/sounds/v1/alarms/medium_bell_ringing_near.ogg" preload="auto"></audio>
+
+    <script>
+      /* SLIDESHOW LOGIC */
+      let currentSlideIndex = 0;
+      const slides = document.querySelectorAll(".slide");
+      const dayButtons = document.querySelectorAll(".day-nav button[data-chapter]");
+
+      function showSlide(index) {
+        if (index >= slides.length) index = 0;
+        if (index < 0) index = slides.length - 1;
+        slides.forEach(slide => slide.classList.remove("active"));
+        slides[index].classList.add("active");
+        currentSlideIndex = index;
+        
+        dayButtons.forEach(btn => btn.classList.remove("active"));
+        if(dayButtons[index]) dayButtons[index].classList.add("active");
+      }
+
+      document.getElementById("next").addEventListener("click", () => showSlide(currentSlideIndex + 1));
+      document.getElementById("prev").addEventListener("click", () => showSlide(currentSlideIndex - 1));
+      
+      dayButtons.forEach((btn, index) => {
+        btn.addEventListener("click", () => showSlide(index));
+      });
+
+      showSlide(0);
+
+      /* TIMER LOGIC */
+      const timerDisplay = document.querySelector(".timer-display");
+      const progressBar = document.querySelector(".timer-progress-bar");
+      const alarmSound = document.getElementById("alarm-sound");
+      
+      let totalTime = 1500; // 25 minutes
+      let remainingTime = totalTime;
+      let timerInterval;
+      let isRunning = false;
+
+      const radius = progressBar.r.baseVal.value;
+      const circumference = 2 * Math.PI * radius;
+      progressBar.style.strokeDasharray = circumference;
+
+      function updateDisplay() {
+        let m = Math.floor(remainingTime / 60);
+        let s = remainingTime % 60;
+        timerDisplay.textContent = `${m}:${s < 10 ? '0' : ''}${s}`;
+        
+        const offset = circumference - (remainingTime / totalTime) * circumference;
+        progressBar.style.strokeDashoffset = offset;
+      }
+
+      document.getElementById("start-pause-timer").addEventListener("click", function() {
+        if(isRunning) {
+          clearInterval(timerInterval);
+          this.innerHTML = '<i class="fas fa-play"></i>';
+        } else {
+          timerInterval = setInterval(() => {
+            if(remainingTime > 0) {
+              remainingTime--;
+              updateDisplay();
+            } else {
+              clearInterval(timerInterval);
+              alarmSound.play();
+              isRunning = false;
+              document.getElementById("start-pause-timer").innerHTML = '<i class="fas fa-play"></i>';
+            }
+          }, 1000);
+          this.innerHTML = '<i class="fas fa-pause"></i>';
+        }
+        isRunning = !isRunning;
+      });
+
+      document.getElementById("reset-timer").addEventListener("click", () => {
+        clearInterval(timerInterval);
+        remainingTime = totalTime;
+        isRunning = false;
+        document.getElementById("start-pause-timer").innerHTML = '<i class="fas fa-play"></i>';
+        updateDisplay();
+      });
+
+      document.querySelectorAll(".timer-adjust-btn").forEach(btn => {
+        btn.addEventListener("click", function() {
+          totalTime += parseInt(this.dataset.time);
+          if(totalTime < 60) totalTime = 60;
+          remainingTime = totalTime;
+          updateDisplay();
+        });
+      });
+      
+      const timerContainer = document.querySelector(".timer-container");
+      document.getElementById("toggle-timer").addEventListener("click", () => {
+        if(timerContainer.style.display === "none") {
+            timerContainer.style.display = "block";
+        } else {
+            timerContainer.style.display = "none";
+        }
+      });
+
+      updateDisplay();
+    </script>
+  </body>
+</html>

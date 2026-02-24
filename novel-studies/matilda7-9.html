@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Matilda: Chapters 7-9</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Bangers&family=Poppins:wght@400;700&display=swap");
+        
+        body { margin: 0; font-family: "Poppins", sans-serif; overflow: hidden; background: #2c3e50; }
+        
+        /* Layout */
+        .slide { display: none; height: 100vh; width: 100vw; flex-direction: column; align-items: center; padding: 20px; box-sizing: border-box; }
+        .slide.active { display: flex; animation: fadeIn 0.5s ease; }
+        
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Backgrounds */
+        .bg-ch7 { background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); } /* Soft Teal/Pink */
+        .bg-ch8 { background: linear-gradient(135deg, #eb3349 0%, #f45c43 100%); } /* Intense Red/Orange */
+        .bg-ch9 { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); } /* Bright Blue */
+
+        /* Text */
+        h1 { font-family: "Bangers", cursive; font-size: 3.5em; color: white; -webkit-text-stroke: 2px #333; margin: 5px 0; text-shadow: 3px 3px 0 #000; }
+        .sub-header { font-weight: bold; color: #333; background: rgba(255,255,255,0.7); padding: 5px 20px; border-radius: 15px; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px; }
+        
+        /* Content Card */
+        .content-box { background: rgba(255,255,255,0.95); width: 90%; max-width: 1100px; height: 70vh; border-radius: 20px; padding: 25px; display: flex; flex-direction: column; gap: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); overflow-y: auto; }
+        
+        /* Steps Styling */
+        .step { display: flex; align-items: center; gap: 15px; border-left: 8px solid #333; padding: 10px; background: #f8f9fa; border-radius: 8px; transition: transform 0.2s; }
+        .step:hover { transform: scale(1.005); background: #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        
+        .step-icon { width: 40px; height: 40px; background: #333; color: white; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 1.1em; flex-shrink: 0; }
+        .step-text h3 { margin: 0; font-size: 1.2em; color: #2c3e50; font-family: "Bangers", cursive; letter-spacing: 1px; }
+        .step-text p { margin: 2px 0 0 0; font-size: 0.95em; color: #555; line-height: 1.3; }
+        
+        .highlight { background-color: #fff3cd; padding: 0 5px; border-radius: 4px; font-weight: bold; border: 1px solid #ffeeba; color: #856404; }
+
+        /* Exit Ticket Box */
+        .exit-box { margin-top: auto; background: #d1ecf1; color: #0c5460; padding: 12px; border-radius: 10px; border: 2px solid #bee5eb; font-weight: bold; display: flex; align-items: center; gap: 10px; }
+
+        /* Timer */
+        .timer-box { position: absolute; top: 20px; right: 20px; background: #333; color: white; padding: 10px; border-radius: 12px; text-align: center; width: 130px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); z-index: 1000; }
+        .time { font-size: 2em; font-weight: bold; font-family: monospace; }
+        .controls button { background: #555; border: none; color: white; padding: 5px 12px; cursor: pointer; border-radius: 5px; margin: 0 2px; transition: background 0.2s; }
+        .controls button.green { background: #27ae60; }
+        .controls button.red { background: #c0392b; }
+
+        /* Navigation */
+        .nav-bar { position: absolute; bottom: 20px; display: flex; gap: 15px; background: rgba(0,0,0,0.7); padding: 12px 25px; border-radius: 30px; backdrop-filter: blur(5px); }
+        .nav-btn { background: transparent; border: 2px solid rgba(255,255,255,0.5); color: white; padding: 8px 20px; border-radius: 20px; cursor: pointer; font-weight: bold; font-size: 1em; transition: all 0.3s; }
+        .nav-btn:hover { background: rgba(255,255,255,0.2); border-color: white; }
+        .nav-btn.active { background: #f0c419; color: #333; border-color: #f0c419; box-shadow: 0 0 10px #f0c419; }
+
+    </style>
+</head>
+<body>
+
+    <!-- ================= CHAPTER 7 ================= -->
+    <div class="slide active bg-ch7" id="c7">
+        <h1>Chapter 7: Miss Honey</h1>
+        <div class="sub-header">Theme: First Impressions</div>
+        
+        <div class="content-box">
+            <!-- Vocab -->
+            <div class="step" style="border-left-color: #9b59b6">
+                <div class="step-icon" style="background: #9b59b6"><i class="fas fa-spell-check"></i></div>
+                <div class="step-text">
+                    <h3>1. Vocabulary Preview</h3>
+                    <p><strong>Packet Page 6:</strong> Find and define <span class="highlight">Formidable</span> (Scary/Strong) and <span class="highlight">Discipline</span> (Rules/Order).</p>
+                </div>
+            </div>
+
+            <!-- Prediction -->
+            <div class="step" style="border-left-color: #3498db">
+                <div class="step-icon" style="background: #3498db"><i class="fas fa-crystal-ball"></i></div>
+                <div class="step-text">
+                    <h3>2. Theme & Prediction</h3>
+                    <p><strong>Theme:</strong> Meeting an Ally (Helper).<br><em>Predict:</em> How will a teacher react to a student like Matilda?</p>
+                </div>
+            </div>
+
+            <!-- Read Aloud -->
+            <div class="step" style="border-left-color: #f39c12">
+                <div class="step-icon" style="background: #f39c12"><i class="fas fa-book-reader"></i></div>
+                <div class="step-text">
+                    <h3>3. Read Aloud</h3>
+                    <p><strong>Chapter 7: Miss Honey</strong><br><em>Listen for:</em> The advice Miss Honey gives the class about the Headmistress.</p>
+                </div>
+            </div>
+
+            <!-- Discussion -->
+            <div class="step" style="border-left-color: #2ecc71">
+                <div class="step-icon" style="background: #2ecc71"><i class="fas fa-users"></i></div>
+                <div class="step-text">
+                    <h3>4. Discussion (Packet Page 7)</h3>
+                    <p><strong>Question 4:</strong> Why do the children like Miss Honey?<br><strong>Question 5:</strong> How does Matilda amaze her?</p>
+                </div>
+            </div>
+
+            <!-- Moral Analogy -->
+            <div class="step" style="border-left-color: #e74c3c">
+                <div class="step-icon" style="background: #e74c3c"><i class="fas fa-balance-scale"></i></div>
+                <div class="step-text">
+                    <h3>5. Moral Dilemma</h3>
+                    <p><strong>Analogy:</strong> If you are really good at something, should you show off or stay quiet? Why did Matilda stay quiet?</p>
+                </div>
+            </div>
+
+            <!-- Exit Ticket -->
+            <div class="exit-box">
+                <i class="fas fa-ticket-alt"></i> Exit Ticket: Write ONE word to describe Miss Honey on a sticky note.
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= CHAPTER 8 ================= -->
+    <div class="slide bg-ch8" id="c8">
+        <h1>Chapter 8: The Trunchbull</h1>
+        <div class="sub-header">Theme: The Villain</div>
+        
+        <div class="content-box">
+            <!-- Vocab -->
+            <div class="step" style="border-left-color: #9b59b6">
+                <div class="step-icon" style="background: #9b59b6"><i class="fas fa-spell-check"></i></div>
+                <div class="step-text">
+                    <h3>1. Vocabulary Preview</h3>
+                    <p><strong>Packet Page 6:</strong> Find and define <span class="highlight">Menace</span> (Danger/Threat) and <span class="highlight">Appalling</span> (Awful).</p>
+                </div>
+            </div>
+
+            <!-- Prediction -->
+            <div class="step" style="border-left-color: #3498db">
+                <div class="step-icon" style="background: #3498db"><i class="fas fa-crystal-ball"></i></div>
+                <div class="step-text">
+                    <h3>2. Theme & Prediction</h3>
+                    <p><strong>Theme:</strong> Tyranny (Cruel Power).<br><em>Predict:</em> How will the Headmistress treat Miss Honey?</p>
+                </div>
+            </div>
+
+            <!-- Read Aloud -->
+            <div class="step" style="border-left-color: #f39c12">
+                <div class="step-icon" style="background: #f39c12"><i class="fas fa-book-reader"></i></div>
+                <div class="step-text">
+                    <h3>3. Read Aloud</h3>
+                    <p><strong>Chapter 8: The Trunchbull</strong><br><em>Listen for:</em> The specific words Trunchbull uses to describe children.</p>
+                </div>
+            </div>
+
+            <!-- Discussion -->
+            <div class="step" style="border-left-color: #2ecc71">
+                <div class="step-icon" style="background: #2ecc71"><i class="fas fa-users"></i></div>
+                <div class="step-text">
+                    <h3>4. Discussion (Packet Page 7)</h3>
+                    <p><strong>Question 6:</strong> Why is her job strange?<br><strong>Question 8:</strong> How does she react to Miss Honey's suggestion?</p>
+                </div>
+            </div>
+
+            <!-- Moral Analogy -->
+            <div class="step" style="border-left-color: #e74c3c">
+                <div class="step-icon" style="background: #e74c3c"><i class="fas fa-balance-scale"></i></div>
+                <div class="step-text">
+                    <h3>5. Moral Dilemma</h3>
+                    <p><strong>The Rhinoceros Analogy:</strong> If a giant animal charges at you, do you fight it or climb a tree? What is Miss Honey doing?</p>
+                </div>
+            </div>
+
+            <!-- Exit Ticket -->
+            <div class="exit-box">
+                <i class="fas fa-ticket-alt"></i> Exit Ticket: Draw a quick symbol/shape that represents The Trunchbull.
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= CHAPTER 9 ================= -->
+    <div class="slide bg-ch9" id="c9">
+        <h1>Chapter 9: The Parents</h1>
+        <div class="sub-header">Theme: Differing Values</div>
+        
+        <div class="content-box">
+            <!-- Vocab -->
+            <div class="step" style="border-left-color: #9b59b6">
+                <div class="step-icon" style="background: #9b59b6"><i class="fas fa-spell-check"></i></div>
+                <div class="step-text">
+                    <h3>1. Vocabulary Preview</h3>
+                    <p><strong>Packet Page 10:</strong> Find and define <span class="highlight">Underestimate</span> (Value too low) and <span class="highlight">Intrigue</span> (Interest).</p>
+                </div>
+            </div>
+
+            <!-- Prediction -->
+            <div class="step" style="border-left-color: #3498db">
+                <div class="step-icon" style="background: #3498db"><i class="fas fa-crystal-ball"></i></div>
+                <div class="step-text">
+                    <h3>2. Theme & Prediction</h3>
+                    <p><strong>Theme:</strong> Looks vs. Books.<br><em>Predict:</em> Will the parents be happy to hear their daughter is a genius?</p>
+                </div>
+            </div>
+
+            <!-- Read Aloud -->
+            <div class="step" style="border-left-color: #f39c12">
+                <div class="step-icon" style="background: #f39c12"><i class="fas fa-book-reader"></i></div>
+                <div class="step-text">
+                    <h3>3. Read Aloud</h3>
+                    <p><strong>Chapter 9: The Parents</strong><br><em>Listen for:</em> The reason Mrs. Wormwood thinks she is better off than Miss Honey.</p>
+                </div>
+            </div>
+
+            <!-- Discussion -->
+            <div class="step" style="border-left-color: #2ecc71">
+                <div class="step-icon" style="background: #2ecc71"><i class="fas fa-users"></i></div>
+                <div class="step-text">
+                    <h3>4. Discussion (Packet Page 10)</h3>
+                    <p><strong>Question 1:</strong> Why does Miss Honey risk visiting them?<br><strong>Question 2:</strong> Why aren't the parents impressed?</p>
+                </div>
+            </div>
+
+            <!-- Moral Analogy -->
+            <div class="step" style="border-left-color: #e74c3c">
+                <div class="step-icon" style="background: #e74c3c"><i class="fas fa-balance-scale"></i></div>
+                <div class="step-text">
+                    <h3>5. Moral Dilemma</h3>
+                    <p><strong>Values:</strong> Is it better to be rich/beautiful or smart/poor? Why do the Wormwoods think they are the winners?</p>
+                </div>
+            </div>
+
+            <!-- Exit Ticket -->
+            <div class="exit-box">
+                <i class="fas fa-ticket-alt"></i> Exit Ticket: Who would you rather have tea with: Miss Honey or Mrs. Wormwood? Why?
+            </div>
+        </div>
+    </div>
+
+    <!-- Timer -->
+    <div class="timer-box">
+        <div class="time" id="display">25:00</div>
+        <div class="controls">
+            <button class="green" onclick="startTimer()"><i class="fas fa-play"></i></button>
+            <button class="red" onclick="resetTimer()"><i class="fas fa-undo"></i></button>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <div class="nav-bar">
+        <button class="nav-btn active" onclick="show(7)">Chapter 7</button>
+        <button class="nav-btn" onclick="show(8)">Chapter 8</button>
+        <button class="nav-btn" onclick="show(9)">Chapter 9</button>
+    </div>
+
+    <script>
+        function show(chapter) {
+            // Hide all slides
+            document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+            // Show selected slide
+            document.getElementById('c'+chapter).classList.add('active');
+            
+            // Update buttons
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            // Calculate index (7->0, 8->1, 9->2)
+            const btnIndex = chapter - 7;
+            if(document.querySelectorAll('.nav-btn')[btnIndex]) {
+                document.querySelectorAll('.nav-btn')[btnIndex].classList.add('active');
+            }
+        }
+
+        // Timer Logic
+        let time = 1500; 
+        let timer;
+        
+        function startTimer() {
+            clearInterval(timer);
+            timer = setInterval(() => {
+                time--;
+                let m = Math.floor(time / 60);
+                let s = time % 60;
+                document.getElementById('display').innerText = `${m}:${s<10?'0':''}${s}`;
+                if (time <= 0) clearInterval(timer);
+            }, 1000);
+        }
+        
+        function resetTimer() {
+            clearInterval(timer);
+            time = 1500;
+            document.getElementById('display').innerText = "25:00";
+        }
+    </script>
+</body>
+</html>
