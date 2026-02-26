@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pre-Writing Research Slides</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Bangers&family=Poppins:wght@400;600;700;800&display=swap");
+      :root {
+        --primary-color: #ff6347;
+        --secondary-color: #4a90e2;
+        --accent-color: #f0c419;
+        --dark-text: #2c3e50;
+        --danger-color: #e74c3c;
+        --success-color: #2ecc71;
+        --warmup-color: #e67e22;
+        --lesson-color: #3498db;
+        --work-color: #9b59b6;
+        --close-color: #27ae60;
+      }
+      body {
+        margin: 0;
+        font-family: "Poppins", sans-serif;
+        background-color: var(--dark-text);
+        overflow: hidden;
+      }
+      .slideshow-container {
+        position: relative;
+        width: 100vw;
+        height: 100vh;
+      }
+
+      /* SLIDE ANIMATIONS & LAYOUT */
+      .slide {
+        display: none;
+        width: 100%;
+        height: 100%;
+        padding: 10px 40px;
+        box-sizing: border-box;
+        text-align: center;
+        justify-content: flex-start;
+        align-items: center;
+        flex-direction: column;
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+      .slide.active {
+        display: flex;
+        animation: slideAppear 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      }
+      @keyframes slideAppear {
+        from { opacity: 0; transform: scale(0.98); }
+        to { opacity: 1; transform: scale(1); }
+      }
+
+      /* DYNAMIC BACKGROUNDS */
+      @keyframes gradient-pan {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+      }
+      .bg-g1 { background: linear-gradient(-45deg, #ff9a9e, #fecfef, #ffecd2); background-size: 400% 400%; animation: gradient-pan 15s ease infinite; }
+      .bg-g2 { background: linear-gradient(-45deg, #f12711, #f5af19, #ffda77); background-size: 400% 400%; animation: gradient-pan 15s ease infinite; }
+      .bg-g3 { background: linear-gradient(-45deg, #2980b9, #6dd5fa, #ffffff); background-size: 400% 400%; animation: gradient-pan 15s ease infinite; }
+      .bg-g4 { background: linear-gradient(-45deg, #11998e, #38ef7d, #a8e063); background-size: 400% 400%; animation: gradient-pan 15s ease infinite; }
+
+      /* TYPOGRAPHY */
+      h1 {
+        font-family: "Bangers", cursive;
+        font-size: clamp(2.5em, 5vw, 4em);
+        margin: 5px 0 0 0;
+        color: #fff;
+        -webkit-text-stroke: 2px #2c3e50;
+        text-shadow: 3px 3px 0px rgba(0,0,0,0.3);
+        letter-spacing: 1px;
+        z-index: 10;
+        line-height: 1;
+      }
+      
+      .chapter-subtitle {
+        font-family: "Poppins", sans-serif;
+        font-weight: 700;
+        color: white;
+        background: rgba(44, 62, 80, 0.8);
+        padding: 2px 15px;
+        border-radius: 15px;
+        margin-bottom: 10px;
+        font-size: 1.2rem;
+        z-index: 10;
+        text-transform: uppercase;
+      }
+
+      /* TARGET BOX STYLES */
+      .target-container {
+        display: flex;
+        gap: 15px;
+        width: 90%;
+        max-width: 1200px;
+        margin-bottom: 10px;
+        z-index: 10;
+      }
+      .target-box {
+        background: rgba(255, 255, 255, 0.95);
+        padding: 8px 20px;
+        border-radius: 15px;
+        font-weight: 700;
+        font-size: 1.1em;
+        color: var(--dark-text);
+        box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        border: 2px solid #2c3e50;
+        flex: 1;
+        text-align: left;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .target-icon { font-size: 1.5em; color: var(--secondary-color); }
+      .success-icon { font-size: 1.5em; color: var(--success-color); }
+
+      /* MAIN CONTENT BOX */
+      .content-box {
+        background: rgba(255, 255, 255, 0.93);
+        margin: 5px 0;
+        padding: 20px 30px;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        border: 4px solid #fff;
+        height: 68vh;
+        width: 95%;
+        max-width: 1400px;
+        display: grid;
+        grid-template-columns: 1fr 1fr; /* 2 Columns */
+        grid-template-rows: 1fr 1fr;    /* 2 Rows */
+        gap: 20px;
+        box-sizing: border-box;
+      }
+
+      /* LESSON STEP CARDS */
+      .step-card {
+        background: white;
+        border-radius: 15px;
+        padding: 15px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        text-align: left;
+        border-left: 10px solid #ccc;
+        transition: transform 0.2s;
+        position: relative;
+        overflow: hidden;
+      }
+      .step-card:hover { transform: translateY(-3px); box-shadow: 0 8px 15px rgba(0,0,0,0.1); }
+
+      /* Card Variations */
+      .card-warmup { border-left-color: var(--warmup-color); background: #fff8e1; }
+      .card-lesson { border-left-color: var(--lesson-color); background: #e3f2fd; }
+      .card-work   { border-left-color: var(--work-color); background: #f3e5f5; }
+      .card-close  { border-left-color: var(--close-color); background: #e8f5e9; }
+
+      .step-header {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 8px;
+        border-bottom: 2px solid rgba(0,0,0,0.05);
+        padding-bottom: 5px;
+      }
+      .step-badge {
+        color: white;
+        padding: 4px 10px;
+        border-radius: 10px;
+        font-weight: 800;
+        font-size: 0.9em;
+        text-transform: uppercase;
+      }
+      .bg-warmup { background-color: var(--warmup-color); }
+      .bg-lesson { background-color: var(--lesson-color); }
+      .bg-work { background-color: var(--work-color); }
+      .bg-close { background-color: var(--close-color); }
+
+      .step-title { font-weight: 800; font-size: 1.3em; color: var(--dark-text); }
+      .step-desc { font-size: 1.1em; color: #444; line-height: 1.4; flex-grow: 1; }
+      .step-icon-bg {
+        position: absolute; bottom: -10px; right: -10px; font-size: 6em; opacity: 0.1;
+      }
+      .card-warmup .step-icon-bg { color: var(--warmup-color); }
+      .card-lesson .step-icon-bg { color: var(--lesson-color); }
+      .card-work .step-icon-bg { color: var(--work-color); }
+      .card-close .step-icon-bg { color: var(--close-color); }
+
+
+      /* NAVIGATION */
+      .nav-button {
+        position: absolute; top: 50%; transform: translateY(-50%);
+        background-color: rgba(44, 62, 80, 0.6); color: white;
+        border: none; font-size: 2em; width: 45px; height: 45px;
+        cursor: pointer; z-index: 100; border-radius: 50%;
+        display: flex; align-items: center; justify-content: center;
+        transition: all 0.2s;
+      }
+      .nav-button:hover { background-color: var(--accent-color); color: var(--dark-text); }
+      #prev { left: 15px; }
+      #next { right: 15px; }
+
+      .day-nav {
+        position: absolute; bottom: 15px; left: 50%; transform: translateX(-50%);
+        z-index: 100; background: rgba(44, 62, 80, 0.8);
+        padding: 8px 15px; border-radius: 50px;
+        display: flex; align-items: center; gap: 5px;
+      }
+      .day-nav button {
+        background: transparent; border: none; color: white;
+        font-family: "Poppins"; font-weight: 700; font-size: 0.9em;
+        padding: 8px 16px; cursor: pointer; border-radius: 30px;
+        transition: all 0.3s ease;
+      }
+      .day-nav button.active {
+        background-color: var(--accent-color); color: var(--dark-text);
+        box-shadow: 0 0 10px var(--accent-color);
+      }
+
+      /* TIMER */
+      .timer-container {
+        position: absolute; top: 15px; right: 15px; z-index: 101;
+        background: var(--dark-text); padding: 10px; border-radius: 15px;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5); color: white;
+        text-align: center; width: 150px; transition: opacity 0.3s;
+      }
+      .timer-visual { position: relative; width: 80px; height: 80px; margin: 0 auto 5px; }
+      .timer-visual svg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; transform: rotate(-90deg); }
+      .timer-progress-bg { fill: none; stroke: rgba(255, 255, 255, 0.1); stroke-width: 7; }
+      .timer-progress-bar { fill: none; stroke: var(--success-color); stroke-width: 7; stroke-linecap: round; transition: stroke-dashoffset 0.2s linear; }
+      .timer-display { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-weight: 800; font-size: 1.4em; }
+      .timer-adjust button { background: #555; border: none; color: white; border-radius: 4px; padding: 2px 6px; cursor: pointer; margin: 0 2px; font-size: 0.7em;}
+      .timer-controls button { border: none; color: white; width: 30px; height: 30px; border-radius: 50%; margin: 5px 3px 0; cursor: pointer; }
+      #start-pause-timer { background: var(--success-color); }
+      #reset-timer { background: var(--danger-color); }
+
+    </style>
+  </head>
+  <body>
+
+    <div class="slideshow-container">
+
+      <!-- GRADE 1: THE IDEA WEB -->
+      <div class="slide bg-g1 active" data-day="g1">
+        <h1><i class="fas fa-spider"></i> 1st Grade: The Idea Web</h1>
+        <div class="chapter-subtitle">Research Pre-Writing</div>
+        
+        <div class="target-container">
+            <div class="target-box">
+                <i class="fas fa-bullseye target-icon"></i>
+                <div><strong>Target:</strong> I can pick the best facts from my notes to share with my team.</div>
+            </div>
+            <div class="target-box">
+                <i class="fas fa-check-circle success-icon"></i>
+                <div><strong>Success:</strong> I drew or wrote my best facts inside the Idea Web bubbles.</div>
+            </div>
+        </div>
+
+        <div class="content-box">
+            <!-- 1. Warmup -->
+            <div class="step-card card-warmup">
+                <i class="fas fa-sticky-note step-icon-bg"></i>
+                <div class="step-header">
+                    <span class="step-badge bg-warmup">Warmup</span>
+                    <div class="step-title">Note Review</div>
+                </div>
+                <div class="step-desc">
+                    Look at all the notes you took from your books. Pick your <strong>favorite fact</strong>. Why is it your favorite?
+                </div>
+            </div>
+
+            <!-- 2. Mini-Lesson -->
+            <div class="step-card card-lesson">
+                <i class="fas fa-project-diagram step-icon-bg"></i>
+                <div class="step-header">
+                    <span class="step-badge bg-lesson">Mini-Lesson</span>
+                    <div class="step-title">What is a Web?</div>
+                </div>
+                <div class="step-desc">
+                    We are putting our ideas together! Remember: <strong>No big sentences yet!</strong> Just use pictures or one word to show your idea.
+                </div>
+            </div>
+
+            <!-- 3. Work Period -->
+            <div class="step-card card-work">
+                <i class="fas fa-users step-icon-bg"></i>
+                <div class="step-header">
+                    <span class="step-badge bg-work">Work Time</span>
+                    <div class="step-title">Fill the Bubbles</div>
+                </div>
+                <div class="step-desc">
+                    Take turns! Share your fact with your group. Have the Scribe draw or write your idea inside <strong>Big Idea #1, #2, or #3</strong>.
+                </div>
+            </div>
+
+            <!-- 4. Closing -->
+            <div class="step-card card-close">
+                <i class="fas fa-star step-icon-bg"></i>
+                <div class="step-header">
+                    <span class="step-badge bg-close">Closing</span>
+                    <div class="step-title">The "WOW" Fact</div>
+                </div>
+                <div class="step-desc">
+                    What was the most surprising thing your group learned? Draw it together in the big <strong>WOW Fact</strong> box!
+                </div>
+            </div>
+        </div>
+      </div>
+
+      <!-- GRADE 2: FACT BUCKETS -->
+      <div class="slide bg-g2" data-day="g2">
+        <h1><i class="fas fa-bitbucket"></i> 2nd Grade: Fact Buckets</h1>
+        <div class="chapter-subtitle">Research Pre-Writing</div>
+        
+        <div class="target-container">
+            <div class="target-box">
+                <i class="fas fa-bullseye target-icon"></i>
+                <div><strong>Target:</strong> I can sort facts that belong together into groups.</div>
+            </div>
+            <div class="target-box">
+                <i class="fas fa-check-circle success-icon"></i>
+                <div><strong>Success:</strong> My facts are written in the correct buckets using bullet points.</div>
+            </div>
+        </div>
+
+        <div class="content-box">
+            <!-- 1. Warmup -->
+            <div class="step-card card-warmup">
+                <i class="fas fa-search step-icon-bg"></i>
+                <div class="step-header">
+                    <span class="step-badge bg-warmup">Warmup</span>
+                    <div class="step-title">Find the Pattern</div>
+                </div>
+                <div class="step-desc">
+                    Read your sticky notes out loud to your group. Do any of your facts sound similar to your friends' facts?
+                </div>
+            </div>
+
+            <!-- 2. Mini-Lesson -->
+            <div class="step-card card-lesson">
+                <i class="fas fa-boxes step-icon-bg"></i>
+                <div class="step-header">
+                    <span class="step-badge bg-lesson">Mini-Lesson</span>
+                    <div class="step-title">Categorizing</div>
+                </div>
+                <div class="step-desc">
+                    What is a category? It's like cleaning up toys: cars go in one bucket, blocks go in another. We need to name our <strong>Fact Buckets</strong>!
+                </div>
+            </div>
+
+            <!-- 3. Work Period -->
+            <div class="step-card card-work">
+                <i class="fas fa-list-ul step-icon-bg"></i>
+                <div class="step-header">
+                    <span class="step-badge bg-work">Work Time</span>
+                    <div class="step-title">Sorting Facts</div>
+                </div>
+                <div class="step-desc">
+                    Decide on your bucket topics (like "Habitat" or "Food"). Write your keywords next to the bullet points in the right bucket.
+                </div>
+            </div>
+
+            <!-- 4. Closing -->
+            <div class="step-card card-close">
+                <i class="fas fa-question step-icon-bg"></i>
+                <div class="step-header">
+                    <span class="step-badge bg-close">Closing</span>
+                    <div class="step-title">Question Mark Box</div>
+                </div>
+                <div class="step-desc">
+                    Look at your buckets. What is missing? Write one thing you <strong>still need to find out</strong> in the Question Mark Box.
+                </div>
+            </div>
+        </div>
+      </div>
+
+      <!-- GRADE 3: SYNTHESIS GRID -->
+      <div class="slide bg-g3" data-day="g3">
+        <h1><i class="fas fa-table"></i> 3rd Grade: Synthesis Grid</h1>
+        <div class="chapter-subtitle">Research Pre-Writing</div>
+        
+        <div class="target-container">
+            <div class="target-box">
+                <i class="fas fa-bullseye target-icon"></i>
+                <div><strong>Target:</strong> I can compare notes with a teammate to find connections.</div>
+            </div>
+            <div class="target-box">
+                <i class="fas fa-check-circle success-icon"></i>
+                <div><strong>Success:</strong> I wrote a "Big Idea" that combines facts from two different people.</div>
+            </div>
+        </div>
+
+        <div class="content-box">
+            <!-- 1. Warmup -->
+            <div class="step-card card-warmup">
+                <i class="fas fa-handshake step-icon-bg"></i>
+                <div class="step-header">
+                    <span class="step-badge bg-warmup">Warmup</span>
+                    <div class="step-title">Note Swap</div>
+                </div>
+                <div class="step-desc">
+                    Trade your notes with a partner in your group. Did they find the exact same thing as you, or something different?
+                </div>
+            </div>
+
+            <!-- 2. Mini-Lesson -->
+            <div class="step-card card-lesson">
+                <i class="fas fa-link step-icon-bg"></i>
+                <div class="step-header">
+                    <span class="step-badge bg-lesson">Mini-Lesson</span>
+                    <div class="step-title">What is Synthesis?</div>
+                </div>
+                <div class="step-desc">
+                    Synthesis means putting pieces together to make something new. <br><em>Fact A + Fact B = One Big Idea!</em>
+                </div>
+            </div>
+
+            <!-- 3. Work Period -->
+            <div class="step-card card-work">
+                <i class="fas fa-pencil-alt step-icon-bg"></i>
+                <div class="step-header">
+                    <span class="step-badge bg-work">Work Time</span>
+                    <div class="step-title">The Grid</div>
+                </div>
+                <div class="step-desc">
+                    Write Member A's keywords on the left. Write Member B's keywords on the right. Work together to write the <strong>Big Idea</strong> at the bottom!
+                </div>
+            </div>
+
+            <!-- 4. Closing -->
+            <div class="step-card card-close">
+                <i class="fas fa-spell-check step-icon-bg"></i>
+                <div class="step-header">
+                    <span class="step-badge bg-close">Closing</span>
+                    <div class="step-title">Vocab Checklist</div>
+                </div>
+                <div class="step-desc">
+                    Every expert needs a strong vocabulary. Fill out your Checklist with 4 scientific or historical words you MUST use in your final report.
+                </div>
+            </div>
+        </div>
+      </div>
+
+      <!-- GRADE 4/5: SKELETON OUTLINE -->
+      <div class="slide bg-g4" data-day="g4">
+        <h1><i class="fas fa-bone"></i> 4th & 5th: Skeleton Outline</h1>
+        <div class="chapter-subtitle">Research Pre-Writing</div>
+        
+        <div class="target-container">
+            <div class="target-box">
+                <i class="fas fa-bullseye target-icon"></i>
+                <div><strong>Target:</strong> I can organize my research into main ideas and supporting details.</div>
+            </div>
+            <div class="target-box">
+                <i class="fas fa-check-circle success-icon"></i>
+                <div><strong>Success:</strong> I created a completed outline that includes source citations.</div>
+            </div>
+        </div>
+
+        <div class="content-box">
+            <!-- 1. Warmup -->
+            <div class="step-card card-warmup">
+                <i class="fas fa-glasses step-icon-bg"></i>
+                <div class="step-header">
+                    <span class="step-badge bg-warmup">Warmup</span>
+                    <div class="step-title">The Thesis Check</div>
+                </div>
+                <div class="step-desc">
+                    Look at your overarching question. In one simple sentence, what is the most important thing your group discovered? This is your <em>Background Statement</em>.
+                </div>
+            </div>
+
+            <!-- 2. Mini-Lesson -->
+            <div class="step-card card-lesson">
+                <i class="fas fa-sitemap step-icon-bg"></i>
+                <div class="step-header">
+                    <span class="step-badge bg-lesson">Mini-Lesson</span>
+                    <div class="step-title">Main Idea vs. Detail</div>
+                </div>
+                <div class="step-desc">
+                    <strong>Do not write paragraphs!</strong> An outline is just the skeleton. <br>Main Point = The big category. <br>Detail = The specific fact or number.
+                </div>
+            </div>
+
+            <!-- 3. Work Period -->
+            <div class="step-card card-work">
+                <i class="fas fa-clipboard-list step-icon-bg"></i>
+                <div class="step-header">
+                    <span class="step-badge bg-work">Work Time</span>
+                    <div class="step-title">Draft the Outline</div>
+                </div>
+                <div class="step-desc">
+                    Group your notes into Sub-Topics (A and B). For every supporting detail you list, you <strong>must</strong> write down which Source it came from!
+                </div>
+            </div>
+
+            <!-- 4. Closing -->
+            <div class="step-card card-close">
+                <i class="fas fa-road step-icon-bg"></i>
+                <div class="step-header">
+                    <span class="step-badge bg-close">Closing</span>
+                    <div class="step-title">Mind the Gap</div>
+                </div>
+                <div class="step-desc">
+                    We read the books, but we still have a question. Fill out <strong>The Gap</strong> section to explain exactly why you need to do your experiment!
+                </div>
+            </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- TIMER COMPONENT -->
+    <div class="timer-container">
+      <div class="timer-visual">
+        <div class="timer-display">05:00</div>
+        <svg>
+          <circle class="timer-progress-bg" cx="40" cy="40" r="36"></circle>
+          <circle class="timer-progress-bar" cx="40" cy="40" r="36"></circle>
+        </svg>
+      </div>
+      <div class="timer-adjust">
+        <button class="timer-adjust-btn" data-time="-60">-1m</button>
+        <button class="timer-adjust-btn" data-time="-15">-15s</button>
+        <button class="timer-adjust-btn" data-time="15">+15s</button>
+        <button class="timer-adjust-btn" data-time="60">+1m</button>
+      </div>
+      <div class="timer-controls">
+        <button id="start-pause-timer"><i class="fas fa-play"></i></button>
+        <button id="reset-timer"><i class="fas fa-redo"></i></button>
+      </div>
+    </div>
+
+    <!-- NAVIGATION CONTROLS -->
+    <button id="prev" class="nav-button"><i class="fas fa-chevron-left"></i></button>
+    <button id="next" class="nav-button"><i class="fas fa-chevron-right"></i></button>
+    
+    <div class="day-nav">
+      <button data-day="g1" class="active">1st Grade</button>
+      <button data-day="g2">2nd Grade</button>
+      <button data-day="g3">3rd Grade</button>
+      <button data-day="g4">4th/5th Grade</button>
+      <button id="toggle-timer-btn" style="margin-left:10px; width:40px; text-align:center;"><i class="fas fa-clock"></i></button>
+    </div>
+
+    <audio id="alarm-sound" src="https://actions.google.com/sounds/v1/alarms/medium_bell_ringing_near.ogg" preload="auto"></audio>
+
+    <script>
+      /* --- NAVIGATION LOGIC --- */
+      let currentSlideIndex = 0;
+      const slides = document.querySelectorAll(".slide");
+      const dayButtons = document.querySelectorAll(".day-nav button[data-day]");
+
+      function showSlide(index) {
+        if (index >= slides.length) index = 0;
+        if (index < 0) index = slides.length - 1;
+        
+        slides.forEach(slide => slide.classList.remove("active"));
+        slides[index].classList.add("active");
+        
+        currentSlideIndex = index;
+        
+        const currentDay = slides[index].getAttribute("data-day");
+        dayButtons.forEach(btn => {
+          btn.classList.toggle("active", btn.getAttribute("data-day") === currentDay);
+        });
+      }
+
+      document.getElementById("next").addEventListener("click", () => showSlide(currentSlideIndex + 1));
+      document.getElementById("prev").addEventListener("click", () => showSlide(currentSlideIndex - 1));
+
+      dayButtons.forEach((btn, index) => {
+        btn.addEventListener("click", () => showSlide(index));
+      });
+
+      /* --- TIMER LOGIC --- */
+      const timerDisplay = document.querySelector(".timer-display");
+      const startPauseBtn = document.getElementById("start-pause-timer");
+      const resetBtn = document.getElementById("reset-timer");
+      const toggleTimerBtn = document.getElementById("toggle-timer-btn");
+      const timerContainer = document.querySelector(".timer-container");
+      const timeAdjustBtns = document.querySelectorAll(".timer-adjust-btn");
+      const progressBar = document.querySelector(".timer-progress-bar");
+      const alarmSound = document.getElementById("alarm-sound");
+
+      const radius = progressBar.r.baseVal.value;
+      const circumference = 2 * Math.PI * radius;
+      progressBar.style.strokeDasharray = circumference;
+
+      let countdown;
+      let totalTime = 300; // 5 Minutes
+      let remainingTime = totalTime;
+      let isRunning = false;
+
+      function updateDisplay() {
+        const mins = Math.floor(remainingTime / 60);
+        const secs = remainingTime % 60;
+        timerDisplay.textContent = `${mins}:${secs < 10 ? "0" : ""}${secs}`;
+        
+        const offset = circumference - (remainingTime / totalTime) * circumference;
+        progressBar.style.strokeDashoffset = offset;
+      }
+
+      function toggleTimer() {
+        if (isRunning) {
+          clearInterval(countdown);
+          startPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+        } else {
+          startPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+          countdown = setInterval(() => {
+            if (remainingTime > 0) {
+              remainingTime--;
+              updateDisplay();
+            } else {
+              clearInterval(countdown);
+              isRunning = false;
+              startPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+              alarmSound.play();
+            }
+          }, 1000);
+        }
+        isRunning = !isRunning;
+      }
+
+      function resetTimer() {
+        clearInterval(countdown);
+        isRunning = false;
+        remainingTime = totalTime;
+        updateDisplay();
+        startPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+        alarmSound.pause();
+        alarmSound.currentTime = 0;
+      }
+
+      timeAdjustBtns.forEach(btn => {
+        btn.addEventListener("click", () => {
+          if (isRunning) return;
+          totalTime += parseInt(btn.dataset.time);
+          if (totalTime < 0) totalTime = 0;
+          remainingTime = totalTime;
+          updateDisplay();
+        });
+      });
+
+      toggleTimerBtn.addEventListener("click", () => {
+        const currentOp = getComputedStyle(timerContainer).opacity;
+        timerContainer.style.opacity = currentOp === "1" ? "0" : "1";
+        timerContainer.style.pointerEvents = currentOp === "1" ? "none" : "auto";
+      });
+
+      startPauseBtn.addEventListener("click", toggleTimer);
+      resetBtn.addEventListener("click", resetTimer);
+      
+      // Init
+      updateDisplay();
+
+    </script>
+  </body>
+</html>
